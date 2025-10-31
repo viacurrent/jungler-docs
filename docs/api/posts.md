@@ -102,7 +102,7 @@ X-API-Key: your_api_key_here
       },
       "search_id": "507f1f77bcf86cd799439012",
       "workspace_id": "507f1f77bcf86cd799439013",
-      "meta": {
+      "classification": {
         "type": "post",
         "lang": "en",
         "sentiment": "positive",
