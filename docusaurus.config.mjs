@@ -12,6 +12,8 @@ const config = {
 
     url: 'https://docs.jungler.ai',
     baseUrl: '/',
+    
+    trailingSlash: false,
 
     // GitHub pages deployment config.
     organizationName: 'viacurrent',
