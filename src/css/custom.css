@@ -155,6 +155,10 @@
     align-items: center;
 }
 
+.menu__link--sublist-caret:after {
+    background-size: 1rem 1rem;
+}
+
 
 .markdown {
     --ifm-h1-font-size: 2.5rem;
@@ -371,14 +375,55 @@ tbody tr:hover {
     background: var(--ifm-color-primary);
 }
 
-* {
-    transition-property: background-color, border-color, color, fill, stroke;
+/* Apply smooth transitions to common elements, but avoid * selector to prevent theme toggle issues */
+.navbar,
+.menu__link,
+.markdown,
+.theme-code-block,
+.card,
+.tabs__item,
+tbody tr,
+.pagination-nav__link {
+    transition-property: background-color, border-color, color, box-shadow, transform;
     transition-duration: 0.2s;
     transition-timing-function: ease;
 }
 
 html {
     scroll-behavior: smooth;
+}
+
+/* Footer styling */
+.footer {
+    background: var(--ifm-background-surface-color);
+    border-top: 1px solid var(--card-border);
+    padding: 2rem 0;
+}
+
+[data-theme='dark'] .footer {
+    background: var(--ifm-background-surface-color);
+}
+
+.footer__title {
+    color: var(--ifm-color-primary);
+    font-weight: 600;
+}
+
+.footer__link-item {
+    color: var(--ifm-font-color-base);
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+}
+
+.footer__link-item:hover {
+    color: var(--ifm-color-primary);
+    opacity: 1;
+}
+
+.footer__copyright {
+    color: var(--ifm-font-color-base);
+    opacity: 0.6;
+    font-size: 0.875rem;
 }
 
 @media (max-width: 996px) {

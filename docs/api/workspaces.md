@@ -2,20 +2,16 @@
 
 The Workspaces API allows you to list all workspaces that you have access to.
 
+:::info Authentication Required
+All API requests require authentication. See [API Reference](/docs/api#authentication) for details.
+:::
+
 ## List Workspaces
 
 Get all workspaces for the authenticated user.
 
 ```http
 GET /api/workspaces
-```
-
-### Authentication
-
-Requires an API key in the header:
-
-```
-X-API-Key: your_api_key_here
 ```
 
 ### Response
@@ -63,6 +59,23 @@ import TabItem from '@theme/TabItem';
 ```bash
 curl -H "X-API-Key: your_api_key_here" \
      https://production.viacurrent.com/api/workspaces
+```
+
+</TabItem>
+<TabItem value="javascript" label="JavaScript">
+
+```javascript
+const response = await fetch('https://production.viacurrent.com/api/workspaces', {
+  headers: {
+    'X-API-Key': 'your_api_key_here'
+  }
+});
+
+const workspaces = await response.json();
+
+for (const workspace of workspaces) {
+  console.log(`${workspace.name} (${workspace.role})`);
+}
 ```
 
 </TabItem>

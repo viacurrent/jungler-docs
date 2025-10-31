@@ -62,7 +62,7 @@ with 50+ employees
 <summary><strong>Initial prompt (too broad)</strong></summary>
 
 ```
-Show posts about CRM tools
+Mark post as relevant if it is about CRM tools
 ```
 
 Result: Too many irrelevant posts about any CRM mention.
@@ -72,7 +72,7 @@ Result: Too many irrelevant posts about any CRM mention.
 <summary><strong>After reviewing results</strong></summary>
 
 ```
-Show posts from people asking for CRM recommendations or 
+Mark post as relevant if it is from people asking for CRM recommendations or 
 comparing CRM options for teams of 10-50 people
 ```
 
@@ -83,7 +83,7 @@ Result: Better, but still catching some off-topic posts.
 <summary><strong>Final refined prompt</strong></summary>
 
 ```
-Show posts where someone is actively evaluating CRM tools 
+Mark post as relevant if someone is actively evaluating CRM tools 
 for a small business, including questions about features, 
 pricing, or asking for recommendations
 ```
@@ -111,28 +111,28 @@ When **disabled**, the AI filter operates without knowledge of your company deta
 
 ## Best Practices
 
-### ✅ Be Specific About Intent
+### Be Specific About Intent
 
 ```
-Good: Show posts from people actively looking for project 
+Good: Mark posts relevant from people actively looking for project 
 management tools and asking their network for recommendations
 
 Vague: Show relevant posts
 ```
 
-### ✅ Define Your Ideal Customer
+### Define Your Ideal Customer
 
 ```
-Good: Show posts from marketing leaders at B2B companies 
+Good: Mark posts relevant from marketing leaders at B2B companies 
 discussing attribution challenges
 
 Vague: Show posts about marketing
 ```
 
-### ✅ Set Clear Exclusions
+### Set Clear Exclusions
 
 ```
-Good: Show posts about hiring data scientists, but exclude 
+Good: Mark posts relevant about hiring data scientists, but exclude 
 internships and academic positions
 
 Unclear: Show posts about data science jobs
@@ -151,7 +151,7 @@ Use search syntax and AI filtering together for precision:
 
 **Example:**
 - **Search:** `"recommendations" AND "sales tool"`
-- **AI Filter:** `Only show posts from people at companies with 50+ employees asking for B2B sales software recommendations`
+- **AI Filter:** `Only mark relevant if posts are from people asking for B2B sales software recommendations`
 
 ---
 

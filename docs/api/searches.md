@@ -2,20 +2,16 @@
 
 The Searches API allows you to list and retrieve information about your searches.
 
+:::info Authentication Required
+All API requests require authentication. See [API Reference](/docs/api#authentication) for details.
+:::
+
 ## List Searches
 
 Get all active searches in a workspace.
 
 ```http
 GET /api/searches
-```
-
-### Authentication
-
-Requires an API key in the header:
-
-```
-X-API-Key: your_api_key_here
 ```
 
 ### Query Parameters
@@ -37,8 +33,8 @@ Returns an array of search objects.
     "frequency": "daily",
     "is_activated": true,
     "prompt": "Find posts from CTOs in tech companies",
-    "query_type": "keyword",
-    "query_identifier": "tech_ctos_v1",
+    "query_type": "search_keyword",
+    "query_identifier": null,
     "created_at": "2024-01-10T08:00:00Z",
     "updated_at": "2024-01-15T10:30:00Z"
   },
@@ -49,10 +45,22 @@ Returns an array of search objects.
     "frequency": "daily",
     "is_activated": true,
     "prompt": "Track all posts from this user",
-    "query_type": "people",
+    "query_type": "user_profile",
     "query_identifier": "vearnold",
     "created_at": "2024-01-12T09:00:00Z",
     "updated_at": "2024-01-12T09:00:00Z"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439014",
+    "name": "Company Posts",
+    "query": "https://linkedin.com/company/example-corp",
+    "frequency": "daily",
+    "is_activated": true,
+    "prompt": "Track all posts from this company",
+    "query_type": "company_profile",
+    "query_identifier": "12345678",
+    "created_at": "2024-01-13T10:00:00Z",
+    "updated_at": "2024-01-13T10:00:00Z"
   }
 ]
 ```
@@ -67,8 +75,8 @@ Returns an array of search objects.
 | `frequency` | string | Search frequency: `hourly`, `daily`, `weekly` |
 | `is_activated` | boolean | Whether the search is active |
 | `prompt` | string | AI prompt used for the search |
-| `query_type` | string | Type of query: `keyword`, `people`, `company` |
-| `query_identifier` | string | Username (for `people`) or company ID (for `company`) or unique identifier (for `keyword`) |
+| `query_type` | string | Type of query: `search_keyword`, `user_profile`, `company_profile` |
+| `query_identifier` | string \| null | Username for `user_profile`, company ID for `company_profile`, or `null` for `search_keyword` |
 | `created_at` | string | ISO 8601 timestamp |
 | `updated_at` | string | ISO 8601 timestamp |
 
@@ -76,17 +84,17 @@ Returns an array of search objects.
 
 The `query` and `query_identifier` fields vary based on `query_type`:
 
-**Keyword Search** (`query_type: "keyword"`):
+**Keyword Search** (`query_type: "search_keyword"`):
 - `query`: Search terms, e.g., `"CTO OR \"Chief Technology Officer\""`
-- `query_identifier`: Unique identifier for the search, e.g., `"tech_ctos_v1"`
+- `query_identifier`: Always `null`
 
-**People Search** (`query_type: "people"`):
-- `query`: Profile URL or username
-- `query_identifier`: Username, e.g., `"vearnold"`
+**User Profile Search** (`query_type: "user_profile"`):
+- `query`: Profile URL, e.g., `"https://linkedin.com/in/vearnold"`
+- `query_identifier`: LinkedIn username, e.g., `"vearnold"`
 
-**Company Search** (`query_type: "company"`):
-- `query`: Company URL or identifier
-- `query_identifier`: Company identifier, e.g., `"12345678"`
+**Company Profile Search** (`query_type: "company_profile"`):
+- `query`: Company URL, e.g., `"https://linkedin.com/company/example-corp"`
+- `query_identifier`: LinkedIn company ID, e.g., `"12345678"`
 
 ### Rate Limiting
 
@@ -103,6 +111,22 @@ import TabItem from '@theme/TabItem';
 ```bash
 curl -H "X-API-Key: your_api_key_here" \
      https://production.viacurrent.com/api/searches?workspace_id=507f1f77bcf86cd799439013
+```
+
+</TabItem>
+<TabItem value="javascript" label="JavaScript">
+
+```javascript
+const url = new URL('https://production.viacurrent.com/api/searches');
+url.searchParams.append('workspace_id', '507f1f77bcf86cd799439013');
+
+const response = await fetch(url, {
+  headers: {
+    'X-API-Key': 'your_api_key_here'
+  }
+});
+
+const searches = await response.json();
 ```
 
 </TabItem>
@@ -154,8 +178,8 @@ GET /api/searches/{search_id}
   "frequency": "daily",
   "is_activated": true,
   "prompt": "Find posts from CTOs in tech companies",
-  "query_type": "keyword",
-  "query_identifier": "tech_ctos_v1",
+  "query_type": "search_keyword",
+  "query_identifier": null,
   "created_at": "2024-01-10T08:00:00Z",
   "updated_at": "2024-01-15T10:30:00Z"
 }
@@ -173,6 +197,23 @@ GET /api/searches/{search_id}
 ```bash
 curl -H "X-API-Key: your_api_key_here" \
      https://production.viacurrent.com/api/searches/507f1f77bcf86cd799439012?workspace_id=507f1f77bcf86cd799439013
+```
+
+</TabItem>
+<TabItem value="javascript" label="JavaScript">
+
+```javascript
+const searchId = '507f1f77bcf86cd799439012';
+const url = new URL(`https://production.viacurrent.com/api/searches/${searchId}`);
+url.searchParams.append('workspace_id', '507f1f77bcf86cd799439013');
+
+const response = await fetch(url, {
+  headers: {
+    'X-API-Key': 'your_api_key_here'
+  }
+});
+
+const search = await response.json();
 ```
 
 </TabItem>
@@ -213,6 +254,30 @@ curl -H "X-API-Key: your_api_key_here" \
 ```
 
 </TabItem>
+<TabItem value="javascript" label="JavaScript">
+
+```javascript
+// 1. List all searches
+const searchesUrl = new URL('https://production.viacurrent.com/api/searches');
+searchesUrl.searchParams.append('workspace_id', '507f1f77bcf86cd799439013');
+
+const searchesResponse = await fetch(searchesUrl, {
+  headers: { 'X-API-Key': 'your_api_key_here' }
+});
+const searches = await searchesResponse.json();
+
+// 2. Use search IDs to filter posts
+const postsUrl = new URL('https://production.viacurrent.com/api/posts');
+postsUrl.searchParams.append('workspace_id', '507f1f77bcf86cd799439013');
+postsUrl.searchParams.append('search_ids', '507f1f77bcf86cd799439012,507f1f77bcf86cd799439015');
+
+const postsResponse = await fetch(postsUrl, {
+  headers: { 'X-API-Key': 'your_api_key_here' }
+});
+const posts = await postsResponse.json();
+```
+
+</TabItem>
 <TabItem value="python" label="Python">
 
 ```python
@@ -230,13 +295,12 @@ searches_response = httpx.get(
 searches = searches_response.json()
 
 # 2. Use search IDs to filter posts
-search_ids = ",".join([s["_id"] for s in searches["items"]])
 posts_response = httpx.get(
     "https://production.viacurrent.com/api/posts",
     headers=headers,
     params={
         "workspace_id": workspace_id,
-        "search_ids": search_ids
+        "search_ids": "507f1f77bcf86cd799439012,507f1f77bcf86cd799439015"
     }
 )
 posts = posts_response.json()
@@ -254,6 +318,22 @@ posts = posts_response.json()
 # Get details of a specific search to check its configuration
 curl -H "X-API-Key: your_api_key_here" \
      https://production.viacurrent.com/api/searches/507f1f77bcf86cd799439012?workspace_id=507f1f77bcf86cd799439013
+```
+
+</TabItem>
+<TabItem value="javascript" label="JavaScript">
+
+```javascript
+const searchId = '507f1f77bcf86cd799439012';
+const url = new URL(`https://production.viacurrent.com/api/searches/${searchId}`);
+url.searchParams.append('workspace_id', '507f1f77bcf86cd799439013');
+
+const response = await fetch(url, {
+  headers: { 'X-API-Key': 'your_api_key_here' }
+});
+
+const searchConfig = await response.json();
+console.log(`Search '${searchConfig.name}' is ${searchConfig.is_activated ? 'active' : 'inactive'}`);
 ```
 
 </TabItem>

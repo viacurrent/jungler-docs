@@ -2,20 +2,16 @@
 
 The Posts API allows you to retrieve and filter posts collected by your searches.
 
+:::info Authentication Required
+All API requests require authentication. See [API Reference](/docs/api#authentication) for details.
+:::
+
 ## List Posts
 
 Retrieve a paginated list of posts with extensive filtering options.
 
 ```http
 GET /api/posts
-```
-
-### Authentication
-
-Requires an API key in the header:
-
-```
-X-API-Key: your_api_key_here
 ```
 
 ### Query Parameters
@@ -138,6 +134,28 @@ curl -H "X-API-Key: your_api_key_here" \
 ```
 
 </TabItem>
+<TabItem value="javascript" label="JavaScript">
+
+```javascript
+const url = new URL('https://production.viacurrent.com/api/posts');
+url.searchParams.append('workspace_id', '507f1f77bcf86cd799439013');
+url.searchParams.append('search_ids', '507f1f77bcf86cd799439012');
+url.searchParams.append('page', '1');
+url.searchParams.append('page_size', '100');
+url.searchParams.append('match', 'relevant');
+url.searchParams.append('sentiment', 'positive');
+url.searchParams.append('country', 'US,GB');
+
+const response = await fetch(url, {
+  headers: {
+    'X-API-Key': 'your_api_key_here'
+  }
+});
+
+const posts = await response.json();
+```
+
+</TabItem>
 <TabItem value="python" label="Python">
 
 ```python
@@ -183,6 +201,38 @@ curl -H "X-API-Key: your_api_key_here" \
 # Page 2 - use the same snapshot_time
 curl -H "X-API-Key: your_api_key_here" \
      https://production.viacurrent.com/api/posts?workspace_id=...&search_ids=...&page=2&snapshot_time=2024-01-15T12:00:00Z
+```
+
+</TabItem>
+<TabItem value="javascript" label="JavaScript">
+
+```javascript
+const url = 'https://production.viacurrent.com/api/posts';
+const headers = { 'X-API-Key': 'your_api_key_here' };
+
+// Page 1
+const params1 = new URLSearchParams({
+  workspace_id: '...',
+  search_ids: '...',
+  page: '1'
+});
+
+const response1 = await fetch(`${url}?${params1}`, { headers });
+const data1 = await response1.json();
+
+// Get snapshot_time from response
+const snapshotTime = data1.snapshot_time;
+
+// Page 2 - use the same snapshot_time
+const params2 = new URLSearchParams({
+  workspace_id: '...',
+  search_ids: '...',
+  page: '2',
+  snapshot_time: snapshotTime
+});
+
+const response2 = await fetch(`${url}?${params2}`, { headers });
+const data2 = await response2.json();
 ```
 
 </TabItem>

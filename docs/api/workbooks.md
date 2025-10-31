@@ -2,6 +2,10 @@
 
 The Workbooks API allows you to extract post interactions (comments, reactions) and contact information from posts.
 
+:::info Authentication Required
+All API requests require authentication. See [API Reference](/docs/api#authentication) for details.
+:::
+
 :::warning Data Expiration
 Workbook data is stored in temporary workbooks that **expire after 12 hours**. Make sure to download all data you need within this timeframe.
 :::
@@ -28,6 +32,27 @@ curl -X POST \
        "workspace_id": "507f1f77bcf86cd799439011"
      }' \
      https://production.viacurrent.com/api/workbooks
+```
+
+  </TabItem>
+  <TabItem value="javascript" label="JavaScript">
+
+```javascript
+const response = await fetch('https://production.viacurrent.com/api/workbooks', {
+  method: 'POST',
+  headers: {
+    'X-API-Key': 'your_api_key_here',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    post_url: 'https://www.linkedin.com/posts/username_activity-1234567890',
+    data_types: ['comment', 'reaction'],
+    workspace_id: '507f1f77bcf86cd799439011'
+  })
+});
+
+const result = await response.json();
+console.log(result);
 ```
 
   </TabItem>
@@ -85,6 +110,35 @@ curl -H "X-API-Key: your_api_key_here" \
 ```
 
   </TabItem>
+  <TabItem value="javascript" label="JavaScript">
+
+```javascript
+const headers = { 'X-API-Key': 'your_api_key_here' };
+const workbookId = '507f1f77bcf86cd799439012';
+
+// Get all contacts (deduplicated)
+const contactsResponse = await fetch(
+  `https://production.viacurrent.com/api/workbooks/${workbookId}/contacts`,
+  { headers }
+);
+const contacts = await contactsResponse.json();
+
+// Get comments
+const commentsResponse = await fetch(
+  `https://production.viacurrent.com/api/workbooks/${workbookId}/comments`,
+  { headers }
+);
+const comments = await commentsResponse.json();
+
+// Get reactions
+const reactionsResponse = await fetch(
+  `https://production.viacurrent.com/api/workbooks/${workbookId}/reactions`,
+  { headers }
+);
+const reactions = await reactionsResponse.json();
+```
+
+  </TabItem>
   <TabItem value="python" label="Python">
 
 ```python
@@ -123,14 +177,6 @@ Create a new temporary workbook to extract interactions from a post.
 
 ```http
 POST /api/workbooks
-```
-
-### Authentication
-
-Requires an API key in the header:
-
-```
-X-API-Key: your_api_key_here
 ```
 
 ### Request Body
@@ -237,6 +283,33 @@ GET /api/tasks/{task_id}/status
 ```bash
 curl -H "X-API-Key: your_api_key_here" \
      https://production.viacurrent.com/api/tasks/abc123-def456-ghi789/status
+```
+
+</TabItem>
+<TabItem value="javascript" label="JavaScript">
+
+```javascript
+const taskId = 'abc123-def456-ghi789';
+const headers = { 'X-API-Key': 'your_api_key_here' };
+
+// Poll for completion
+let workbookId;
+while (true) {
+  const response = await fetch(
+    `https://production.viacurrent.com/api/tasks/${taskId}/status`,
+    { headers }
+  );
+  const data = await response.json();
+  
+  if (data.status === 'success' || data.status === 'failure') {
+    workbookId = data.result?.workbook_id;
+    break;
+  }
+  
+  await new Promise(resolve => setTimeout(resolve, 10000)); // Wait 10 seconds
+}
+
+console.log(`Workbook ID: ${workbookId}`);
 ```
 
 </TabItem>
