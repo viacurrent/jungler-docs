@@ -1,7 +1,6 @@
 # Jungler Documentation
 
-This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
-
+The Jungler Docs have been built with [Docusaurus](https://docusaurus.io/).
 ## Installation
 
 ```bash
@@ -27,22 +26,6 @@ This command generates static content into the `build` directory and can be serv
 ## Deployment
 
 The site is automatically deployed to GitHub Pages at https://docs.jungler.ai when you push to the `main` branch.
-
-### Manual Deployment
-
-Using SSH:
-
-```bash
-USE_SSH=true npm run deploy
-```
-
-Not using SSH:
-
-```bash
-GIT_USER=<Your GitHub username> npm run deploy
-```
-
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
 
 ## Project Structure
 
