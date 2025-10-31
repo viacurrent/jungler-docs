@@ -1,0 +1,187 @@
+/**
+ * CSS files with the .module.css suffix will be treated as CSS modules
+ * and scoped locally.
+ */
+
+.heroBanner {
+    padding: 8rem 0 6rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(180deg, var(--ifm-background-color) 0%, var(--ifm-background-surface-color) 100%);
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+}
+
+.heroBackground {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.orbitImage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px;
+    max-width: 100%;
+    height: auto;
+    opacity: 0.6;
+}
+
+.flowersImage {
+    position: absolute;
+    bottom: -50px;
+    right: -50px;
+    width: 400px;
+    height: auto;
+    opacity: 0.5;
+}
+
+.heroTitle {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, var(--ifm-color-primary) 0%, var(--ifm-color-primary-light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+    z-index: 1;
+}
+
+.heroSubtitle {
+    font-size: 1.5rem;
+    color: var(--ifm-color-emphasis-700);
+    margin-bottom: 2.5rem;
+    font-weight: 400;
+    position: relative;
+    z-index: 1;
+}
+
+[data-theme='dark'] .heroSubtitle {
+    color: var(--ifm-color-emphasis-600);
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.features {
+    padding: 4rem 0;
+    background: var(--ifm-background-color);
+}
+
+.featuresGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.featureCard {
+    background: var(--card-background);
+    border: 1px solid var(--card-border);
+    border-radius: var(--ifm-global-radius);
+    padding: 2rem;
+    text-align: center;
+    box-shadow: var(--card-shadow);
+    transition: all 0.3s ease;
+}
+
+.featureCard:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--card-shadow-hover);
+    border-color: var(--ifm-color-primary);
+}
+
+.featureIcon {
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.featureIcon img {
+    width: 48px;
+    height: 48px;
+    display: block;
+}
+
+.featureCard h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: var(--ifm-color-primary);
+}
+
+.featureCard p {
+    color: var(--ifm-color-emphasis-700);
+    line-height: 1.6;
+    margin: 0;
+}
+
+[data-theme='dark'] .featureCard p {
+    color: var(--ifm-color-emphasis-600);
+}
+
+@media screen and (max-width: 996px) {
+    .heroBanner {
+        padding: 4rem 2rem 3rem;
+        min-height: 500px;
+    }
+
+    .heroTitle {
+        font-size: 2.5rem;
+    }
+
+    .heroSubtitle {
+        font-size: 1.25rem;
+    }
+
+    .buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .buttons a {
+        width: 100%;
+        margin-left: 0 !important;
+    }
+
+    .orbitImage {
+        width: 500px;
+    }
+
+    .flowersImage {
+        width: 250px;
+        bottom: -30px;
+        right: -30px;
+    }
+
+    .featuresGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .orbitImage {
+        width: 350px;
+    }
+
+    .flowersImage {
+        width: 180px;
+    }
+}
