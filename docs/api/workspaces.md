@@ -61,8 +61,8 @@ import TabItem from '@theme/TabItem';
 <TabItem value="curl" label="cURL" default>
 
 ```bash
-curl -X GET "https://production.viacurrent.com/api/workspaces" \
-  -H "X-API-Key: your_api_key_here"
+curl -H "X-API-Key: your_api_key_here" \
+     https://production.viacurrent.com/api/workspaces
 ```
 
 </TabItem>

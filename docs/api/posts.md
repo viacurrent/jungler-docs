@@ -133,8 +133,8 @@ import TabItem from '@theme/TabItem';
 <TabItem value="curl" label="cURL" default>
 
 ```bash
-curl -X GET "https://production.viacurrent.com/api/posts?workspace_id=507f1f77bcf86cd799439013&search_ids=507f1f77bcf86cd799439012&page=1&page_size=100&match=relevant&sentiment=positive&country=US,GB" \
-  -H "X-API-Key: your_api_key_here"
+curl -H "X-API-Key: your_api_key_here" \
+     https://production.viacurrent.com/api/posts?workspace_id=507f1f77bcf86cd799439013&search_ids=507f1f77bcf86cd799439012&page=1&page_size=100&match=relevant&sentiment=positive&country=US,GB
 ```
 
 </TabItem>
@@ -175,12 +175,14 @@ For consistent pagination across pages:
 
 ```bash
 # Page 1
-curl "https://production.viacurrent.com/api/posts?workspace_id=...&search_ids=...&page=1"
+curl -H "X-API-Key: your_api_key_here" \
+     https://production.viacurrent.com/api/posts?workspace_id=...&search_ids=...&page=1
 
 # Response includes: "snapshot_time": "2024-01-15T12:00:00Z"
 
 # Page 2 - use the same snapshot_time
-curl "https://production.viacurrent.com/api/posts?workspace_id=...&search_ids=...&page=2&snapshot_time=2024-01-15T12:00:00Z"
+curl -H "X-API-Key: your_api_key_here" \
+     https://production.viacurrent.com/api/posts?workspace_id=...&search_ids=...&page=2&snapshot_time=2024-01-15T12:00:00Z
 ```
 
 </TabItem>

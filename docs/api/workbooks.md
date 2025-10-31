@@ -172,6 +172,108 @@ Returns a task ID for tracking the extraction progress.
 
 ---
 
+## Get Task Status
+
+Monitor the progress of your workbook extraction task.
+
+```http
+GET /api/tasks/{task_id}/status
+```
+
+### Path Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `task_id` | string | The task ID returned from workbook creation |
+
+### Response
+
+<Tabs>
+<TabItem value="pending" label="In Progress">
+
+```json
+{
+  "task_id": "abc123-def456-ghi789",
+  "status": "running"
+}
+```
+
+</TabItem>
+<TabItem value="success" label="Completed">
+
+```json
+{
+  "task_id": "abc123-def456-ghi789",
+  "status": "success",
+  "completed_at": "2024-01-15T10:30:00Z",
+  "result": {
+    "workbook_id": "507f1f77bcf86cd799439012",
+    "items_collected": 150,
+    "success": true
+  }
+}
+```
+
+</TabItem>
+<TabItem value="failure" label="Failed">
+
+```json
+{
+  "task_id": "abc123-def456-ghi789",
+  "status": "failure",
+  "completed_at": "2024-01-15T10:35:00Z",
+  "error": "Post not found or access denied"
+}
+```
+
+</TabItem>
+</Tabs>
+
+### Example Request
+
+<Tabs>
+<TabItem value="curl" label="cURL" default>
+
+```bash
+curl -H "X-API-Key: your_api_key_here" \
+     https://production.viacurrent.com/api/tasks/abc123-def456-ghi789/status
+```
+
+</TabItem>
+<TabItem value="python" label="Python">
+
+```python
+import httpx
+import time
+
+task_id = "abc123-def456-ghi789"
+headers = {"X-API-Key": "your_api_key_here"}
+
+# Poll for completion
+while True:
+    response = httpx.get(
+        f"https://production.viacurrent.com/api/tasks/{task_id}/status",
+        headers=headers
+    )
+    data = response.json()
+    
+    if data["status"] in ["success", "failure"]:
+        break
+    
+    time.sleep(10)  # Wait 10 seconds before checking again
+
+workbook_id = data["result"]["workbook_id"]
+```
+
+</TabItem>
+</Tabs>
+
+### Rate Limiting
+
+- **60 requests per minute** per API key
+
+---
+
 ## Get Contacts
 
 Retrieve deduplicated contact information from a workbook.

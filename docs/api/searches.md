@@ -101,8 +101,8 @@ import TabItem from '@theme/TabItem';
 <TabItem value="curl" label="cURL" default>
 
 ```bash
-curl -X GET "https://production.viacurrent.com/api/searches?workspace_id=507f1f77bcf86cd799439013" \
-  -H "X-API-Key: your_api_key_here"
+curl -H "X-API-Key: your_api_key_here" \
+     https://production.viacurrent.com/api/searches?workspace_id=507f1f77bcf86cd799439013
 ```
 
 </TabItem>
@@ -171,8 +171,8 @@ GET /api/searches/{search_id}
 <TabItem value="curl" label="cURL" default>
 
 ```bash
-curl -X GET "https://production.viacurrent.com/api/searches/507f1f77bcf86cd799439012?workspace_id=507f1f77bcf86cd799439013" \
-  -H "X-API-Key: your_api_key_here"
+curl -H "X-API-Key: your_api_key_here" \
+     https://production.viacurrent.com/api/searches/507f1f77bcf86cd799439012?workspace_id=507f1f77bcf86cd799439013
 ```
 
 </TabItem>
@@ -204,12 +204,12 @@ search = response.json()
 
 ```bash
 # 1. List all searches
-curl "https://production.viacurrent.com/api/searches?workspace_id=507f1f77bcf86cd799439013" \
-  -H "X-API-Key: your_api_key_here"
+curl -H "X-API-Key: your_api_key_here" \
+     https://production.viacurrent.com/api/searches?workspace_id=507f1f77bcf86cd799439013
 
 # 2. Use search IDs to filter posts
-curl "https://production.viacurrent.com/api/posts?workspace_id=507f1f77bcf86cd799439013&search_ids=507f1f77bcf86cd799439012,507f1f77bcf86cd799439015" \
-  -H "X-API-Key: your_api_key_here"
+curl -H "X-API-Key: your_api_key_here" \
+     https://production.viacurrent.com/api/posts?workspace_id=507f1f77bcf86cd799439013&search_ids=507f1f77bcf86cd799439012,507f1f77bcf86cd799439015
 ```
 
 </TabItem>
@@ -252,8 +252,8 @@ posts = posts_response.json()
 
 ```bash
 # Get details of a specific search to check its configuration
-curl "https://production.viacurrent.com/api/searches/507f1f77bcf86cd799439012?workspace_id=507f1f77bcf86cd799439013" \
-  -H "X-API-Key: your_api_key_here"
+curl -H "X-API-Key: your_api_key_here" \
+     https://production.viacurrent.com/api/searches/507f1f77bcf86cd799439012?workspace_id=507f1f77bcf86cd799439013
 ```
 
 </TabItem>

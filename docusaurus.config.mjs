@@ -49,7 +49,10 @@ const config = {
             apiKey: '3d8a2523209b7d5057cd93b8f5aef146',
             indexName: 'jungler',
             contextualSearch: true,
-            searchParameters: {},
+            searchParameters: {
+                facetFilters: ['language:en', 'version:current']
+            },
+            searchPagePath: 'search',
         },
         navbar: {
             title: 'Jungler',
