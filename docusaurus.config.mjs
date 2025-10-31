@@ -50,7 +50,7 @@ const config = {
             appId: '61LGGO91N7',
             apiKey: '3d8a2523209b7d5057cd93b8f5aef146',
             indexName: 'jungler',
-            contextualSearch: true,
+            contextualSearch: false,
         },
         navbar: {
             title: 'Jungler',
