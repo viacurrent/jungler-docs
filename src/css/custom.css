@@ -101,11 +101,16 @@
     border-right: 1px solid var(--card-border);
 }
 
+.menu {
+    padding: 1rem 0.75rem 1rem 1rem;
+}
+
 .menu__link {
     font-size: 0.9375rem;
     border-radius: 0.5rem;
     transition: all 0.2s ease;
     font-weight: 500;
+    margin-right: 0.3rem;
 }
 
 .menu__link:hover {
