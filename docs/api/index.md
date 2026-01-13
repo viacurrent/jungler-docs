@@ -46,6 +46,7 @@ When you exceed the rate limit, you'll receive a `429 Too Many Requests` respons
 - **[Searches](/docs/api/searches)** - List and retrieve search configurations
 - **[Posts](/docs/api/posts)** - Retrieve and filter posts
 - **[Workbooks](/docs/api/workbooks)** - Extract post interactions and contacts
+- **[Webhooks](/docs/api/webhooks)** - Send data to external platforms automatically
 
 ## Quick Start
 
