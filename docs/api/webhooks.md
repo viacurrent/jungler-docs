@@ -11,10 +11,10 @@ Jungler sends data from your signals to external endpoints on a scheduled basis.
 Webhooks can send two types of data:
 
 - **Posts** - Social media posts matching your search criteria
-- **Engagements** - User interactions (likes, comments, shares) on posts from monitored profiles or companies
+- **Engagements** - User interactions (likes, comments) on posts from monitored profiles or companies
 
 :::info About Engagements
-Engagements are only available for **company or profile monitoring**, not for keyword searches or signals.
+Engagements are currently only available for **company or profile monitoring**, not for keyword searches or signals.
 
 Engagement types can be either **REACTION** (likes, other reactions) or **COMMENT** (comments, replies). The `content` field only contains data for COMMENT engagement types - for REACTION types, it will be "N/A".
 
