@@ -34,6 +34,7 @@ const sidebars = {
                 'api/searches',
                 'api/posts',
                 'api/workbooks',
+                'api/webhooks',
             ],
         },
     ],
