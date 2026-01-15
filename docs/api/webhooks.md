@@ -33,7 +33,7 @@ Jungler sends data in **batches of up to 500 records per request** to optimize d
 
 - Some platforms like **Zapier** automatically unpack batches, creating individual "zaps" for each record
 - Other platforms like **n8n** require you to add an unpacking step in your workflow to process each record individually
-- For engagements, batches are sent every 2 seconds with a maximum of 10,000 records per sync
+- Batches are sent every 2 seconds with a maximum of **10,000 records per sync** (applies to both posts and engagements)
 
 :::tip Processing Batches
 If you're using a platform that doesn't automatically unpack batches, add a "split" or "loop" node at the start of your workflow to process each record individually.
@@ -41,8 +41,7 @@ If you're using a platform that doesn't automatically unpack batches, add a "spl
 
 ### Data Volume Considerations
 
-- Maximum of **10,000 records per sync** for engagements
-- If you have many high-volume signals in one configuration, some data might be lost
+- If you have many high-volume signals in one configuration, some data might be lost due to the 10,000 record limit
 - For best results, avoid combining too many high-volume signals in a single webhook configuration
 
 ## Setting Up a Webhook
