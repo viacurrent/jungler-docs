@@ -360,7 +360,7 @@ GET /api/workbooks/{workbook_id}/contacts
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
 | `fields` | string | `name,profile_url` | Comma-separated fields to include |
-| `activity_filter` | string | (all) | Filter by activity: `posters`, `commenters`, `reactors`, or combinations |
+| `activity_filter` | string | (all) | Filter by activity: `commenters`, `reactors`, or combinations |
 
 **Available fields:**
 - `name` - Full name
