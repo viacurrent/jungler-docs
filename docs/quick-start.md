@@ -151,7 +151,7 @@ print(response.json())
         "name": "Jane Smith",
         "profile_url": "https://linkedin.com/in/janesmith",
         "function": "ENG",
-        "seniority": "L"
+        "authority": "L"
       },
       "posted_at": "2024-01-15T10:30:00Z",
       "reaction_count": 42,
@@ -181,7 +181,7 @@ Explore powerful filtering options:
 ```bash
 # Filter by sentiment and function
 curl -H "X-API-Key: your_api_key_here" \
-     "https://production.viacurrent.com/api/posts?workspace_id=507f1f77bcf86cd799439011&search_ids=507f1f77bcf86cd799439012&sentiment=positive&function=ENG,PRD&seniority=L"
+     "https://production.viacurrent.com/api/posts?workspace_id=507f1f77bcf86cd799439011&search_ids=507f1f77bcf86cd799439012&sentiment=positive&function=ENG,PRD&authority=L"
 
 # Filter by date range
 curl -H "X-API-Key: your_api_key_here" \
@@ -207,7 +207,7 @@ response = httpx.get(
         'search_ids': '507f1f77bcf86cd799439012',
         'sentiment': 'positive',
         'function': 'ENG,PRD',
-        'seniority': 'L'
+        'authority': 'L'
     }
 )
 

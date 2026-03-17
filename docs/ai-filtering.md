@@ -18,7 +18,7 @@ Every post matching your search is analyzed by AI according to your custom promp
 |-------------|------------------|
 | **Post content** | Full text and context |
 | **Author headline** | Job title and professional description |
-| **Author profile** | Company, industry, and seniority signals |
+| **Author profile** | Company, industry, and authority signals |
 
 ---
 

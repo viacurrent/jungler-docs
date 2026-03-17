@@ -53,8 +53,8 @@ GET /api/posts
 | `country_exclude` | string | Comma-separated ISO country codes to exclude |
 | `function` | string | Functions: `ENG` (Engineering/IT), `PRD` (Product), `MKT` (Marketing), `SAL` (Sales), `FIN` (Finance), `OPS` (Operations), `HR` (Human Resources), `CS` (Customer Success), `LEG` (Legal), `DA` (Data/Analytics), `DSN` (Design/UX), `EDU` (Education/Academia), `AMB` (Ambiguous/Consultant), `GEN` (General Management), `UNMAPPED` |
 | `function_exclude` | string | Functions to exclude (same values as above) |
-| `seniority` | string | Seniority levels: `L` (Executive/C-Level), `M` (Middle Management), `S` (Individual Contributors), `XS` (Junior/Entry-Level), `NA` (Solopreneur/Freelancer), `UNMAPPED` |
-| `seniority_exclude` | string | Seniority levels to exclude (same values as above) |
+| `authority` | string | Authority levels: `L` (Executive/C-Level), `M` (Middle Management), `S` (Individual Contributors), `XS` (Junior/Entry-Level), `NA` (Solopreneur/Freelancer), `UNMAPPED` |
+| `authority_exclude` | string | Authority levels to exclude (same values as above) |
 | `company_size` | string | Company sizes: `XXS` (1-10), `XS` (11-50), `S` (51-200), `M` (201-500), `L` (501-1000), `XL` (1001-5000), `XXL` (5001+), `UNMAPPED` |
 | `company_size_exclude` | string | Company sizes to exclude (same values as above) |
 | `company_industry` | string | Industries: `TECH_INFO_MEDIA`, `FINANCIAL_SERVICES`, `HEALTH_CARE`, `PROFESSIONAL_SERVICES`, `MANUFACTURING`, `RETAIL`, `EDUCATION`, `CONSTRUCTION`, `CONSUMER_SERVICES`, `ENTERTAINMENT`, `TRANSPORTATION_LOGISTICS`, `ACCOMMODATION_SERVICES`, `ADMINISTRATIVE_SERVICES`, `FARMING_RANCHING_FORESTRY`, `GOV_ADMIN`, `HOLDING_COMPANIES`, `OIL_GAS_MINING`, `REAL_ESTATE_EQUIPMENT`, `UTILITIES`, `WHOLESALE`, `UNMAPPED` |
@@ -79,7 +79,7 @@ GET /api/posts
         "profile_type": "user",
         "country_code": "US",
         "country": "United States",
-        "seniority": "M",
+        "authority": "M",
         "function": "ENG",
         "company_size": "L",
         "company_industry": "Technology",
@@ -338,16 +338,16 @@ response = httpx.get(url, headers=headers, params=params)
 | `GEN` | General Management | CEO, Founder, President, GM |
 | `UNMAPPED` | Unknown | Function could not be determined |
 
-### Seniority Levels
+### Authority Levels
 
 | Code | Level | Description |
 |------|-------|-------------|
 | `L` | Executive | C-level, Founder, Owner, VP, Head of function |
 | `M` | Middle Management | Manager, Team Lead, Department Manager |
-| `S` | Individual Contributor | Standard roles, unclear seniority |
+| `S` | Individual Contributor | Standard roles, unclear authority |
 | `XS` | Junior | Junior, Intern, Student, Entry-level |
 | `NA` | Independent | Solopreneur, Consultant, Advisor, Freelancer |
-| `UNMAPPED` | Unknown | Seniority level could not be determined |
+| `UNMAPPED` | Unknown | Authority level could not be determined |
 
 ### Company Sizes
 
