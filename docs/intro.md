@@ -19,7 +19,7 @@ Create custom searches to track social meida conversations about specific topics
 Every post is automatically analyzed for:
 - **Relevance** - How well it matches your search intent
 - **Sentiment** - Positive, negative, or neutral tone
-- **Author insights** - Function, authority level, company size, industry
+- **Author insights** - Function, seniority level, company size, industry
 - **Content type** - Post, article, poll, etc.
 
 ### <img src="/img/icon-workbooks.svg" alt="" style={{width: '24px', height: '24px', display: 'inline-block', verticalAlign: 'middle', marginRight: '8px'}} /> **Workbooks**

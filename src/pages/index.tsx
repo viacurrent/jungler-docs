@@ -56,7 +56,7 @@ function FeaturesSection() {
                     <FeatureCard
                         iconSrc="/img/icon-search.svg"
                         title="Search Posts"
-                        description="Filter posts by function, authority level, company size, and industry."
+                        description="Filter posts by function, seniority level, company size, and industry."
                     />
                     <FeatureCard
                         iconSrc="/img/icon-workbooks.svg"
