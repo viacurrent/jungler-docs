@@ -344,7 +344,7 @@ response = httpx.get(url, headers=headers, params=params)
 |------|-------|-------------|
 | `L` | Executive | C-level, Founder, Owner, VP, Head of function |
 | `M` | Middle Management | Manager, Team Lead, Department Manager |
-| `S` | Individual Contributor | Standard roles, unclear seniority |
+| `S` | Individual Contributor | Standard roles, unclear authority |
 | `XS` | Junior | Junior, Intern, Student, Entry-level |
 | `NA` | Independent | Solopreneur, Consultant, Advisor, Freelancer |
 | `UNMAPPED` | Unknown | Authority level could not be determined |

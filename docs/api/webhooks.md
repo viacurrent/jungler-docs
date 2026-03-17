@@ -117,6 +117,7 @@ import TabItem from '@theme/TabItem';
     },
     "body": [
       {
+        "author_name": "John Doe",
         "author_first_name": "John",
         "author_last_name": "Doe",
         "author_country": "United States",
@@ -132,13 +133,15 @@ import TabItem from '@theme/TabItem';
         "author_company_staff_range": "11-50",
         "author_company_staff_registered": "45",
         "author_company_industry": "TECH_INFO_MEDIA",
+        "author_function": "GEN",
+        "author_seniority": "L",
         "post_url": "https://example.com/posts/...",
         "post_content": "Just shipped our new feature...",
         "post_language": "en",
         "post_sentiment": "positive",
         "post_type": "announcement",
         "posted_at": "2026-01-10T15:30:00.000000+00:00",
-        "jungler_post_id": "69654ea72a0d2c9f612d1cb4"
+        "jungler_signal_id": "69654ea72a0d2c9f612d1cb4"
       }
       // ... up to 500 posts per batch
     ]
@@ -158,7 +161,7 @@ import TabItem from '@theme/TabItem';
     },
     "body": [
       {
-        "jungler_engagement_id": "6963b2beb79d3a2768c537ba",
+        "jungler_signal_id": "6963b2beb79d3a2768c537ba",
         "name": "Jane Smith",
         "first_name": "Jane",
         "last_name": "Smith",
@@ -172,7 +175,7 @@ import TabItem from '@theme/TabItem';
         "country_code": "GB",
         "region": "EU",
         "function": "Engineering",
-        "authority": "Executive",
+        "seniority": "Executive",
         "company_staff_range": "51-200",
         "company_staff_registered": "156",
         "company_website": "https://startupco.com",
