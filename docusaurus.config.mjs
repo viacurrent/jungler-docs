@@ -66,35 +66,51 @@ const config = {
                     label: 'Docs',
                 },
                 {
-                    href: 'https://github.com/viacurrent/jungler-docs',
-                    label: 'GitHub',
+                    type: 'html',
                     position: 'right',
+                    value: '<div class="navbar__buttons"><a href="https://app.jungler.ai/login" target="_blank" rel="noopener noreferrer" class="navbar__item--login">Log in</a><a href="https://app.jungler.ai/register" target="_blank" rel="noopener noreferrer" class="navbar__item--cta">Start for free</a></div>',
                 },
             ],
         },
         footer: {
-            style: 'dark',
             links: [
                 {
-                    title: 'Docs',
+                    title: 'Resources',
                     items: [
                         {
-                            label: 'Getting Started',
+                            label: 'Documentation',
                             to: '/docs/intro',
+                        },
+                        {
+                            label: 'API Reference',
+                            to: '/docs/quick-start',
                         },
                     ],
                 },
                 {
-                    title: 'Community',
+                    title: 'Legal',
                     items: [
                         {
-                            label: 'GitHub',
-                            href: 'https://github.com/viacurrent/jungler-docs',
+                            label: 'Privacy Policy',
+                            href: 'https://jungler.ai/privacy',
+                        },
+                        {
+                            label: 'Terms of Service',
+                            href: 'https://jungler.ai/terms',
+                        },
+                    ],
+                },
+                {
+                    title: 'Socials',
+                    items: [
+                        {
+                            label: 'LinkedIn',
+                            href: 'https://linkedin.com/company/jungler',
                         },
                     ],
                 },
             ],
-            copyright: `Copyright © ${new Date().getFullYear()} Jungler. Built with Docusaurus.`,
+            copyright: `© ${new Date().getFullYear()} Jungler`,
         },
         prism: {
             theme: prismThemes.github,

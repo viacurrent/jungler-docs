@@ -1,0 +1,55 @@
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: var(--doc-sidebar-width);
+}
+
+.sidebarWithHideableNavbar {
+    padding-top: var(--ifm-navbar-height);
+}
+
+.sidebarHidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.sidebarLogo {
+    display: flex !important;
+    align-items: center;
+    margin: 0 var(--ifm-spacing-horizontal);
+    min-height: var(--ifm-navbar-height);
+    max-height: var(--ifm-navbar-height);
+}
+
+.searchContainer {
+    padding: 0.75rem 0.75rem 0.75rem;
+    overflow: hidden;
+}
+
+.searchContainer > div {
+    width: 100%;
+}
+
+.searchContainer :global(.DocSearch-Button) {
+    width: 100% !important;
+    box-sizing: border-box;
+}
+
+.contentWrapper {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+}
+
+.content {
+    height: 100%;
+}
+
+.bottomBar {
+    padding: 1.5rem;
+}
+
+.bottomBarBorder {
+    border-top: 1px solid var(--card-border);
+}

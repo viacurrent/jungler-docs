@@ -1,0 +1,37 @@
+.toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    padding: 3px;
+    border-radius: 9999px;
+    background-color: var(--card-border);
+}
+
+[data-theme='dark'] .toggle {
+    background-color: oklch(0.2859 0.0199 236.32);
+}
+
+.btn {
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 9999px;
+    border: none;
+    background: transparent;
+    color: var(--ifm-font-color-base);
+    opacity: 0.4;
+    cursor: pointer;
+    transition: background-color 0.15s, color 0.15s, opacity 0.15s;
+    padding: 0;
+}
+
+.btn:hover {
+    opacity: 0.8;
+}
+
+.btn.active {
+    background-color: var(--ifm-background-color);
+    opacity: 1;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
