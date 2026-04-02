@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import clsx from 'clsx';
 import ErrorBoundary from '@docusaurus/ErrorBoundary';
 import {
@@ -7,14 +8,32 @@ import {
     ThemeClassNames,
 } from '@docusaurus/theme-common';
 import { useKeyboardNavigation } from '@docusaurus/theme-common/internal';
-import { useLocation } from '@docusaurus/router';
+
 import SkipToContent from '@theme/SkipToContent';
 import AnnouncementBar from '@theme/AnnouncementBar';
 import Navbar from '@theme/Navbar';
 import Footer from '@theme/Footer';
+import ColorModeToggle from '@theme/ColorModeToggle';
 import LayoutProvider from '@theme/Layout/Provider';
 import ErrorPageContent from '@theme/ErrorPageContent';
 import styles from './styles.module.css';
+
+function NavbarTogglePortal() {
+    const [slot, setSlot] = useState<HTMLElement | null>(null);
+    useEffect(() => {
+        // Re-check for slot on every render cycle and after DOM mutations
+        const findSlot = () => {
+            const el = document.getElementById('navbar-toggle-slot');
+            if (el && el !== slot) setSlot(el);
+        };
+        findSlot();
+        const observer = new MutationObserver(findSlot);
+        observer.observe(document.body, { childList: true, subtree: true });
+        return () => observer.disconnect();
+    }, [slot]);
+    if (!slot) return null;
+    return createPortal(<ColorModeToggle />, slot);
+}
 
 export default function Layout(props: any) {
     const {
@@ -27,9 +46,8 @@ export default function Layout(props: any) {
     useKeyboardNavigation();
 
     // Hide outer footer on doc pages — it's rendered inside the main scroll area instead
-    const { pathname } = useLocation();
-    const isDocPage = pathname.startsWith('/docs');
-    const shouldHideFooter = noFooter || isDocPage;
+    // All pages are doc pages now — footer is rendered inside the doc scroll area
+    const shouldHideFooter = true;
 
     return (
         <LayoutProvider>
@@ -37,13 +55,14 @@ export default function Layout(props: any) {
             <SkipToContent />
             <AnnouncementBar />
             <Navbar />
+            <NavbarTogglePortal />
             <div
                 id={SkipToContentFallbackId}
                 className={clsx(
                     ThemeClassNames.layout.main.container,
                     ThemeClassNames.wrapper.main,
                     styles.mainWrapper,
-                    isDocPage && styles.docPageWrapper,
+                    styles.docPageWrapper,
                     wrapperClassName,
                 )}>
                 <ErrorBoundary fallback={(params) => <ErrorPageContent {...params} />}>

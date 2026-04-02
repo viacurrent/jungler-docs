@@ -169,7 +169,7 @@ print(response.json())
 
 ### Extract Post Interactions
 
-Want to get comments and reactions from a specific post? See the [Workbooks API Quick Start](/docs/api/workbooks#quick-start).
+Want to get comments and reactions from a specific post? See the [Workbooks API Quick Start](/api/workbooks#quick-start).
 
 ### Advanced Filtering
 
@@ -239,7 +239,7 @@ response = httpx.get(
   </TabItem>
 </Tabs>
 
-See the [Posts API documentation](/docs/api/posts) for all available filters.
+See the [Posts API documentation](/api/posts) for all available filters.
 
 ## Common Issues
 
@@ -271,7 +271,7 @@ See the [Posts API documentation](/docs/api/posts) for all available filters.
 
 ## Further Reading
 
-- [API Reference](/docs/api/) - Complete API documentation
-- [Posts API](/docs/api/posts) - Detailed filtering options
-- [Workbooks API](/docs/api/workbooks) - Extract post interactions
-- [Searches API](/docs/api/searches) - Manage searches
+- [API Reference](/api/) - Complete API documentation
+- [Posts API](/api/posts) - Detailed filtering options
+- [Workbooks API](/api/workbooks) - Extract post interactions
+- [Searches API](/api/searches) - Manage searches

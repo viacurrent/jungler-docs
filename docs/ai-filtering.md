@@ -167,8 +167,8 @@ Use search syntax and AI filtering together for precision:
 
 ## Next Steps
 
-**→** Review [how Jungler works](/docs/how-it-works) for the full workflow
+**→** Review [how Jungler works](/how-it-works) for the full workflow
 
-**→** Learn about [search syntax](/docs/search-syntax) to optimize your queries
+**→** Learn about [search syntax](/search-syntax) to optimize your queries
 
-**→** Explore the [Searches API](/docs/api/searches) to manage filters programmatically
+**→** Explore the [Searches API](/api/searches) to manage filters programmatically

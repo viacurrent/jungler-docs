@@ -1,10 +1,10 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import { useThemeConfig } from '@docusaurus/theme-common';
+import { MessageCircle } from 'lucide-react';
 import Logo from '@theme/Logo';
 import CollapseButton from '@theme/DocSidebar/Desktop/CollapseButton';
 import Content from '@theme/DocSidebar/Desktop/Content';
-import ColorModeToggle from '@theme/ColorModeToggle';
 import SearchBar from '@theme/SearchBar';
 import styles from './styles.module.css';
 
@@ -15,21 +15,6 @@ function DocSidebarDesktop({ path, sidebar, onCollapse, isHidden }: any) {
             sidebar: { hideable },
         },
     } = useThemeConfig();
-
-    const contentRef = useRef<HTMLDivElement>(null);
-    const [isOverflowing, setIsOverflowing] = useState(false);
-
-    useEffect(() => {
-        const el = contentRef.current?.querySelector('nav');
-        if (!el) return;
-        const check = () => {
-            setIsOverflowing(el.scrollHeight > el.clientHeight);
-        };
-        check();
-        const observer = new ResizeObserver(check);
-        observer.observe(el);
-        return () => observer.disconnect();
-    }, [path]);
 
     return (
         <div
@@ -42,12 +27,13 @@ function DocSidebarDesktop({ path, sidebar, onCollapse, isHidden }: any) {
             <div className={styles.searchContainer}>
                 <SearchBar />
             </div>
-            <div ref={contentRef} className={styles.contentWrapper}>
+            <div className={styles.contentWrapper}>
                 <Content path={path} sidebar={sidebar} className={styles.content} />
             </div>
-            <div className={clsx(styles.bottomBar, isOverflowing && styles.bottomBarBorder)}>
-                <ColorModeToggle />
-            </div>
+            <a href="mailto:team@jungler.ai" className={styles.contactLink}>
+                <MessageCircle size={16} />
+                <span>Contact support</span>
+            </a>
             {hideable && <CollapseButton onClick={onCollapse} />}
         </div>
     );

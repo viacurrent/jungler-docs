@@ -3,7 +3,7 @@
 The Posts API allows you to retrieve and filter posts collected by your searches.
 
 :::info Authentication Required
-All API requests require authentication. See [API Reference](/docs/api#authentication) for details.
+All API requests require authentication. See [API Reference](/api#authentication) for details.
 :::
 
 ## List Posts

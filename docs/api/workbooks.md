@@ -3,7 +3,7 @@
 The Workbooks API allows you to extract post interactions (comments, reactions) and contact information from posts.
 
 :::info Authentication Required
-All API requests require authentication. See [API Reference](/docs/api#authentication) for details.
+All API requests require authentication. See [API Reference](/api#authentication) for details.
 :::
 
 :::warning Data Expiration

@@ -26,12 +26,15 @@ const config = {
         locales: ['en'],
     },
 
+    plugins: ['./plugins/raw-docs.js'],
+
     presets: [
         [
             'classic',
             {
                 docs: {
                     sidebarPath: './sidebars.mjs',
+                    routeBasePath: '/',
                 },
                 blog: false, // Disable blog
                 theme: {
@@ -53,68 +56,23 @@ const config = {
             contextualSearch: false,
         },
         navbar: {
-            title: 'Jungler',
+            title: '',
             logo: {
-                alt: 'Jungler Logo',
+                alt: 'Jungler',
                 src: 'img/logo.svg',
+                srcDark: 'img/logo-dark.svg',
             },
             items: [
                 {
-                    type: 'docSidebar',
-                    sidebarId: 'tutorialSidebar',
-                    position: 'left',
-                    label: 'Docs',
-                },
-                {
                     type: 'html',
                     position: 'right',
-                    value: '<div class="navbar__buttons"><a href="https://app.jungler.ai/login" target="_blank" rel="noopener noreferrer" class="navbar__item--login">Log in</a><a href="https://app.jungler.ai/register" target="_blank" rel="noopener noreferrer" class="navbar__item--cta">Start for free</a></div>',
+                    value: '<div class="navbar__right-group"><div class="navbar__toggle-slot" id="navbar-toggle-slot"></div><div class="navbar__divider"></div><a href="https://app.jungler.ai/login" target="_blank" rel="noopener noreferrer" class="navbar__item--login">Log in</a><a href="https://app.jungler.ai/register" target="_blank" rel="noopener noreferrer" class="navbar__item--cta">Start for free</a></div>',
                 },
             ],
-        },
-        footer: {
-            links: [
-                {
-                    title: 'Resources',
-                    items: [
-                        {
-                            label: 'Documentation',
-                            to: '/docs/intro',
-                        },
-                        {
-                            label: 'API Reference',
-                            to: '/docs/quick-start',
-                        },
-                    ],
-                },
-                {
-                    title: 'Legal',
-                    items: [
-                        {
-                            label: 'Privacy Policy',
-                            href: 'https://jungler.ai/privacy',
-                        },
-                        {
-                            label: 'Terms of Service',
-                            href: 'https://jungler.ai/terms',
-                        },
-                    ],
-                },
-                {
-                    title: 'Socials',
-                    items: [
-                        {
-                            label: 'LinkedIn',
-                            href: 'https://linkedin.com/company/jungler',
-                        },
-                    ],
-                },
-            ],
-            copyright: `© ${new Date().getFullYear()} Jungler`,
         },
         prism: {
             theme: prismThemes.github,
-            darkTheme: prismThemes.dracula,
+            darkTheme: prismThemes.oceanicNext,
         },
     },
 };

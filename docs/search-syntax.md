@@ -197,8 +197,8 @@ Multi-word phrases like "looking for" and "new role" use quotes to keep words to
 
 ## Next Steps
 
-**→** See [search ideas](/docs/search-ideas) for proven query patterns
+**→** See [search ideas](/search-ideas) for proven query patterns
 
-**→** Configure [AI filtering](/docs/ai-filtering) to further refine results
+**→** Configure [AI filtering](/ai-filtering) to further refine results
 
-**→** Use the [Searches API](/docs/api/searches) to manage searches programmatically
+**→** Use the [Searches API](/api/searches) to manage searches programmatically

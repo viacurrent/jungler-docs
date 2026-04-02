@@ -46,10 +46,26 @@
     height: 100%;
 }
 
-.bottomBar {
-    padding: 1.5rem;
+.contactLink {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0 0.75rem 0.75rem;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    font-weight: 400;
+    color: var(--ifm-menu-color);
+    text-decoration: none;
+    border-radius: 0.5rem;
 }
 
-.bottomBarBorder {
-    border-top: 1px solid var(--card-border);
+.contactLink:hover {
+    background: var(--card-border);
+    color: var(--ifm-menu-color);
+    text-decoration: none;
+}
+
+[data-theme='dark'] .contactLink:hover {
+    background: oklch(0.2859 0.0199 236.32);
 }

@@ -3,7 +3,7 @@
 The Searches API allows you to list and retrieve information about your searches.
 
 :::info Authentication Required
-All API requests require authentication. See [API Reference](/docs/api#authentication) for details.
+All API requests require authentication. See [API Reference](/api#authentication) for details.
 :::
 
 ## List Searches
@@ -392,6 +392,6 @@ print(f"Search '{search_config['name']}' is {'active' if search_config['is_activ
 ## Next Steps
 
 Once you have search IDs, you can:
-- [Retrieve posts from these searches](/docs/api/posts)
+- [Retrieve posts from these searches](/api/posts)
 - Filter posts by multiple searches simultaneously
 - Track which searches are generating the most relevant content
