@@ -166,17 +166,17 @@ function CopyDropdown() {
         setOpen(false);
     }, []);
 
-    const handleOpenChatGPT = useCallback(async () => {
-        const md = await fetchRawMd();
-        const url = `https://chatgpt.com/?q=${encodeURIComponent(`Help me understand this documentation:\n\n${md}`)}`;
-        window.open(url, '_blank');
+    const handleOpenChatGPT = useCallback(() => {
+        const pageUrl = `https://docs.jungler.ai${window.location.pathname}`;
+        const prompt = `Read ${pageUrl} and answer questions about the content.`;
+        window.open(`https://chatgpt.com/?q=${encodeURIComponent(prompt)}`, '_blank');
         setOpen(false);
     }, []);
 
-    const handleOpenClaude = useCallback(async () => {
-        const md = await fetchRawMd();
-        const url = `https://claude.ai/new?q=${encodeURIComponent(`Help me understand this documentation:\n\n${md}`)}`;
-        window.open(url, '_blank');
+    const handleOpenClaude = useCallback(() => {
+        const pageUrl = `https://docs.jungler.ai${window.location.pathname}`;
+        const prompt = `Read ${pageUrl} and answer questions about the content.`;
+        window.open(`https://claude.ai/new?q=${encodeURIComponent(prompt)}`, '_blank');
         setOpen(false);
     }, []);
 

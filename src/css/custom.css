@@ -37,6 +37,8 @@
 
     --ifm-sidebar-background: #FBFBFC;
     --doc-sidebar-width: 260px;
+    --ifm-container-width: 9999px;
+    --ifm-container-width-xl: 9999px;
 
     --card-background: #FFFFFF;
     --card-border: #E5E6E8;
@@ -89,14 +91,19 @@
 }
 
 .navbar {
-    background: var(--ifm-background-color);
-    border-bottom: 1px solid var(--card-border);
+    background: transparent;
+    border-bottom: none;
     box-shadow: none;
-    padding: 0 1rem;
+    padding: 0px 8px 0px 16px;
+}
+
+/* Remove sidebar border */
+aside[class*='docSidebarContainer'] {
+    border-right: none !important;
 }
 
 .navbar__logo img {
-    height: 22px;
+    height: 24px;
     width: auto;
     display: block;
 }
@@ -113,12 +120,12 @@
 }
 
 /* Hide search from navbar — it lives in the sidebar */
-.navbar__items--right > [class*='navbarSearchContainer'] {
+.navbar__items--right>[class*='navbarSearchContainer'] {
     display: none;
 }
 
 /* Move color toggle to inside the right group via portal */
-.navbar__items--right > [class*='toggle'] {
+.navbar__items--right>[class*='toggle'] {
     display: none;
 }
 
@@ -140,7 +147,7 @@
     gap: 16px;
 }
 
-.navbar__items--right > .navbar__item:has(.navbar__buttons) {
+.navbar__items--right>.navbar__item:has(.navbar__buttons) {
     padding: 0;
 }
 
@@ -159,6 +166,7 @@
     align-items: center;
     gap: 16px;
 }
+
 .navbar__item--login {
     border: 1px solid var(--card-border);
     border-radius: 0.5rem;
@@ -231,7 +239,7 @@
 }
 
 /* Sidebar category labels */
-.theme-doc-sidebar-menu > .menu__list-item > .menu__list-item-collapsible > .menu__link {
+.theme-doc-sidebar-menu>.menu__list-item>.menu__list-item-collapsible>.menu__link {
     font-size: 0.75rem;
     font-weight: 500;
     text-transform: uppercase;
@@ -247,6 +255,7 @@
     font-weight: 400;
     padding: 0.375rem 0.75rem;
     line-height: 1.5;
+    transition: none !important;
 }
 
 .menu__link:hover {
@@ -302,22 +311,26 @@
     background-size: 1rem 1rem;
 }
 
+/* Consistent fast collapse animation for all sidebar categories */
+.menu__list-item-collapsible + .menu__list {
+    transition-duration: 150ms !important;
+}
 
 
-/* Content area — 680px max width, centered in remaining space */
+
+/* Content area — 640px max width, centered between sidebar and viewport edge */
 .theme-doc-markdown,
 article {
-    max-width: 640px;
+    max-width: 760px;
     margin-left: auto;
     margin-right: auto;
 }
 
 [class*='docMainContainer'] {
     flex: 1;
-}
-
-[class*='docItemContainer'] {
-    max-width: 100%;
+    --ifm-container-width: 100%;
+    --ifm-container-width-xl: 100%;
+    overflow-x: hidden;
 }
 
 /* Breadcrumbs — text only, hide home item entirely */
@@ -349,7 +362,7 @@ article {
 }
 
 .theme-doc-breadcrumbs {
-    margin-bottom: 80px;
+    margin-bottom: 40px;
     margin-top: -4px;
 }
 
@@ -445,7 +458,7 @@ article {
 }
 
 .copy-dropdown-item svg,
-.copy-dropdown-item > span {
+.copy-dropdown-item>span {
     flex-shrink: 0;
 }
 
@@ -563,13 +576,23 @@ article {
 }
 
 @media (min-width: 640px) {
-    .markdown h1 { font-size: 40px; }
-    .markdown h2 { font-size: 26px; }
+    .markdown h1 {
+        font-size: 40px;
+    }
+
+    .markdown h2 {
+        font-size: 26px;
+    }
 }
 
 @media (min-width: 1200px) {
-    .markdown h1 { font-size: 48px; }
-    .markdown h2 { font-size: 28px; }
+    .markdown h1 {
+        font-size: 48px;
+    }
+
+    .markdown h2 {
+        font-size: 28px;
+    }
 }
 
 .markdown p {
@@ -578,7 +601,7 @@ article {
 }
 
 .markdown {
-    padding-bottom: 240px;
+    padding-bottom: 360px;
 }
 
 /* Text selection — green highlight from jungler.ai */
@@ -635,7 +658,7 @@ article {
     content: none !important;
 }
 
-.anchor:hover > .hash-link {
+.anchor:hover>.hash-link {
     opacity: 1;
 }
 
@@ -670,7 +693,7 @@ details {
     --docusaurus-details-decoration-color: var(--card-border) !important;
 }
 
-details > summary {
+details>summary {
     font-weight: 600;
     font-size: 1rem;
     cursor: pointer;
@@ -686,16 +709,16 @@ details > summary {
 }
 
 /* Remove all default markers and Docusaurus arrows */
-details > summary::-webkit-details-marker {
+details>summary::-webkit-details-marker {
     display: none !important;
 }
 
-details > summary::marker {
+details>summary::marker {
     display: none !important;
     content: '' !important;
 }
 
-details > summary::before {
+details>summary::before {
     content: '' !important;
     position: static !important;
     display: inline-block !important;
@@ -714,8 +737,8 @@ details > summary::before {
     transform-origin: center center !important;
 }
 
-details[data-collapsed='false'] > summary::before,
-details[open] > summary::before {
+details[data-collapsed='false']>summary::before,
+details[open]>summary::before {
     transform: rotate(90deg) !important;
 }
 
@@ -726,7 +749,7 @@ details[open] > summary::before {
     padding: 0 16px 12px !important;
 }
 
-[class*='collapsibleContent'] > :last-child {
+[class*='collapsibleContent']> :last-child {
     margin-bottom: 0 !important;
 }
 
@@ -747,7 +770,8 @@ body {
 }
 
 /* Use semibold (600) everywhere instead of bold (700) */
-strong, b {
+strong,
+b {
     font-weight: 600;
 }
 
@@ -927,7 +951,7 @@ pre code {
 }
 
 /* Remove trailing space in admonition content */
-.alert [class*='admonitionContent'] > :last-child {
+.alert [class*='admonitionContent']> :last-child {
     margin-bottom: 0 !important;
 }
 
@@ -1131,16 +1155,19 @@ html {
     font-size: 0.875rem !important;
     max-width: 100% !important;
     box-sizing: border-box !important;
+    padding: 0.375rem 0.375rem 0.375rem 0.75rem !important;
 }
 
 .DocSearch-Button-Placeholder {
     font-size: 0.875rem !important;
 }
 
+/* Hide default Algolia SVG icon, use Lucide-style search icon via CSS */
 .DocSearch-Search-Icon {
-    width: 14px !important;
-    height: 14px !important;
-    color: var(--ifm-font-color-base) !important;
+    width: 16px !important;
+    height: 16px !important;
+    color: var(--ifm-menu-color) !important;
+    opacity: 0.6;
 }
 
 .DocSearch-Form:focus-within {
@@ -1262,9 +1289,15 @@ mark.DocSearch-Hit-path-highlight {
     box-shadow: none !important;
     color: var(--ifm-font-color-base) !important;
     opacity: 0.5;
+    font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
     font-size: 12px !important;
-    width: 24px !important;
-    height: 24px !important;
+    width: 20px !important;
+    height: 20px !important;
+    padding: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 1 !important;
 }
 
 .DocSearch-Label {
@@ -1318,10 +1351,208 @@ html[data-theme-switching] * {
 
 /* Prevent logo flicker during hydration */
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 .navbar__inner {
     animation: fadeIn 0.01s 0.1s both;
+}
+
+/* ─── Mobile ─── */
+@media (max-width: 996px) {
+    /* Sticky navbar with solid background */
+    .navbar {
+        background: var(--ifm-background-color) !important;
+        border-bottom: 1px solid var(--card-border);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        padding: 0 16px;
+    }
+
+    /* Navbar: logo left, burger right */
+    .navbar__inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .navbar__items {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .navbar__brand {
+        order: 0;
+    }
+
+    .navbar__toggle {
+        order: 1;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* Hide login/CTA buttons on mobile */
+    .navbar__items--right {
+        display: none !important;
+    }
+
+    /* Content padding — force 16px on all sides */
+    .padding-top--md {
+        padding: 16px 16px 0 16px !important;
+    }
+
+    /* Hide custom scrollbar on mobile — use native overlay */
+    ::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+        display: none;
+    }
+
+
+    .theme-doc-breadcrumbs {
+        margin-top: 0;
+    }
+
+    /* Breadcrumbs spacing */
+    .theme-doc-breadcrumbs {
+        margin-bottom: 24px;
+    }
+
+    /* Mobile sidebar — instant full-screen overlay */
+    .navbar-sidebar {
+        background: var(--ifm-background-color) !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-shadow: none !important;
+        transform: none !important;
+        transition: none !important;
+        display: flex !important;
+        flex-direction: column !important;
+        height: 100% !important;
+    }
+
+    .navbar-sidebar--show .navbar-sidebar {
+        transform: none !important;
+    }
+
+    /* Hide backdrop */
+    .navbar-sidebar__backdrop {
+        display: none !important;
+    }
+
+    .navbar-sidebar__items {
+        flex: 1 !important;
+        overflow-y: auto !important;
+        min-height: 0 !important;
+    }
+
+    .navbar-sidebar__item {
+        width: 100% !important;
+    }
+
+    .navbar-sidebar__brand {
+        border-bottom: 1px solid var(--card-border);
+        padding: 0 16px;
+        min-height: var(--ifm-navbar-height);
+        max-height: var(--ifm-navbar-height);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .navbar-sidebar__close {
+        margin: 0;
+    }
+
+    /* Menu items — match desktop sidebar styling */
+    .navbar-sidebar .menu {
+        padding: 0.75rem !important;
+    }
+
+    .navbar-sidebar .menu > .menu__list {
+        margin-top: 0.5rem;
+    }
+
+    .navbar-sidebar .menu__list {
+        padding: 0;
+    }
+
+    .navbar-sidebar .menu__link {
+        font-size: 0.875rem;
+        border-radius: 0.5rem;
+        font-weight: 400;
+        padding: 0 0.75rem;
+        height: 40px;
+        display: flex;
+        align-items: center;
+    }
+
+    .navbar-sidebar .menu__link--active {
+        background: var(--card-border);
+        color: var(--ifm-font-color-base) !important;
+        font-weight: 400;
+    }
+
+    [data-theme='dark'] .navbar-sidebar .menu__link--active {
+        background: oklch(0.2859 0.0199 236.32);
+    }
+
+    .navbar-sidebar .menu__link:hover {
+        background: var(--card-border);
+    }
+
+    [data-theme='dark'] .navbar-sidebar .menu__link:hover {
+        background: oklch(0.2859 0.0199 236.32);
+    }
+
+    /* Category labels — plain text, no button styling */
+    .navbar-sidebar .menu__link--sublist {
+        font-size: 0.75rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        opacity: 0.5;
+        padding-left: 0.75rem;
+        background: none !important;
+        border: none !important;
+        box-shadow: none !important;
+        outline: none !important;
+    }
+
+    .navbar-sidebar .menu__link--sublist:hover {
+        background: none !important;
+    }
+
+    .navbar-sidebar .menu__list-item-collapsible {
+        background: none !important;
+        border: none !important;
+    }
+
+    .navbar-sidebar .menu__list-item-collapsible:hover {
+        background: none !important;
+    }
+
+    /* Nested items indentation */
+    .navbar-sidebar .menu__list .menu__list {
+        padding-left: 0;
+        margin-left: 0;
+    }
+
+    .navbar-sidebar .menu__list .menu__list .menu__link {
+        padding-left: 1.5rem;
+    }
+
+    /* Remove bottom padding on article for mobile */
+    .markdown {
+        padding-bottom: 48px;
+    }
 }

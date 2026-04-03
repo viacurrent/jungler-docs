@@ -1,8 +1,8 @@
 import React from 'react';
 import clsx from 'clsx';
 import { useThemeConfig } from '@docusaurus/theme-common';
-import { MessageCircle } from 'lucide-react';
 import Logo from '@theme/Logo';
+import ColorModeToggle from '@theme/ColorModeToggle';
 import CollapseButton from '@theme/DocSidebar/Desktop/CollapseButton';
 import Content from '@theme/DocSidebar/Desktop/Content';
 import SearchBar from '@theme/SearchBar';
@@ -30,10 +30,9 @@ function DocSidebarDesktop({ path, sidebar, onCollapse, isHidden }: any) {
             <div className={styles.contentWrapper}>
                 <Content path={path} sidebar={sidebar} className={styles.content} />
             </div>
-            <a href="mailto:team@jungler.ai" className={styles.contactLink}>
-                <MessageCircle size={16} />
-                <span>Contact support</span>
-            </a>
+            <div className={styles.toggleContainer}>
+                <ColorModeToggle />
+            </div>
             {hideable && <CollapseButton onClick={onCollapse} />}
         </div>
     );

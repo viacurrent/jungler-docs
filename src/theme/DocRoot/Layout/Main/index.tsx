@@ -76,7 +76,7 @@ export default function DocRootLayoutMain({
             onScroll={handleScroll}>
             <div
                 className={clsx(
-                    'container padding-top--md padding-bottom--lg',
+                    'padding-top--md padding-bottom--lg',
                     styles.docItemWrapper,
                     hiddenSidebarContainer && styles.docItemWrapperEnhanced,
                 )}>
