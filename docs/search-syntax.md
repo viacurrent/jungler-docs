@@ -6,15 +6,15 @@ sidebar_position: 4
 
 Understanding how search operators work helps you build precise queries that surface the right conversations.
 
-:::info
-LinkedIn's post search doesn't behave like Google. Mastering quotation marks and Boolean operators turns an overwhelming feed into a targeted stream of opportunities.
+:::info Search
+Not all searches behave like Google. Mastering quotation marks and Boolean operators turns an overwhelming feed into a targeted stream of opportunities.
 :::
 
 ---
 
 ## Quotation Marks
 
-LinkedIn's search behavior varies depending on whether you're searching for single or multiple words:
+Search behavior varies depending on whether you're searching for single or multiple words:
 
 ### Single Word Searches
 
@@ -197,8 +197,8 @@ Multi-word phrases like "looking for" and "new role" use quotes to keep words to
 
 ## Next Steps
 
-**→** See [search ideas](/docs/search-ideas) for proven query patterns
+**→** See [search ideas](./search-ideas.md) for proven query patterns
 
-**→** Configure [AI filtering](/docs/ai-filtering) to further refine results
+**→** Configure [AI filtering](./ai-filtering.md) to further refine results
 
-**→** Use the [Searches API](/docs/api/searches) to manage searches programmatically
+**→** Use the [Signals API](./api/signals.md) to manage signals programmatically

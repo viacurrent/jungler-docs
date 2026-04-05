@@ -26,12 +26,15 @@ const config = {
         locales: ['en'],
     },
 
+    plugins: ['./plugins/raw-docs.js'],
+
     presets: [
         [
             'classic',
             {
                 docs: {
                     sidebarPath: './sidebars.mjs',
+                    routeBasePath: '/',
                 },
                 blog: false, // Disable blog
                 theme: {
@@ -53,52 +56,23 @@ const config = {
             contextualSearch: false,
         },
         navbar: {
-            title: 'Jungler',
+            title: '',
             logo: {
-                alt: 'Jungler Logo',
+                alt: 'Jungler',
                 src: 'img/logo.svg',
+                srcDark: 'img/logo-dark.svg',
             },
             items: [
                 {
-                    type: 'docSidebar',
-                    sidebarId: 'tutorialSidebar',
-                    position: 'left',
-                    label: 'Docs',
-                },
-                {
-                    href: 'https://github.com/viacurrent/jungler-docs',
-                    label: 'GitHub',
+                    type: 'html',
                     position: 'right',
+                    value: '<div class="navbar__right-group"><a href="https://app.jungler.ai/login" target="_blank" rel="noopener noreferrer" class="navbar__item--login">Log in</a><a href="https://app.jungler.ai/register" target="_blank" rel="noopener noreferrer" class="navbar__item--cta">Start for free</a></div>',
                 },
             ],
-        },
-        footer: {
-            style: 'dark',
-            links: [
-                {
-                    title: 'Docs',
-                    items: [
-                        {
-                            label: 'Getting Started',
-                            to: '/docs/intro',
-                        },
-                    ],
-                },
-                {
-                    title: 'Community',
-                    items: [
-                        {
-                            label: 'GitHub',
-                            href: 'https://github.com/viacurrent/jungler-docs',
-                        },
-                    ],
-                },
-            ],
-            copyright: `Copyright © ${new Date().getFullYear()} Jungler. Built with Docusaurus.`,
         },
         prism: {
             theme: prismThemes.github,
-            darkTheme: prismThemes.dracula,
+            darkTheme: prismThemes.oceanicNext,
         },
     },
 };

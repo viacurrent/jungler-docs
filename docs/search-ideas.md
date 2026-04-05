@@ -120,8 +120,8 @@ Unique signals that indicate buying readiness in your specific market.
 
 ## Next Steps
 
-**→** Learn the [search syntax](/docs/search-syntax) to build effective queries
+**→** Learn the [search syntax](./search-syntax.md) to build effective queries
 
-**→** Configure [AI filtering](/docs/ai-filtering) to refine your results
+**→** Configure [AI filtering](./ai-filtering.md) to refine your results
 
-**→** Explore the [API](/docs/api/) to automate your workflow
+**→** Explore the [API](./api/index.md) to automate your workflow

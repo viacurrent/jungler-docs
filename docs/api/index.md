@@ -1,4 +1,8 @@
-# API Reference
+---
+sidebar_label: Overview
+---
+
+# API Overview
 
 Welcome to the Jungler API documentation. The Jungler API allows you to programmatically access and analyze data collected by your searches.
 
@@ -30,11 +34,12 @@ API requests are rate-limited per endpoint:
 | Endpoint | Rate Limit |
 |----------|------------|
 | POST /workbooks | 6/minute |
-| GET /workbooks/\* | 12/minute |
 | GET /workspaces | 30/minute |
-| GET /searches | 30/minute |
-| GET /searches/:id | 60/minute |
+| GET /signals | 30/minute |
+| GET /signals/:id | 60/minute |
 | GET /posts | 60/minute |
+| GET /engagers/* | 60/minute |
+| GET /tasks/:id/status | 60/minute |
 
 When you exceed the rate limit, you'll receive a `429 Too Many Requests` response.
 
@@ -42,11 +47,12 @@ When you exceed the rate limit, you'll receive a `429 Too Many Requests` respons
 
 ### Core Resources
 
-- **[Workspaces](/docs/api/workspaces)** - List your workspaces
-- **[Searches](/docs/api/searches)** - List and retrieve search configurations
-- **[Posts](/docs/api/posts)** - Retrieve and filter posts
-- **[Workbooks](/docs/api/workbooks)** - Extract post interactions and contacts
-- **[Webhooks](/docs/api/webhooks)** - Send data to external platforms automatically
+- **[Workspaces](./workspaces.md)** - List your workspaces
+- **[Signals](./signals.md)** - List and retrieve signal configurations
+- **[Posts](./posts.md)** - Retrieve and filter posts
+- **[Engagers](./engagers.md)** - Retrieve interactions (comments, reactions) and contacts
+- **[Workbooks](./workbooks.md)** - Create extraction tasks for specific posts
+- **[Webhooks](./webhooks.md)** - Send data to external platforms automatically
 
 ## Quick Start
 
@@ -57,34 +63,23 @@ curl -X GET "https://production.viacurrent.com/api/workspaces" \
   -H "X-API-Key: your_api_key_here"
 ```
 
-### 2. List searches in a workspace
+### 2. List signals in a workspace
 
 ```bash
-curl -X GET "https://production.viacurrent.com/api/searches?workspace_id=YOUR_WORKSPACE_ID" \
+curl -X GET "https://production.viacurrent.com/api/signals?workspace_id=YOUR_WORKSPACE_ID" \
   -H "X-API-Key: your_api_key_here"
 ```
 
 ### 3. Retrieve posts
 
 ```bash
-curl -X GET "https://production.viacurrent.com/api/posts?workspace_id=YOUR_WORKSPACE_ID&search_ids=YOUR_SEARCH_ID" \
+curl -X GET "https://production.viacurrent.com/api/posts?workspace_id=YOUR_WORKSPACE_ID&signal_ids=YOUR_SIGNAL_ID" \
   -H "X-API-Key: your_api_key_here"
 ```
 
 ## Response Format
 
 All API responses use JSON format. Successful responses have a `2xx` status code.
-
-### Success Response
-
-```json
-{
-  "items": [...],
-  "total": 100,
-  "page": 1,
-  "page_size": 50
-}
-```
 
 ### Error Response
 
@@ -133,12 +128,6 @@ Resource identifiers are MongoDB ObjectIds represented as 24-character hexadecim
 ```
 
 ## Best Practices
-
-### Pagination
-
-- Always use `snapshot_time` for consistent pagination across multiple pages
-- Save the `snapshot_time` from your first request and reuse it for subsequent pages
-- Maximum page size is 500 items
 
 ### Filtering
 

@@ -1,0 +1,47 @@
+html,
+body {
+    height: 100%;
+}
+
+.mainWrapper {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.docPageWrapper {
+    flex: 1 1 0;
+    min-height: 0;
+    overflow: hidden;
+    /* Pull up behind the transparent navbar */
+    margin-top: calc(-1 * var(--ifm-navbar-height));
+}
+
+@media (max-width: 996px) {
+    .docPageWrapper {
+        margin-top: 0;
+    }
+}
+
+/* On doc pages, prevent #__docusaurus from growing beyond viewport */
+:global(#__docusaurus):has(.docPageWrapper) {
+    height: 100vh;
+    min-height: 0;
+}
+
+@media (max-width: 996px) {
+    :global(#__docusaurus):has(.docPageWrapper) {
+        height: auto;
+        min-height: 100vh;
+    }
+}
+
+:global(.docusaurus-mt-lg) {
+    margin-top: 3rem;
+}
+
+:global(#__docusaurus) {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}

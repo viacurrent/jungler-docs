@@ -1,0 +1,52 @@
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: var(--doc-sidebar-width);
+}
+
+.sidebarWithHideableNavbar {
+    padding-top: var(--ifm-navbar-height);
+}
+
+.sidebarHidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.sidebarLogo {
+    display: flex !important;
+    align-items: center;
+    margin: 0 var(--ifm-spacing-horizontal);
+    min-height: var(--ifm-navbar-height);
+    max-height: var(--ifm-navbar-height);
+}
+
+.searchContainer {
+    padding: calc(var(--ifm-navbar-height) + 0.75rem) 0.75rem 0.75rem;
+    overflow: hidden;
+}
+
+.searchContainer > div {
+    width: 100%;
+}
+
+.searchContainer :global(.DocSearch-Button) {
+    width: 100% !important;
+    box-sizing: border-box;
+}
+
+.contentWrapper {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+}
+
+.content {
+    height: 100%;
+}
+
+.toggleContainer {
+    margin: 0 0.75rem 0.75rem;
+    padding: 0.375rem 0.75rem 0.375rem 6px;
+}

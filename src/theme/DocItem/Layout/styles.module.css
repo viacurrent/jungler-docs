@@ -1,0 +1,31 @@
+.docItemLayout {
+    position: relative;
+    width: 100%;
+}
+
+.docItemCenter {
+    max-width: 760px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.docItemTOC {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: var(--doc-sidebar-width);
+}
+
+@media (min-width: 997px) {
+    .docItemLayout {
+        /* Reserve space for the TOC so article centers in the remaining area */
+        padding-right: var(--doc-sidebar-width);
+    }
+}
+
+@media (max-width: 996px) {
+    .docItemTOC {
+        display: none;
+    }
+}

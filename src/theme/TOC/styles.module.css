@@ -1,0 +1,25 @@
+.tableOfContents {
+    overflow-y: auto;
+    position: sticky;
+    top: 1rem;
+    max-height: calc(100vh - 56px - 2rem);
+    padding-top: 78px;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--brand-text-muted);
+    opacity: 1;
+    margin-bottom: 0.5rem;
+    margin-left: -2px;
+}
+
+@media (max-width: 996px) {
+    .tableOfContents {
+        display: none;
+    }
+}

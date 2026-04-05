@@ -123,7 +123,7 @@ import TabItem from '@theme/TabItem';
         "author_country": "United States",
         "author_country_code": "US",
         "author_headline": "CEO @ TechCorp",
-        "author_profile_url": "https://www.linkedin.com/in/johndoe",
+        "author_profile_url": "https://www.social.com/in/johndoe",
         "author_type": "user",
         "author_company_job_title": "CEO",
         "author_company_name": "TechCorp",

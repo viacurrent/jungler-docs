@@ -26,13 +26,15 @@ const sidebars = {
         },
         {
             type: 'category',
-            label: 'API Reference',
+            label: 'API',
             collapsed: false,
             items: [
+                'api/index',
                 'quick-start',
                 'api/workspaces',
-                'api/searches',
+                'api/signals',
                 'api/posts',
+                'api/engagers',
                 'api/workbooks',
                 'api/webhooks',
             ],

@@ -1,5 +1,6 @@
 ---
 sidebar_position: 1
+slug: /
 ---
 
 # Welcome to Jungler
@@ -12,23 +13,23 @@ Jungler continuously monitors social media for posts matching your search criter
 
 ## Key Features
 
-### <img src="/img/icon-search.svg" alt="" style={{width: '24px', height: '24px', display: 'inline-block', verticalAlign: 'middle', marginRight: '8px'}} /> **Smart Searches**
-Create custom searches to track social meida conversations about specific topics, industries, or roles. Our AI continuously collects and classifies relevant posts.
+### Smart Searches
+Create custom searches to track social media conversations about specific topics, industries, or roles. Our AI continuously collects and classifies relevant posts.
 
-### <img src="/img/icon-insights.svg" alt="" style={{width: '24px', height: '24px', display: 'inline-block', verticalAlign: 'middle', marginRight: '8px'}} /> **AI-Powered Analysis**
+### AI-Powered Analysis
 Every post is automatically analyzed for:
 - **Relevance** - How well it matches your search intent
 - **Sentiment** - Positive, negative, or neutral tone
 - **Author insights** - Function, seniority level, company size, industry
 - **Content type** - Post, article, poll, etc.
 
-### <img src="/img/icon-workbooks.svg" alt="" style={{width: '24px', height: '24px', display: 'inline-block', verticalAlign: 'middle', marginRight: '8px'}} /> **Workbooks**
+### Workbooks
 Extract and analyze interactions from any post:
 - **Comments** - See who's engaging and what they're saying
 - **Reactions** - Track who's interested in the content
 - **Contacts** - Export deduplicated contact lists with enriched data
 
-### <img src="/img/icon-api.svg" alt="" style={{width: '24px', height: '24px', display: 'inline-block', verticalAlign: 'middle', marginRight: '8px'}} /> **Developer API**
+### Developer API
 Access your data programmatically with our REST API:
 - Filter and export posts with extensive criteria
 - Extract post interactions at scale
@@ -45,17 +46,18 @@ Access your data programmatically with our REST API:
 
 ### For Developers
 
-1. **[Get an API key](/docs/api/)** - Access your data programmatically
-2. **[Explore the API](/docs/api/)** - Learn about available endpoints
-3. **[Try examples](/docs/api/)** - See common use cases in action
+1. **[Get an API key](./api/index.md)** - Access your data programmatically
+2. **[Explore the API](./api/index.md)** - Learn about available endpoints
+3. **[Try examples](./api/index.md)** - See common use cases in action
 
 ## Quick Links
 
-- [API Reference](/docs/api/) - Complete API documentation
-- [Workspaces API](/docs/api/workspaces) - Manage your workspaces
-- [Searches API](/docs/api/searches) - Work with searches
-- [Posts API](/docs/api/posts) - Retrieve and filter posts
-- [Workbooks API](/docs/api/workbooks) - Extract post interactions
+- [API](./api/index.md) - Complete API documentation
+- [Workspaces API](./api/workspaces.md) - Manage your workspaces
+- [Signals API](./api/signals.md) - Work with signals
+- [Posts API](./api/posts.md) - Retrieve and filter posts
+- [Engagers API](./api/engagers.md) - Retrieve post interactions and contacts
+- [Workbooks API](./api/workbooks.md) - Create extraction tasks for specific posts
 
 ## Need Help?
 

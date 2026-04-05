@@ -62,16 +62,16 @@ print(response.json())
 
 Save the `_id` - this is your workspace ID for subsequent requests.
 
-## Step 3: List Your Searches
+## Step 3: List Your Signals
 
-Check which searches are collecting posts in your workspace:
+Check which signals are collecting posts in your workspace:
 
 <Tabs>
   <TabItem value="curl" label="cURL" default>
 
 ```bash
 curl -H "X-API-Key: your_api_key_here" \
-     "https://production.viacurrent.com/api/searches?workspace_id=507f1f77bcf86cd799439011"
+     "https://production.viacurrent.com/api/signals?workspace_id=507f1f77bcf86cd799439011"
 ```
 
   </TabItem>
@@ -81,7 +81,7 @@ curl -H "X-API-Key: your_api_key_here" \
 import httpx
 
 response = httpx.get(
-    'https://production.viacurrent.com/api/searches',
+    'https://production.viacurrent.com/api/signals',
     headers={'X-API-Key': 'your_api_key_here'},
     params={'workspace_id': '507f1f77bcf86cd799439011'}
 )
@@ -104,18 +104,18 @@ print(response.json())
 ]
 ```
 
-Save the search `_id` to filter posts.
+Save the signal `_id` to filter posts.
 
 ## Step 4: Retrieve Posts
 
-Get posts from your searches with filters:
+Get posts from your signals with filters:
 
 <Tabs>
   <TabItem value="curl" label="cURL" default>
 
 ```bash
 curl -H "X-API-Key: your_api_key_here" \
-     "https://production.viacurrent.com/api/posts?workspace_id=507f1f77bcf86cd799439011&search_ids=507f1f77bcf86cd799439012&page_size=10&match=relevant"
+     "https://production.viacurrent.com/api/posts?workspace_id=507f1f77bcf86cd799439011&signal_ids=507f1f77bcf86cd799439012&page_size=10&match=relevant"
 ```
 
   </TabItem>
@@ -129,7 +129,7 @@ response = httpx.get(
     headers={'X-API-Key': 'your_api_key_here'},
     params={
         'workspace_id': '507f1f77bcf86cd799439011',
-        'search_ids': '507f1f77bcf86cd799439012',
+        'signal_ids': '507f1f77bcf86cd799439012',
         'page_size': 10,
         'match': 'relevant'
     }
@@ -149,7 +149,7 @@ print(response.json())
       "content": "Excited to announce...",
       "author": {
         "name": "Jane Smith",
-        "profile_url": "https://linkedin.com/in/janesmith",
+        "profile_url": "https://social.com/in/janesmith",
         "function": "ENG",
         "authority": "L"
       },
@@ -169,7 +169,7 @@ print(response.json())
 
 ### Extract Post Interactions
 
-Want to get comments and reactions from a specific post? See the [Workbooks API Quick Start](/docs/api/workbooks#quick-start).
+Want to get comments and reactions from a specific post? See the [Workbooks API Quick Start](./api/workbooks.md#quick-start).
 
 ### Advanced Filtering
 
@@ -181,15 +181,15 @@ Explore powerful filtering options:
 ```bash
 # Filter by sentiment and function
 curl -H "X-API-Key: your_api_key_here" \
-     "https://production.viacurrent.com/api/posts?workspace_id=507f1f77bcf86cd799439011&search_ids=507f1f77bcf86cd799439012&sentiment=positive&function=ENG,PRD&authority=L"
+     "https://production.viacurrent.com/api/posts?workspace_id=507f1f77bcf86cd799439011&signal_ids=507f1f77bcf86cd799439012&sentiment=positive&function=ENG,PRD&authority=L"
 
 # Filter by date range
 curl -H "X-API-Key: your_api_key_here" \
-     "https://production.viacurrent.com/api/posts?workspace_id=507f1f77bcf86cd799439011&search_ids=507f1f77bcf86cd799439012&created_after=2024-01-01&created_before=2024-01-31"
+     "https://production.viacurrent.com/api/posts?workspace_id=507f1f77bcf86cd799439011&signal_ids=507f1f77bcf86cd799439012&created_after=2024-01-01&created_before=2024-01-31"
 
 # Filter by company size and industry
 curl -H "X-API-Key: your_api_key_here" \
-     "https://production.viacurrent.com/api/posts?workspace_id=507f1f77bcf86cd799439011&search_ids=507f1f77bcf86cd799439012&company_size=L,XL,XXL&company_industry=TECH_INFO_MEDIA"
+     "https://production.viacurrent.com/api/posts?workspace_id=507f1f77bcf86cd799439011&signal_ids=507f1f77bcf86cd799439012&company_size=L,XL,XXL&company_industry=TECH_INFO_MEDIA"
 ```
 
   </TabItem>
@@ -204,7 +204,7 @@ response = httpx.get(
     headers={'X-API-Key': 'your_api_key_here'},
     params={
         'workspace_id': '507f1f77bcf86cd799439011',
-        'search_ids': '507f1f77bcf86cd799439012',
+        'signal_ids': '507f1f77bcf86cd799439012',
         'sentiment': 'positive',
         'function': 'ENG,PRD',
         'authority': 'L'
@@ -217,7 +217,7 @@ response = httpx.get(
     headers={'X-API-Key': 'your_api_key_here'},
     params={
         'workspace_id': '507f1f77bcf86cd799439011',
-        'search_ids': '507f1f77bcf86cd799439012',
+        'signal_ids': '507f1f77bcf86cd799439012',
         'created_after': '2024-01-01',
         'created_before': '2024-01-31'
     }
@@ -229,7 +229,7 @@ response = httpx.get(
     headers={'X-API-Key': 'your_api_key_here'},
     params={
         'workspace_id': '507f1f77bcf86cd799439011',
-        'search_ids': '507f1f77bcf86cd799439012',
+        'signal_ids': '507f1f77bcf86cd799439012',
         'company_size': 'L,XL,XXL',
         'company_industry': 'TECH_INFO_MEDIA'
     }
@@ -239,7 +239,7 @@ response = httpx.get(
   </TabItem>
 </Tabs>
 
-See the [Posts API documentation](/docs/api/posts) for all available filters.
+See the [Posts API documentation](./api/posts.md) for all available filters.
 
 ## Common Issues
 
@@ -264,14 +264,14 @@ See the [Posts API documentation](/docs/api/posts) for all available filters.
 | Endpoint | Rate Limit |
 |----------|------------|
 | GET /workspaces | 30/minute |
-| GET /searches | 30/minute |
+| GET /signals | 30/minute |
 | GET /posts | 60/minute |
 | POST /workbooks | 6/minute |
-| GET /workbooks/\* | 12/minute |
+| GET /engagers/* | 60/minute |
 
 ## Further Reading
 
-- [API Reference](/docs/api/) - Complete API documentation
-- [Posts API](/docs/api/posts) - Detailed filtering options
-- [Workbooks API](/docs/api/workbooks) - Extract post interactions
-- [Searches API](/docs/api/searches) - Manage searches
+- [API](./api/index.md) - Complete API documentation
+- [Posts API](./api/posts.md) - Detailed filtering options
+- [Workbooks API](./api/workbooks.md) - Extract post interactions
+- [Signals API](./api/signals.md) - Manage signals

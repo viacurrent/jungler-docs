@@ -1,28 +1,28 @@
-# Searches API
+# Signals API
 
-The Searches API allows you to list and retrieve information about your searches.
+The Signals API allows you to list and retrieve information about your signals (saved searches).
 
 :::info Authentication Required
-All API requests require authentication. See [API Reference](/docs/api#authentication) for details.
+All API requests require authentication. See [API Overview](./index.md#authentication) for details.
 :::
 
-## List Searches
+## List Signals
 
-Get all active searches in a workspace.
+Get all active signals in a workspace.
 
 ```http
-GET /api/searches
+GET /api/signals
 ```
 
 ### Query Parameters
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `workspace_id` | string | Yes | The workspace ID to list searches for |
+| `workspace_id` | string | Yes | The workspace ID to list signals for |
 
 ### Response
 
-Returns an array of search objects.
+Returns an array of signal objects.
 
 ```json
 [
@@ -41,7 +41,7 @@ Returns an array of search objects.
   {
     "_id": "507f1f77bcf86cd799439013",
     "name": "Follow Specific Person",
-    "query": "https://linkedin.com/in/vearnold",
+    "query": "https://social.com/in/vearnold",
     "frequency": "daily",
     "is_activated": true,
     "prompt": "Track all posts from this user",
@@ -53,7 +53,7 @@ Returns an array of search objects.
   {
     "_id": "507f1f77bcf86cd799439014",
     "name": "Company Posts",
-    "query": "https://linkedin.com/company/example-corp",
+    "query": "https://social.com/company/example-corp",
     "frequency": "daily",
     "is_activated": true,
     "prompt": "Track all posts from this company",
@@ -69,12 +69,12 @@ Returns an array of search objects.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `_id` | string | Unique search identifier |
-| `name` | string | Search name |
-| `query` | string | Search query (varies by `query_type`) |
-| `frequency` | string | Search frequency: `hourly`, `daily`, `weekly` |
-| `is_activated` | boolean | Whether the search is active |
-| `prompt` | string | AI prompt used for the search |
+| `_id` | string | Unique signal identifier |
+| `name` | string | Signal name |
+| `query` | string | Signal query (varies by `query_type`) |
+| `frequency` | string | Signal frequency: `hourly`, `daily`, `weekly` |
+| `is_activated` | boolean | Whether the signal is active |
+| `prompt` | string | AI prompt used for this signal |
 | `query_type` | string | Type of query: `search_keyword`, `user_profile`, `company_profile` |
 | `query_identifier` | string \| null | Username for `user_profile`, company ID for `company_profile`, or `null` for `search_keyword` |
 | `created_at` | string | ISO 8601 timestamp |
@@ -88,13 +88,13 @@ The `query` and `query_identifier` fields vary based on `query_type`:
 - `query`: Search terms, e.g., `"CTO OR \"Chief Technology Officer\""`
 - `query_identifier`: Always `null`
 
-**User Profile Search** (`query_type: "user_profile"`):
-- `query`: Profile URL, e.g., `"https://linkedin.com/in/vearnold"`
-- `query_identifier`: LinkedIn username, e.g., `"vearnold"`
+**User Profile Signal** (`query_type: "user_profile"`):
+- `query`: Profile URL, e.g., `"https://social.com/in/vearnold"`
+- `query_identifier`: Username, e.g., `"vearnold"`
 
-**Company Profile Search** (`query_type: "company_profile"`):
-- `query`: Company URL, e.g., `"https://linkedin.com/company/example-corp"`
-- `query_identifier`: LinkedIn company ID, e.g., `"12345678"`
+**Company Profile Signal** (`query_type: "company_profile"`):
+- `query`: Company URL, e.g., `"https://social.com/company/example-corp"`
+- `query_identifier`: Company ID, e.g., `"12345678"`
 
 ### Rate Limiting
 
@@ -110,14 +110,14 @@ import TabItem from '@theme/TabItem';
 
 ```bash
 curl -H "X-API-Key: your_api_key_here" \
-     https://production.viacurrent.com/api/searches?workspace_id=507f1f77bcf86cd799439013
+     https://production.viacurrent.com/api/signals?workspace_id=507f1f77bcf86cd799439013
 ```
 
 </TabItem>
 <TabItem value="javascript" label="JavaScript">
 
 ```javascript
-const url = new URL('https://production.viacurrent.com/api/searches');
+const url = new URL('https://production.viacurrent.com/api/signals');
 url.searchParams.append('workspace_id', '507f1f77bcf86cd799439013');
 
 const response = await fetch(url, {
@@ -126,7 +126,7 @@ const response = await fetch(url, {
   }
 });
 
-const searches = await response.json();
+const signals = await response.json();
 ```
 
 </TabItem>
@@ -135,12 +135,12 @@ const searches = await response.json();
 ```python
 import httpx
 
-url = "https://production.viacurrent.com/api/searches"
+url = "https://production.viacurrent.com/api/signals"
 headers = {"X-API-Key": "your_api_key_here"}
 params = {"workspace_id": "507f1f77bcf86cd799439013"}
 
 response = httpx.get(url, headers=headers, params=params)
-searches = response.json()
+signals = response.json()
 ```
 
 </TabItem>
@@ -148,25 +148,25 @@ searches = response.json()
 
 ---
 
-## Get Search
+## Get Signal
 
-Get detailed information about a specific search.
+Get detailed information about a specific signal.
 
 ```http
-GET /api/searches/{search_id}
+GET /api/signals/{signal_id}
 ```
 
 ### Path Parameters
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `search_id` | string | The search ID to retrieve |
+| `signal_id` | string | The signal ID to retrieve |
 
 ### Query Parameters
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `workspace_id` | string | Yes | The workspace ID that owns this search |
+| `workspace_id` | string | Yes | The workspace ID that owns this signal |
 
 ### Response
 
@@ -196,15 +196,15 @@ GET /api/searches/{search_id}
 
 ```bash
 curl -H "X-API-Key: your_api_key_here" \
-     https://production.viacurrent.com/api/searches/507f1f77bcf86cd799439012?workspace_id=507f1f77bcf86cd799439013
+     https://production.viacurrent.com/api/signals/507f1f77bcf86cd799439012?workspace_id=507f1f77bcf86cd799439013
 ```
 
 </TabItem>
 <TabItem value="javascript" label="JavaScript">
 
 ```javascript
-const searchId = '507f1f77bcf86cd799439012';
-const url = new URL(`https://production.viacurrent.com/api/searches/${searchId}`);
+const signalId = '507f1f77bcf86cd799439012';
+const url = new URL(`https://production.viacurrent.com/api/signals/${signalId}`);
 url.searchParams.append('workspace_id', '507f1f77bcf86cd799439013');
 
 const response = await fetch(url, {
@@ -213,7 +213,7 @@ const response = await fetch(url, {
   }
 });
 
-const search = await response.json();
+const signal = await response.json();
 ```
 
 </TabItem>
@@ -222,13 +222,13 @@ const search = await response.json();
 ```python
 import httpx
 
-search_id = "507f1f77bcf86cd799439012"
-url = f"https://production.viacurrent.com/api/searches/{search_id}"
+signal_id = "507f1f77bcf86cd799439012"
+url = f"https://production.viacurrent.com/api/signals/{signal_id}"
 headers = {"X-API-Key": "your_api_key_here"}
 params = {"workspace_id": "507f1f77bcf86cd799439013"}
 
 response = httpx.get(url, headers=headers, params=params)
-search = response.json()
+signal = response.json()
 ```
 
 </TabItem>
@@ -238,38 +238,38 @@ search = response.json()
 
 ## Use Cases
 
-### Get search IDs for filtering posts
+### Get signal IDs for filtering posts
 
 <Tabs>
 <TabItem value="curl" label="cURL" default>
 
 ```bash
-# 1. List all searches
+# 1. List all signals
 curl -H "X-API-Key: your_api_key_here" \
-     https://production.viacurrent.com/api/searches?workspace_id=507f1f77bcf86cd799439013
+     https://production.viacurrent.com/api/signals?workspace_id=507f1f77bcf86cd799439013
 
-# 2. Use search IDs to filter posts
+# 2. Use signal IDs to filter posts
 curl -H "X-API-Key: your_api_key_here" \
-     https://production.viacurrent.com/api/posts?workspace_id=507f1f77bcf86cd799439013&search_ids=507f1f77bcf86cd799439012,507f1f77bcf86cd799439015
+     "https://production.viacurrent.com/api/posts?workspace_id=507f1f77bcf86cd799439013&signal_ids=507f1f77bcf86cd799439012,507f1f77bcf86cd799439015"
 ```
 
 </TabItem>
 <TabItem value="javascript" label="JavaScript">
 
 ```javascript
-// 1. List all searches
-const searchesUrl = new URL('https://production.viacurrent.com/api/searches');
-searchesUrl.searchParams.append('workspace_id', '507f1f77bcf86cd799439013');
+// 1. List all signals
+const signalsUrl = new URL('https://production.viacurrent.com/api/signals');
+signalsUrl.searchParams.append('workspace_id', '507f1f77bcf86cd799439013');
 
-const searchesResponse = await fetch(searchesUrl, {
+const signalsResponse = await fetch(signalsUrl, {
   headers: { 'X-API-Key': 'your_api_key_here' }
 });
-const searches = await searchesResponse.json();
+const signals = await signalsResponse.json();
 
-// 2. Use search IDs to filter posts
+// 2. Use signal IDs to filter posts
 const postsUrl = new URL('https://production.viacurrent.com/api/posts');
 postsUrl.searchParams.append('workspace_id', '507f1f77bcf86cd799439013');
-postsUrl.searchParams.append('search_ids', '507f1f77bcf86cd799439012,507f1f77bcf86cd799439015');
+postsUrl.searchParams.append('signal_ids', signals.map(s => s._id).join(','));
 
 const postsResponse = await fetch(postsUrl, {
   headers: { 'X-API-Key': 'your_api_key_here' }
@@ -286,21 +286,22 @@ import httpx
 headers = {"X-API-Key": "your_api_key_here"}
 workspace_id = "507f1f77bcf86cd799439013"
 
-# 1. List all searches
-searches_response = httpx.get(
-    "https://production.viacurrent.com/api/searches",
+# 1. List all signals
+signals_response = httpx.get(
+    "https://production.viacurrent.com/api/signals",
     headers=headers,
     params={"workspace_id": workspace_id}
 )
-searches = searches_response.json()
+signals = signals_response.json()
 
-# 2. Use search IDs to filter posts
+# 2. Use signal IDs to filter posts
+signal_ids = ",".join(s["_id"] for s in signals)
 posts_response = httpx.get(
     "https://production.viacurrent.com/api/posts",
     headers=headers,
     params={
         "workspace_id": workspace_id,
-        "search_ids": "507f1f77bcf86cd799439012,507f1f77bcf86cd799439015"
+        "signal_ids": signal_ids,
     }
 )
 posts = posts_response.json()
@@ -309,31 +310,17 @@ posts = posts_response.json()
 </TabItem>
 </Tabs>
 
-### Monitor search configuration
+### Get engagers for a profile signal
+
+Signals with `query_type` of `user_profile` or `company_profile` have engagers (people who interacted with the tracked profile's posts).
 
 <Tabs>
 <TabItem value="curl" label="cURL" default>
 
 ```bash
-# Get details of a specific search to check its configuration
+# Get engagers for a profile signal
 curl -H "X-API-Key: your_api_key_here" \
-     https://production.viacurrent.com/api/searches/507f1f77bcf86cd799439012?workspace_id=507f1f77bcf86cd799439013
-```
-
-</TabItem>
-<TabItem value="javascript" label="JavaScript">
-
-```javascript
-const searchId = '507f1f77bcf86cd799439012';
-const url = new URL(`https://production.viacurrent.com/api/searches/${searchId}`);
-url.searchParams.append('workspace_id', '507f1f77bcf86cd799439013');
-
-const response = await fetch(url, {
-  headers: { 'X-API-Key': 'your_api_key_here' }
-});
-
-const searchConfig = await response.json();
-console.log(`Search '${searchConfig.name}' is ${searchConfig.is_activated ? 'active' : 'inactive'}`);
+     "https://production.viacurrent.com/api/engagers/signal/507f1f77bcf86cd799439013?workspace_id=507f1f77bcf86cd799439013&page=1&page_size=100"
 ```
 
 </TabItem>
@@ -342,14 +329,13 @@ console.log(`Search '${searchConfig.name}' is ${searchConfig.is_activated ? 'act
 ```python
 import httpx
 
-search_id = "507f1f77bcf86cd799439012"
-url = f"https://production.viacurrent.com/api/searches/{search_id}"
-headers = {"X-API-Key": "your_api_key_here"}
-params = {"workspace_id": "507f1f77bcf86cd799439013"}
-
-response = httpx.get(url, headers=headers, params=params)
-search_config = response.json()
-print(f"Search '{search_config['name']}' is {'active' if search_config['is_activated'] else 'inactive'}")
+signal_id = "507f1f77bcf86cd799439013"
+response = httpx.get(
+    f"https://production.viacurrent.com/api/engagers/signal/{signal_id}",
+    headers={"X-API-Key": "your_api_key_here"},
+    params={"workspace_id": "507f1f77bcf86cd799439013", "page": 1, "page_size": 100},
+)
+engagers = response.json()
 ```
 
 </TabItem>
@@ -369,14 +355,14 @@ print(f"Search '{search_config['name']}' is {'active' if search_config['is_activ
 #### 403 Forbidden
 ```json
 {
-  "detail": "search_not_in_workspace"
+  "detail": "signal_not_in_workspace"
 }
 ```
 
 #### 404 Not Found
 ```json
 {
-  "detail": "Search not found"
+  "detail": "Signal not found"
 }
 ```
 
@@ -391,7 +377,7 @@ print(f"Search '{search_config['name']}' is {'active' if search_config['is_activ
 
 ## Next Steps
 
-Once you have search IDs, you can:
-- [Retrieve posts from these searches](/docs/api/posts)
-- Filter posts by multiple searches simultaneously
-- Track which searches are generating the most relevant content
+Once you have signal IDs, you can:
+- [Retrieve posts from these signals](./posts.md)
+- [Get engagers for profile signals](./engagers.md#signal-engagers) (user_profile and company_profile types)
+- Filter posts by multiple signals simultaneously
