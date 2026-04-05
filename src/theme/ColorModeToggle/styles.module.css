@@ -30,6 +30,11 @@
     opacity: 0.8;
 }
 
+.active {
+    composes: btn;
+}
+
+.active,
 .btn.active {
     background-color: var(--ifm-background-color);
     opacity: 1;

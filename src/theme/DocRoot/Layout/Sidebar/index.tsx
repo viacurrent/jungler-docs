@@ -41,7 +41,7 @@ export default function DocRootLayoutSidebar({
                 hiddenSidebarContainer && styles.docSidebarContainerHidden,
             )}
             onTransitionEnd={(e) => {
-                if (!e.currentTarget.classList.contains(styles.docSidebarContainer)) {
+                if (e.target !== e.currentTarget) {
                     return;
                 }
                 if (hiddenSidebarContainer) {

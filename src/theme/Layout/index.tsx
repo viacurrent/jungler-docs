@@ -11,7 +11,6 @@ import { useKeyboardNavigation } from '@docusaurus/theme-common/internal';
 import SkipToContent from '@theme/SkipToContent';
 import AnnouncementBar from '@theme/AnnouncementBar';
 import Navbar from '@theme/Navbar';
-import Footer from '@theme/Footer';
 import LayoutProvider from '@theme/Layout/Provider';
 import ErrorPageContent from '@theme/ErrorPageContent';
 import styles from './styles.module.css';
@@ -19,16 +18,11 @@ import styles from './styles.module.css';
 export default function Layout(props: any) {
     const {
         children,
-        noFooter,
         wrapperClassName,
         title,
         description,
     } = props;
     useKeyboardNavigation();
-
-    // Hide outer footer on doc pages — it's rendered inside the main scroll area instead
-    // All pages are doc pages now — footer is rendered inside the doc scroll area
-    const shouldHideFooter = true;
 
     return (
         <LayoutProvider>
@@ -49,7 +43,6 @@ export default function Layout(props: any) {
                     {children}
                 </ErrorBoundary>
             </div>
-            {!shouldHideFooter && <Footer />}
         </LayoutProvider>
     );
 }

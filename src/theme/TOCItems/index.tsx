@@ -1,13 +1,13 @@
-import React, {type ReactNode, useMemo, useEffect, useRef} from 'react';
-import {useThemeConfig} from '@docusaurus/theme-common';
-import {useFilteredAndTreeifiedTOC} from '@docusaurus/theme-common/internal';
+import React, { type ReactNode, useMemo, useEffect, useRef } from 'react';
+import { useThemeConfig } from '@docusaurus/theme-common';
+import { useFilteredAndTreeifiedTOC } from '@docusaurus/theme-common/internal';
 import TOCItemTree from '@theme/TOCItems/Tree';
-import type {Props} from '@theme/TOCItems';
+import type { Props } from '@theme/TOCItems';
 
 function getVisibleBoundingClientRect(element: HTMLElement): DOMRect {
     const rect = element.getBoundingClientRect();
-    if (rect.top === rect.bottom) {
-        return getVisibleBoundingClientRect(element.parentNode as HTMLElement);
+    if (rect.top === rect.bottom && element.parentElement) {
+        return getVisibleBoundingClientRect(element.parentElement);
     }
     return rect;
 }
@@ -47,7 +47,7 @@ function useTOCHighlightCustom(config: {
 
     useEffect(() => {
         if (!config) return;
-        const {linkClassName, linkActiveClassName, minHeadingLevel, maxHeadingLevel} = config;
+        const { linkClassName, linkActiveClassName, minHeadingLevel, maxHeadingLevel } = config;
 
         function updateActiveLink() {
             const links = Array.from(
@@ -75,12 +75,12 @@ function useTOCHighlightCustom(config: {
         }
 
         document.addEventListener('scroll', updateActiveLink);
-        document.addEventListener('resize', updateActiveLink);
+        window.addEventListener('resize', updateActiveLink);
         updateActiveLink();
 
         return () => {
             document.removeEventListener('scroll', updateActiveLink);
-            document.removeEventListener('resize', updateActiveLink);
+            window.removeEventListener('resize', updateActiveLink);
         };
     }, [config]);
 }
@@ -109,7 +109,7 @@ export default function TOCItems({
 
     const tocHighlightConfig = useMemo(() => {
         if (linkClassName && linkActiveClassName) {
-            return {linkClassName, linkActiveClassName, minHeadingLevel, maxHeadingLevel};
+            return { linkClassName, linkActiveClassName, minHeadingLevel, maxHeadingLevel };
         }
         return undefined;
     }, [linkClassName, linkActiveClassName, minHeadingLevel, maxHeadingLevel]);

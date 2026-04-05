@@ -46,10 +46,10 @@ Searches are automatically rerun every 24 hours, ensuring your feed stays curren
 
 <div style={{display: 'flex', flexDirection: 'column', gap: '0.5rem'}}>
 
-**→** Learn [what to search for](/search-ideas) to track buying intent
+**→** Learn [what to search for](./search-ideas.md) to track buying intent
 
-**→** Understand [how to create effective searches](/search-syntax)
+**→** Understand [how to create effective searches](./search-syntax.md)
 
-**→** Configure [AI filtering](/ai-filtering) to refine your results
+**→** Configure [AI filtering](./ai-filtering.md) to refine your results
 
 </div>

@@ -1,9 +1,9 @@
 # Posts API
 
-The Posts API allows you to retrieve and filter posts collected by your searches.
+The Posts API allows you to retrieve and filter posts collected by your signals.
 
 :::info Authentication Required
-All API requests require authentication. See [API Reference](/api#authentication) for details.
+All API requests require authentication. See [API Overview](./index.md#authentication) for details.
 :::
 
 ## List Posts
@@ -21,7 +21,7 @@ GET /api/posts
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `workspace_id` | string | The workspace ID to fetch posts from |
-| `search_ids` | string | Comma-separated list of search IDs to filter by |
+| `signal_ids` | string | Comma-separated list of signal IDs to filter by |
 
 #### Pagination Parameters
 
@@ -42,7 +42,7 @@ GET /api/posts
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `match` | string | AI relevance classification: `relevant`, `not_relevant`, `unclassified`, or combinations (comma-separated). **Note:** Only works if AI filtering is configured for your searches. |
+| `match` | string | AI relevance classification: `relevant`, `not_relevant`, `unclassified`, or combinations (comma-separated). **Note:** Only works if AI filtering is configured for your signals. |
 | `type` | string | Post types: `buying_intent`, `hiring`, `thought_leadership`, `lead_magnet`, `promotion`, `announcement`, `other` |
 | `sentiment` | string | Sentiment: `positive`, `negative`, `neutral` |
 | `author` | string | Comma-separated author types |
@@ -67,12 +67,12 @@ GET /api/posts
   "items": [
     {
       "_id": "507f1f77bcf86cd799439011",
-      "url": "https://linkedin.com/feed/update/...",
+      "url": "https://social.com/feed/update/...",
       "urn": "urn:li:activity:...",
       "content": "Post content text...",
       "author": {
         "name": "John Doe",
-        "profile_url": "https://linkedin.com/in/johndoe",
+        "profile_url": "https://social.com/in/johndoe",
         "profile_image_url": "https://...",
         "description": "Software Engineer at Company",
         "username": "johndoe",
@@ -130,7 +130,7 @@ import TabItem from '@theme/TabItem';
 
 ```bash
 curl -H "X-API-Key: your_api_key_here" \
-     https://production.viacurrent.com/api/posts?workspace_id=507f1f77bcf86cd799439013&search_ids=507f1f77bcf86cd799439012&page=1&page_size=100&match=relevant&sentiment=positive&country=US,GB
+     "https://production.viacurrent.com/api/posts?workspace_id=507f1f77bcf86cd799439013&signal_ids=507f1f77bcf86cd799439012&page=1&page_size=100&match=relevant&sentiment=positive&country=US,GB"
 ```
 
 </TabItem>
@@ -139,7 +139,7 @@ curl -H "X-API-Key: your_api_key_here" \
 ```javascript
 const url = new URL('https://production.viacurrent.com/api/posts');
 url.searchParams.append('workspace_id', '507f1f77bcf86cd799439013');
-url.searchParams.append('search_ids', '507f1f77bcf86cd799439012');
+url.searchParams.append('signal_ids', '507f1f77bcf86cd799439012');
 url.searchParams.append('page', '1');
 url.searchParams.append('page_size', '100');
 url.searchParams.append('match', 'relevant');
@@ -165,7 +165,7 @@ url = "https://production.viacurrent.com/api/posts"
 headers = {"X-API-Key": "your_api_key_here"}
 params = {
     "workspace_id": "507f1f77bcf86cd799439013",
-    "search_ids": "507f1f77bcf86cd799439012",
+    "signal_ids": "507f1f77bcf86cd799439012",
     "page": 1,
     "page_size": 100,
     "match": "relevant",
@@ -194,13 +194,13 @@ For consistent pagination across pages:
 ```bash
 # Page 1
 curl -H "X-API-Key: your_api_key_here" \
-     https://production.viacurrent.com/api/posts?workspace_id=...&search_ids=...&page=1
+     "https://production.viacurrent.com/api/posts?workspace_id=...&signal_ids=...&page=1"
 
 # Response includes: "snapshot_time": "2024-01-15T12:00:00Z"
 
 # Page 2 - use the same snapshot_time
 curl -H "X-API-Key: your_api_key_here" \
-     https://production.viacurrent.com/api/posts?workspace_id=...&search_ids=...&page=2&snapshot_time=2024-01-15T12:00:00Z
+     "https://production.viacurrent.com/api/posts?workspace_id=...&signal_ids=...&page=2&snapshot_time=2024-01-15T12:00:00Z"
 ```
 
 </TabItem>
@@ -213,7 +213,7 @@ const headers = { 'X-API-Key': 'your_api_key_here' };
 // Page 1
 const params1 = new URLSearchParams({
   workspace_id: '...',
-  search_ids: '...',
+  signal_ids: '...',
   page: '1'
 });
 
@@ -226,7 +226,7 @@ const snapshotTime = data1.snapshot_time;
 // Page 2 - use the same snapshot_time
 const params2 = new URLSearchParams({
   workspace_id: '...',
-  search_ids: '...',
+  signal_ids: '...',
   page: '2',
   snapshot_time: snapshotTime
 });
@@ -245,7 +245,7 @@ url = "https://production.viacurrent.com/api/posts"
 headers = {"X-API-Key": "your_api_key_here"}
 
 # Page 1
-params = {"workspace_id": "...", "search_ids": "...", "page": 1}
+params = {"workspace_id": "...", "signal_ids": "...", "page": 1}
 response = httpx.get(url, headers=headers, params=params)
 data = response.json()
 
@@ -255,7 +255,7 @@ snapshot_time = data["snapshot_time"]
 # Page 2 - use the same snapshot_time
 params = {
     "workspace_id": "...",
-    "search_ids": "...",
+    "signal_ids": "...",
     "page": 2,
     "snapshot_time": snapshot_time
 }
@@ -276,14 +276,14 @@ response = httpx.get(url, headers=headers, params=params)
 #### 400 Bad Request
 ```json
 {
-  "detail": "invalid_search_id_format"
+  "detail": "invalid_signal_id_format"
 }
 ```
 
 #### 403 Forbidden
 ```json
 {
-  "detail": "search_507f1f77bcf86cd799439012_not_in_workspace"
+  "detail": "signal_not_in_workspace"
 }
 ```
 

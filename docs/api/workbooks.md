@@ -1,13 +1,13 @@
 # Workbooks API
 
-The Workbooks API allows you to extract post interactions (comments, reactions) and contact information from posts.
+The Workbooks API allows you to create temporary workbooks that extract post interactions (comments, reactions) and contact information from posts.
 
 :::info Authentication Required
-All API requests require authentication. See [API Reference](/api#authentication) for details.
+All API requests require authentication. See [API Overview](./index.md#authentication) for details.
 :::
 
 :::warning Data Expiration
-Workbook data is stored in temporary workbooks that **expire after 12 hours**. Make sure to download all data you need within this timeframe.
+Workbook data is stored in temporary workbooks that **expire after 12 hours**. Make sure to retrieve all data you need within this timeframe using the [Engagers API](./engagers.md).
 :::
 
 ## Quick Start
@@ -27,7 +27,7 @@ curl -X POST \
      -H "X-API-Key: your_api_key_here" \
      -H "Content-Type: application/json" \
      -d '{
-       "post_url": "https://www.linkedin.com/posts/username_activity-1234567890",
+       "post_url": "https://www.social.com/posts/username_activity-1234567890",
        "data_types": ["comment", "reaction"],
        "workspace_id": "507f1f77bcf86cd799439011"
      }' \
@@ -45,7 +45,7 @@ const response = await fetch('https://production.viacurrent.com/api/workbooks', 
     'Content-Type': 'application/json'
   },
   body: JSON.stringify({
-    post_url: 'https://www.linkedin.com/posts/username_activity-1234567890',
+    post_url: 'https://www.social.com/posts/username_activity-1234567890',
     data_types: ['comment', 'reaction'],
     workspace_id: '507f1f77bcf86cd799439011'
   })
@@ -65,7 +65,7 @@ response = httpx.post(
     'https://production.viacurrent.com/api/workbooks',
     headers={'X-API-Key': 'your_api_key_here'},
     json={
-        'post_url': 'https://www.linkedin.com/posts/username_activity-1234567890',
+        'post_url': 'https://www.social.com/posts/username_activity-1234567890',
         'data_types': ['comment', 'reaction'],
         'workspace_id': '507f1f77bcf86cd799439011'
     }
@@ -86,27 +86,23 @@ print(response.json())
 
 ### 2. Wait for Completion
 
-The extraction typically takes 1-3 minutes. The task runs asynchronously, so you can check back later or poll for status updates (if status endpoint is available).
+The extraction typically takes 1-3 minutes. Poll the [task status](#get-task-status) endpoint until it completes.
 
 ### 3. Retrieve Your Data
 
-Once complete, use the workbook ID to access the collected data:
+Once complete, use the workbook ID from the task result to access collected data via the [Engagers API](./engagers.md):
 
 <Tabs>
   <TabItem value="curl" label="cURL" default>
 
 ```bash
-# Get all contacts (deduplicated)
+# Get all engagers (comments + reactions)
 curl -H "X-API-Key: your_api_key_here" \
-     https://production.viacurrent.com/api/workbooks/507f1f77bcf86cd799439012/contacts
+     "https://production.viacurrent.com/api/engagers/workbook/507f1f77bcf86cd799439012?page=1&page_size=100"
 
-# Get comments
+# Get deduplicated contacts
 curl -H "X-API-Key: your_api_key_here" \
-     https://production.viacurrent.com/api/workbooks/507f1f77bcf86cd799439012/comments
-
-# Get reactions
-curl -H "X-API-Key: your_api_key_here" \
-     https://production.viacurrent.com/api/workbooks/507f1f77bcf86cd799439012/reactions
+     "https://production.viacurrent.com/api/engagers/workbook/507f1f77bcf86cd799439012/contacts?page=1&page_size=500"
 ```
 
   </TabItem>
@@ -116,26 +112,19 @@ curl -H "X-API-Key: your_api_key_here" \
 const headers = { 'X-API-Key': 'your_api_key_here' };
 const workbookId = '507f1f77bcf86cd799439012';
 
-// Get all contacts (deduplicated)
+// Get all engagers (comments + reactions)
+const engagersResponse = await fetch(
+  `https://production.viacurrent.com/api/engagers/workbook/${workbookId}?page=1&page_size=100`,
+  { headers }
+);
+const engagers = await engagersResponse.json();
+
+// Get deduplicated contacts
 const contactsResponse = await fetch(
-  `https://production.viacurrent.com/api/workbooks/${workbookId}/contacts`,
+  `https://production.viacurrent.com/api/engagers/workbook/${workbookId}/contacts?page=1&page_size=500`,
   { headers }
 );
 const contacts = await contactsResponse.json();
-
-// Get comments
-const commentsResponse = await fetch(
-  `https://production.viacurrent.com/api/workbooks/${workbookId}/comments`,
-  { headers }
-);
-const comments = await commentsResponse.json();
-
-// Get reactions
-const reactionsResponse = await fetch(
-  `https://production.viacurrent.com/api/workbooks/${workbookId}/reactions`,
-  { headers }
-);
-const reactions = await reactionsResponse.json();
 ```
 
   </TabItem>
@@ -147,22 +136,18 @@ import httpx
 headers = {'X-API-Key': 'your_api_key_here'}
 workbook_id = '507f1f77bcf86cd799439012'
 
-# Get all contacts (deduplicated)
+# Get all engagers (comments + reactions)
+engagers = httpx.get(
+    f'https://production.viacurrent.com/api/engagers/workbook/{workbook_id}',
+    headers=headers,
+    params={'page': 1, 'page_size': 100},
+).json()
+
+# Get deduplicated contacts
 contacts = httpx.get(
-    f'https://production.viacurrent.com/api/workbooks/{workbook_id}/contacts',
-    headers=headers
-).json()
-
-# Get comments
-comments = httpx.get(
-    f'https://production.viacurrent.com/api/workbooks/{workbook_id}/comments',
-    headers=headers
-).json()
-
-# Get reactions
-reactions = httpx.get(
-    f'https://production.viacurrent.com/api/workbooks/{workbook_id}/reactions',
-    headers=headers
+    f'https://production.viacurrent.com/api/engagers/workbook/{workbook_id}/contacts',
+    headers=headers,
+    params={'page': 1, 'page_size': 500},
 ).json()
 ```
 
@@ -171,7 +156,7 @@ reactions = httpx.get(
 
 ---
 
-### Create a Workbook
+## Create a Workbook
 
 Create a new temporary workbook to extract interactions from a post.
 
@@ -184,7 +169,7 @@ POST /api/workbooks
 ```json
 {
   "workspace_id": "507f1f77bcf86cd799439013",
-  "post_url": "https://www.linkedin.com/feed/update/urn:li:activity:...",
+  "post_url": "https://www.social.com/feed/update/urn:li:activity:...",
   "data_types": ["comment", "reaction"]
 }
 ```
@@ -192,7 +177,7 @@ POST /api/workbooks
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
 | `workspace_id` | string | Yes | The workspace ID |
-| `post_url` | string | Yes | Post URL (see [supported formats](#supported-post-url-formats)) |
+| `post_url` | string | Yes | Post URL |
 | `data_types` | array | Yes | Types of data to extract: `comment`, `reaction` (post data is always included) |
 
 ### Response
@@ -347,192 +332,6 @@ workbook_id = data["result"]["workbook_id"]
 
 ---
 
-## Get Contacts
-
-Retrieve deduplicated contact information from a workbook.
-
-```http
-GET /api/workbooks/{workbook_id}/contacts
-```
-
-### Query Parameters
-
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `fields` | string | `name,profile_url` | Comma-separated fields to include |
-| `activity_filter` | string | (all) | Filter by activity: `commenters`, `reactors`, or combinations |
-
-**Available fields:**
-- `name` - Full name
-- `first_name` - Parsed first name
-- `last_name` - Parsed last name
-- `urn` - Platform URN (Universal Resource Name)
-- `profile_url` - Profile URL
-- `profile_type` - Type of profile (user, company)
-- `description` - Profile headline/description
-- `profile_image_url` - Profile picture URL
-- `stats` - All activity statistics
-- `stats.posts` - Number of posts
-- `stats.reactions` - Number of reactions
-- `stats.comments` - Number of comments
-
-### Response
-
-```json
-[
-  {
-    "name": "Jane Smith",
-    "first_name": "Jane",
-    "last_name": "Smith",
-    "profile_url": "https://linkedin.com/in/janesmith",
-    "profile_image_url": "https://...",
-    "description": "Product Manager at Tech Corp",
-    "stats": {
-      "posts": 0,
-      "reactions": 1,
-      "comments": 3
-    }
-  }
-]
-```
-
-### Rate Limiting
-
-- **12 requests per minute** per API key
-
----
-
-## Get Comments
-
-Retrieve all comments from a workbook.
-
-```http
-GET /api/workbooks/{workbook_id}/comments
-```
-
-### Query Parameters
-
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `include_replies` | boolean | `true` | Include reply comments in results |
-
-### Response
-
-```json
-[
-  {
-    "_id": "507f1f77bcf86cd799439011",
-    "content": "Great insight! Thanks for sharing.",
-    "author": {
-      "name": "John Doe",
-      "urn": "urn:li:person:...",
-      "profile_url": "https://linkedin.com/in/johndoe",
-      "profile_image_url": "https://..."
-    },
-    "posted_at": "2024-01-15T10:45:00Z",
-    "meta": {
-      "is_reply": false
-    }
-  }
-]
-```
-
-### Rate Limiting
-
-- **12 requests per minute** per API key
-
----
-
-## Get Reactions
-
-Retrieve all reactions from a workbook.
-
-```http
-GET /api/workbooks/{workbook_id}/reactions
-```
-
-### Response
-
-```json
-[
-  {
-    "_id": "507f1f77bcf86cd799439011",
-    "reaction_type": "LIKE",
-    "author": {
-      "name": "John Doe",
-      "urn": "urn:li:person:...",
-      "profile_url": "https://linkedin.com/in/johndoe",
-      "profile_image_url": "https://..."
-    },
-    "created_at": "2024-01-15T10:30:00Z"
-  }
-]
-```
-
-**Reaction types:**
-- `LIKE`
-- `CELEBRATE`
-- `SUPPORT`
-- `LOVE`
-- `INSIGHTFUL`
-- `FUNNY`
-
-### Rate Limiting
-
-- **12 requests per minute** per API key
-
----
-
-## Example Workflow
-
-### 1. Create an interaction run
-
-```bash
-curl -X POST "https://production.viacurrent.com/api/workbooks" \
-  -H "X-API-Key: your_api_key_here" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "workspace_id": "507f1f77bcf86cd799439013",
-    "post_url": "https://www.linkedin.com/feed/update/urn:li:activity:...",
-    "data_types": ["comment", "reaction"]
-  }'
-```
-
-Response:
-```json
-{
-  "task_id": "abc123-def456-ghi789",
-  "status": "PENDING"
-}
-```
-
-### 2. Wait for extraction to complete
-
-Poll the task status (implementation depends on your task monitoring system).
-
-### 3. Get contacts from the workbook
-
-```bash
-curl -X GET "https://production.viacurrent.com/api/workbooks/507f1f77bcf86cd799439014/contacts?fields=name,profile_url,stats&activity_filter=commenters,reactors" \
-  -H "X-API-Key: your_api_key_here"
-```
-
-### 4. Get comments
-
-```bash
-curl -X GET "https://production.viacurrent.com/api/workbooks/507f1f77bcf86cd799439014/comments" \
-  -H "X-API-Key: your_api_key_here"
-```
-
-### 5. Get reactions
-
-```bash
-curl -X GET "https://production.viacurrent.com/api/workbooks/507f1f77bcf86cd799439014/reactions" \
-  -H "X-API-Key: your_api_key_here"
-```
-
----
-
 ## Error Responses
 
 #### 400 Bad Request
@@ -576,8 +375,8 @@ curl -X GET "https://production.viacurrent.com/api/workbooks/507f1f77bcf86cd7994
 ```
 
 **Solution:** Check that your post URL format is correct. Valid formats:
-- `https://www.linkedin.com/posts/username_activity-1234567890`
-- `https://www.linkedin.com/feed/update/urn:li:activity:...`
+- `https://www.social.com/posts/username_activity-1234567890`
+- `https://www.social.com/feed/update/urn:li:activity:...`
 
 #### 429 Too Many Requests
 ```json
@@ -597,10 +396,18 @@ curl -X GET "https://production.viacurrent.com/api/workbooks/507f1f77bcf86cd7994
 Workbook data expires after 12 hours. Make sure to:
 - Download all required data within this timeframe
 - Save the workbook ID immediately after creation
-- Extract all needed information (contacts, comments, reactions) before expiration
+- Extract all needed information via the [Engagers API](./engagers.md) before expiration
 
 ### Task Limitations
 
 - Only one extraction task can run per post at a time
 - Extraction typically takes 1-3 minutes depending on post size
 - Large posts (1000+ interactions) may take longer
+
+---
+
+## Next Steps
+
+Once your workbook extraction is complete:
+- [Retrieve engagers](./engagers.md#workbook-engagers) — paginated comments and reactions
+- [Retrieve contacts](./engagers.md#workbook-contacts) — deduplicated contact list with enrichment data

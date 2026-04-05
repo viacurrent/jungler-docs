@@ -1,10 +1,10 @@
-import React, {type ReactNode} from 'react';
+import React, { type ReactNode } from 'react';
 import clsx from 'clsx';
-import {translate} from '@docusaurus/Translate';
-import {useAnchorTargetClassName} from '@docusaurus/theme-common';
+import { translate } from '@docusaurus/Translate';
+import { useAnchorTargetClassName } from '@docusaurus/theme-common';
 import Link from '@docusaurus/Link';
 import useBrokenLinks from '@docusaurus/useBrokenLinks';
-import type {Props} from '@theme/Heading';
+import type { Props } from '@theme/Heading';
 
 function LinkIcon() {
     return (
@@ -25,7 +25,7 @@ function LinkIcon() {
     );
 }
 
-export default function Heading({as: As, id, ...props}: Props): ReactNode {
+export default function Heading({ as: As, id, ...props }: Props): ReactNode {
     const brokenLinks = useBrokenLinks();
     const anchorTargetClassName = useAnchorTargetClassName(id);
 
@@ -61,8 +61,9 @@ export default function Heading({as: As, id, ...props}: Props): ReactNode {
                 onClick={(e) => {
                     e.preventDefault();
                     const url = `${window.location.origin}${window.location.pathname}#${id}`;
-                    navigator.clipboard.writeText(url);
+                    navigator.clipboard.writeText(url).catch(() => { });
                     window.history.replaceState(null, '', `#${id}`);
+                    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
                 }}>
                 <LinkIcon />
             </a>

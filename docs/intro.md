@@ -14,23 +14,23 @@ Jungler continuously monitors social media for posts matching your search criter
 ## Key Features
 
 ### Smart Searches
-<SearchIcon /> Create custom searches to track social media conversations about specific topics, industries, or roles. Our AI continuously collects and classifies relevant posts.
+Create custom searches to track social media conversations about specific topics, industries, or roles. Our AI continuously collects and classifies relevant posts.
 
 ### AI-Powered Analysis
-<SparklesIcon /> Every post is automatically analyzed for:
+Every post is automatically analyzed for:
 - **Relevance** - How well it matches your search intent
 - **Sentiment** - Positive, negative, or neutral tone
 - **Author insights** - Function, seniority level, company size, industry
 - **Content type** - Post, article, poll, etc.
 
 ### Workbooks
-<BookOpenIcon /> Extract and analyze interactions from any post:
+Extract and analyze interactions from any post:
 - **Comments** - See who's engaging and what they're saying
 - **Reactions** - Track who's interested in the content
 - **Contacts** - Export deduplicated contact lists with enriched data
 
 ### Developer API
-<CodeIcon /> Access your data programmatically with our REST API:
+Access your data programmatically with our REST API:
 - Filter and export posts with extensive criteria
 - Extract post interactions at scale
 - Integrate Jungler data into your workflows
@@ -46,17 +46,18 @@ Jungler continuously monitors social media for posts matching your search criter
 
 ### For Developers
 
-1. **[Get an API key](/api/)** - Access your data programmatically
-2. **[Explore the API](/api/)** - Learn about available endpoints
-3. **[Try examples](/api/)** - See common use cases in action
+1. **[Get an API key](./api/index.md)** - Access your data programmatically
+2. **[Explore the API](./api/index.md)** - Learn about available endpoints
+3. **[Try examples](./api/index.md)** - See common use cases in action
 
 ## Quick Links
 
-- [API Reference](/api/) - Complete API documentation
-- [Workspaces API](/api/workspaces) - Manage your workspaces
-- [Searches API](/api/searches) - Work with searches
-- [Posts API](/api/posts) - Retrieve and filter posts
-- [Workbooks API](/api/workbooks) - Extract post interactions
+- [API](./api/index.md) - Complete API documentation
+- [Workspaces API](./api/workspaces.md) - Manage your workspaces
+- [Signals API](./api/signals.md) - Work with signals
+- [Posts API](./api/posts.md) - Retrieve and filter posts
+- [Engagers API](./api/engagers.md) - Retrieve post interactions and contacts
+- [Workbooks API](./api/workbooks.md) - Create extraction tasks for specific posts
 
 ## Need Help?
 

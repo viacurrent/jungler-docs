@@ -1,6 +1,8 @@
-import React, {type ReactNode, useState} from 'react';
-import {useNavbarMobileSidebar} from '@docusaurus/theme-common/internal';
-import {useLocation} from '@docusaurus/router';
+import React, { type ReactNode, useState } from 'react';
+import clsx from 'clsx';
+import { useNavbarMobileSidebar } from '@docusaurus/theme-common/internal';
+import { Collapsible } from '@docusaurus/theme-common';
+import { useLocation } from '@docusaurus/router';
 import Link from '@docusaurus/Link';
 
 type MenuItem = {
@@ -14,25 +16,25 @@ type MenuCategory = {
 };
 
 const menu: (MenuItem | MenuCategory)[] = [
-    {label: 'Welcome to Jungler', href: '/'},
+    { label: 'Welcome to Jungler', href: '/' },
     {
         label: 'Guide',
         items: [
-            {label: 'How Jungler Works', href: '/how-it-works'},
-            {label: 'What to Search For', href: '/search-ideas'},
-            {label: 'Search Syntax', href: '/search-syntax'},
-            {label: 'AI Filtering', href: '/ai-filtering'},
+            { label: 'How Jungler Works', href: '/how-it-works' },
+            { label: 'What to Search For', href: '/search-ideas' },
+            { label: 'Search Syntax', href: '/search-syntax' },
+            { label: 'AI Filtering', href: '/ai-filtering' },
         ],
     },
     {
         label: 'API Reference',
         items: [
-            {label: 'Quick Start', href: '/quick-start'},
-            {label: 'Workspaces API', href: '/api/workspaces'},
-            {label: 'Searches API', href: '/api/searches'},
-            {label: 'Posts API', href: '/api/posts'},
-            {label: 'Workbooks API', href: '/api/workbooks'},
-            {label: 'Webhooks', href: '/api/webhooks'},
+            { label: 'Quick Start', href: '/quick-start' },
+            { label: 'Workspaces API', href: '/api/workspaces' },
+            { label: 'Searches API', href: '/api/searches' },
+            { label: 'Posts API', href: '/api/posts' },
+            { label: 'Workbooks API', href: '/api/workbooks' },
+            { label: 'Webhooks', href: '/api/webhooks' },
         ],
     },
 ];
@@ -52,39 +54,41 @@ function CategoryItem({
     onNavigate: () => void;
 }) {
     const hasActive = category.items.some((item) => isActive(item.href, pathname));
-    const [expanded, setExpanded] = useState(true);
+    const [expanded, setExpanded] = useState(hasActive);
 
     return (
-        <li className="menu__list-item">
+        <li className={clsx('menu__list-item', { 'menu__list-item--collapsed': !expanded })}>
             <button
-                className="menu__link menu__link--sublist menu__link--sublist-caret"
+                className={clsx('menu__link menu__link--sublist menu__link--sublist-caret', {
+                    'menu__link--active': hasActive,
+                })}
                 onClick={() => setExpanded(!expanded)}
                 type="button"
             >
                 {category.label}
             </button>
-            {expanded && (
-                <ul className="menu__list">
-                    {category.items.map((item) => (
-                        <li key={item.href} className="menu__list-item">
-                            <Link
-                                className={`menu__link ${isActive(item.href, pathname) ? 'menu__link--active' : ''}`}
-                                to={item.href}
-                                onClick={onNavigate}
-                            >
-                                {item.label}
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
-            )}
+            <Collapsible lazy as="ul" className="menu__list" collapsed={!expanded}>
+                {category.items.map((item) => (
+                    <li key={item.href} className="menu__list-item">
+                        <Link
+                            className={clsx('menu__link', {
+                                'menu__link--active': isActive(item.href, pathname),
+                            })}
+                            to={item.href}
+                            onClick={onNavigate}
+                        >
+                            {item.label}
+                        </Link>
+                    </li>
+                ))}
+            </Collapsible>
         </li>
     );
 }
 
 export default function NavbarMobilePrimaryMenu(): ReactNode {
     const mobileSidebar = useNavbarMobileSidebar();
-    const {pathname} = useLocation();
+    const { pathname } = useLocation();
 
     return (
         <ul className="menu__list">

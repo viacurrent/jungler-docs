@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { JSX } from 'react';
 import { useColorMode } from '@docusaurus/theme-common';
 import { Sun, Moon } from 'lucide-react';
 import styles from './styles.module.css';

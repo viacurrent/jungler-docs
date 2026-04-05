@@ -3,7 +3,7 @@
 The Workspaces API allows you to list all workspaces that you have access to.
 
 :::info Authentication Required
-All API requests require authentication. See [API Reference](/api#authentication) for details.
+All API requests require authentication. See [API Overview](./index.md#authentication) for details.
 :::
 
 ## List Workspaces
@@ -125,6 +125,6 @@ Use this endpoint to:
 ## Next Steps
 
 Once you have a workspace ID, you can:
-- [List searches in a workspace](/api/searches)
-- [Retrieve posts from searches](/api/posts)
-- [Create workbooks for interaction extraction](/api/workbooks)
+- [List signals in a workspace](./signals.md)
+- [Retrieve posts from signals](./posts.md)
+- [Create workbooks for interaction extraction](./workbooks.md)

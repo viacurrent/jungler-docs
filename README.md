@@ -1,6 +1,6 @@
 # Jungler Documentation
 
-The Jungler Docs have been built with [Docusaurus](https://docusaurus.io/).
+The Jungler Docs have been built with [Docusaurus](https://docusaurus.io/) — an open-source documentation framework by Meta.
 ## Installation
 
 ```bash

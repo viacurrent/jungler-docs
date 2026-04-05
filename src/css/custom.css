@@ -311,9 +311,9 @@ aside[class*='docSidebarContainer'] {
     background-size: 1rem 1rem;
 }
 
-/* Consistent fast collapse animation for all sidebar categories */
-.menu__list-item-collapsible + .menu__list {
-    transition-duration: 150ms !important;
+/* Cap sidebar collapse animation so taller sections don't reveal items one-by-one */
+.menu__list-item .menu__list {
+    transition-duration: 200ms !important;
 }
 
 
@@ -617,7 +617,7 @@ article {
     margin-bottom: 16px;
 }
 
-.markdown li {
+.markdown li:not(.tabs__item) {
     margin-bottom: 4px;
     line-height: 1.6;
 }
@@ -901,16 +901,21 @@ pre code {
 }
 
 .tabs {
+    --ifm-tabs-padding-vertical: 0.375rem;
+    --ifm-tabs-padding-horizontal: 0.75rem;
     border-radius: var(--ifm-global-radius);
     border: 1px solid var(--card-border);
     overflow: hidden;
     margin-bottom: 1.5rem;
+    display: flex;
+    padding: 0;
 }
 
 .tabs__item {
     font-weight: 500;
-    font-size: 0.9375rem;
+    font-size: 0.8125rem;
     border-radius: 0;
+    border-bottom: none;
     transition: all 0.2s ease;
 }
 
@@ -963,6 +968,13 @@ pre code {
 .alert li::marker {
     color: inherit !important;
     opacity: 1 !important;
+}
+
+/* Links in admonitions — inherit alert color, underlined for visibility */
+.alert a {
+    color: inherit !important;
+    text-decoration: underline;
+    font-weight: 600;
 }
 
 /* Kill Docusaurus icon styles completely */
@@ -1366,6 +1378,7 @@ html[data-theme-switching] * {
 
 /* ─── Mobile ─── */
 @media (max-width: 996px) {
+
     /* Sticky navbar with solid background */
     .navbar {
         background: var(--ifm-background-color) !important;
@@ -1478,7 +1491,7 @@ html[data-theme-switching] * {
         padding: 0.75rem !important;
     }
 
-    .navbar-sidebar .menu > .menu__list {
+    .navbar-sidebar .menu>.menu__list {
         margin-top: 0.5rem;
     }
 
