@@ -66,7 +66,7 @@ const config = {
                 {
                     type: 'html',
                     position: 'right',
-                    value: '<div class="navbar__right-group"><a href="https://app.jungler.ai/login" target="_blank" rel="noopener noreferrer" class="navbar__item--login">Log in</a><a href="https://app.jungler.ai/register" target="_blank" rel="noopener noreferrer" class="navbar__item--cta">Start for free</a></div>',
+                    value: '<div class="navbar__right-group"><a href="https://app.jungler.ai/login" target="_blank" rel="noopener noreferrer" class="navbar__item--login">Log in</a><a href="https://app.jungler.ai/signup" target="_blank" rel="noopener noreferrer" class="navbar__item--cta">Start for free</a></div>',
                 },
             ],
         },

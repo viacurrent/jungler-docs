@@ -48,7 +48,7 @@ export default function NavbarMobileSidebarLayout({
                     Log in
                 </a>
                 <a
-                    href="https://app.jungler.ai/register"
+                    href="https://app.jungler.ai/signup"
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{
