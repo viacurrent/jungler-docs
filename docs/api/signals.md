@@ -270,8 +270,8 @@ POST /api/signals
 
 The signal type (`query_type`) is automatically detected from the `query` string:
 - **Keywords** → `search_keyword` — e.g. `"CTO OR \"VP Engineering\""`
-- **Profile URL** → `user_profile` — e.g. `"https://linkedin.com/in/vearnold"`
-- **Company URL** → `company_profile` — e.g. `"https://linkedin.com/company/example"`
+- **Profile URL** → `user_profile` — e.g. `"https://social.com/in/vearnold"`
+- **Company URL** → `company_profile` — e.g. `"https://social.com/company/example"`
 
 :::info AI Filtering (Keyword Signals Only)
 The `prompt` and `prompt_name` fields are only used for **keyword signals**. They let you define custom AI criteria for filtering posts (see [AI Filtering](/ai-filtering)). For profile and company signals, these fields are ignored — all posts from the tracked profile are collected automatically.
@@ -396,7 +396,7 @@ curl -X POST https://production.viacurrent.com/api/signals \
      -d '{
        "workspace_id": "507f1f77bcf86cd799439013",
        "name": "Follow VP of Engineering",
-       "query": "https://linkedin.com/in/vearnold",
+       "query": "https://social.com/in/vearnold",
        "webhook_url": "https://customer.com/callback"
      }'
 ```
@@ -413,7 +413,7 @@ response = httpx.post(
     json={
         "workspace_id": "507f1f77bcf86cd799439013",
         "name": "Follow VP of Engineering",
-        "query": "https://linkedin.com/in/vearnold",
+        "query": "https://social.com/in/vearnold",
         "webhook_url": "https://customer.com/callback",
     },
 )
@@ -434,7 +434,7 @@ curl -X POST https://production.viacurrent.com/api/signals \
      -d '{
        "workspace_id": "507f1f77bcf86cd799439013",
        "name": "Acme Corp Posts",
-       "query": "https://linkedin.com/company/acme-corp",
+       "query": "https://social.com/company/acme-corp",
        "webhook_url": "https://customer.com/callback"
      }'
 ```
@@ -451,7 +451,7 @@ response = httpx.post(
     json={
         "workspace_id": "507f1f77bcf86cd799439013",
         "name": "Acme Corp Posts",
-        "query": "https://linkedin.com/company/acme-corp",
+        "query": "https://social.com/company/acme-corp",
         "webhook_url": "https://customer.com/callback",
     },
 )
