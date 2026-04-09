@@ -33,12 +33,17 @@ API requests are rate-limited per endpoint:
 
 | Endpoint | Rate Limit |
 |----------|------------|
-| POST /workbooks | 6/minute |
 | GET /workspaces | 30/minute |
 | GET /signals | 30/minute |
 | GET /signals/:id | 60/minute |
+| POST /signals | 6/minute |
+| GET /signals/:id/run | 60/minute |
+| PUT /signals/:id/activate | 6/minute |
+| PUT /signals/:id/deactivate | 6/minute |
+| DELETE /signals/:id | 6/minute |
 | GET /posts | 60/minute |
 | GET /engagers/* | 60/minute |
+| POST /workbooks | 6/minute |
 | GET /tasks/:id/status | 60/minute |
 
 When you exceed the rate limit, you'll receive a `429 Too Many Requests` response.

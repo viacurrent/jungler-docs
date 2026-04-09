@@ -34,11 +34,11 @@ Returns an array of signal objects. Fields that are `null` are omitted.
 [
   {
     "_id": "507f1f77bcf86cd799439012",
-    "name": "Tech Industry Leaders",
-    "query": "CTO OR \"Chief Technology Officer\"",
+    "name": "CRM Recommendations",
+    "query": "recommend OR \"looking for\" CRM",
     "frequency": 24,
     "is_activated": true,
-    "prompt": "Find posts from CTOs in tech companies",
+    "prompt": "Find posts where people ask for or recommend CRM tools",
     "query_type": "search_keyword",
     "created_at": "2024-01-10T08:00:00Z",
     "updated_at": "2024-01-15T10:30:00Z"
@@ -173,11 +173,11 @@ GET /api/signals/{signal_id}
 ```json
 {
   "_id": "507f1f77bcf86cd799439012",
-  "name": "Tech Industry Leaders",
-  "query": "CTO OR \"Chief Technology Officer\"",
+  "name": "CRM Recommendations",
+  "query": "recommend OR \"looking for\" CRM",
   "frequency": 24,
   "is_activated": true,
-  "prompt": "Find posts from CTOs in tech companies",
+  "prompt": "Find posts where people ask for or recommend CRM tools",
   "query_type": "search_keyword",
   "created_at": "2024-01-10T08:00:00Z",
   "updated_at": "2024-01-15T10:30:00Z"
@@ -269,7 +269,7 @@ POST /api/signals
 | `webhook_url` | string | No | HTTPS URL to receive run completion callbacks (max 1000 characters) |
 
 The signal type (`query_type`) is automatically detected from the `query` string:
-- **Keywords** → `search_keyword` — e.g. `"CTO OR \"VP Engineering\""`
+- **Keywords** → `search_keyword` — e.g. `"recommend OR \"looking for\" CRM"`
 - **Profile URL** → `user_profile` — e.g. `"https://social.com/in/vearnold"`
 - **Company URL** → `company_profile` — e.g. `"https://social.com/company/example"`
 
@@ -297,11 +297,11 @@ Returns `201 Created` with the signal object and initial run info:
 ```json
 {
   "_id": "507f1f77bcf86cd799439012",
-  "name": "Tech Industry Leaders",
-  "query": "CTO OR \"VP of Engineering\"",
+  "name": "CRM Recommendations",
+  "query": "recommend OR \"looking for\" CRM",
   "frequency": 24,
   "is_activated": true,
-  "prompt": "Find senior tech leaders discussing AI strategy",
+  "prompt": "Find posts where people ask for or recommend CRM tools",
   "query_type": "search_keyword",
   "webhook_url": "https://customer.com/callback",
   "created_at": "2025-01-15T10:30:00Z",
@@ -330,9 +330,9 @@ curl -X POST https://production.viacurrent.com/api/signals \
      -H "Content-Type: application/json" \
      -d '{
        "workspace_id": "507f1f77bcf86cd799439013",
-       "name": "Tech Industry Leaders",
-       "query": "CTO OR \"VP of Engineering\"",
-       "prompt": "Find senior tech leaders discussing AI strategy",
+       "name": "CRM Recommendations",
+       "query": "recommend OR \"looking for\" CRM",
+       "prompt": "Find posts where people ask for or recommend CRM tools",
        "webhook_url": "https://customer.com/callback"
      }'
 ```
@@ -349,9 +349,9 @@ const response = await fetch('https://production.viacurrent.com/api/signals', {
   },
   body: JSON.stringify({
     workspace_id: '507f1f77bcf86cd799439013',
-    name: 'Tech Industry Leaders',
-    query: 'CTO OR "VP of Engineering"',
-    prompt: 'Find senior tech leaders discussing AI strategy',
+    name: 'CRM Recommendations',
+    query: 'recommend OR "looking for" CRM',
+    prompt: 'Find posts where people ask for or recommend CRM tools',
     webhook_url: 'https://customer.com/callback'
   })
 });
@@ -371,9 +371,9 @@ response = httpx.post(
     headers={"X-API-Key": "your_api_key_here"},
     json={
         "workspace_id": "507f1f77bcf86cd799439013",
-        "name": "Tech Industry Leaders",
-        "query": 'CTO OR "VP of Engineering"',
-        "prompt": "Find senior tech leaders discussing AI strategy",
+        "name": "CRM Recommendations",
+        "query": 'recommend OR "looking for" CRM',
+        "prompt": "Find posts where people ask for or recommend CRM tools",
         "webhook_url": "https://customer.com/callback",
     },
 )
@@ -395,7 +395,7 @@ curl -X POST https://production.viacurrent.com/api/signals \
      -H "Content-Type: application/json" \
      -d '{
        "workspace_id": "507f1f77bcf86cd799439013",
-       "name": "Follow VP of Engineering",
+       "name": "Follow Arnold",
        "query": "https://social.com/in/vearnold",
        "webhook_url": "https://customer.com/callback"
      }'
@@ -412,7 +412,7 @@ response = httpx.post(
     headers={"X-API-Key": "your_api_key_here"},
     json={
         "workspace_id": "507f1f77bcf86cd799439013",
-        "name": "Follow VP of Engineering",
+        "name": "Follow Arnold",
         "query": "https://social.com/in/vearnold",
         "webhook_url": "https://customer.com/callback",
     },
@@ -530,9 +530,9 @@ create_response = httpx.post(
     headers=headers,
     json={
         "workspace_id": WORKSPACE_ID,
-        "name": "Tech Industry Leaders",
-        "query": 'CTO OR "VP of Engineering"',
-        "prompt": "Find senior tech leaders discussing AI strategy",
+        "name": "CRM Recommendations",
+        "query": 'recommend OR "looking for" CRM',
+        "prompt": "Find posts where people ask for or recommend CRM tools",
     },
 )
 signal = create_response.json()
@@ -574,9 +574,9 @@ curl -X POST https://production.viacurrent.com/api/signals \
      -H "Content-Type: application/json" \
      -d '{
        "workspace_id": "507f1f77bcf86cd799439013",
-       "name": "Tech Industry Leaders",
-       "query": "CTO OR \"VP of Engineering\"",
-       "prompt": "Find senior tech leaders discussing AI strategy"
+       "name": "CRM Recommendations",
+       "query": "recommend OR \"looking for\" CRM",
+       "prompt": "Find posts where people ask for or recommend CRM tools"
      }'
 
 # Poll status (repeat every 10-30s until status is terminal)
@@ -610,11 +610,11 @@ Returns the updated signal object with `is_activated: false`.
 ```json
 {
   "_id": "507f1f77bcf86cd799439012",
-  "name": "Tech Industry Leaders",
-  "query": "CTO OR \"VP of Engineering\"",
+  "name": "CRM Recommendations",
+  "query": "recommend OR \"looking for\" CRM",
   "frequency": 24,
   "is_activated": false,
-  "prompt": "Find senior tech leaders discussing AI strategy",
+  "prompt": "Find posts where people ask for or recommend CRM tools",
   "query_type": "search_keyword",
   "created_at": "2025-01-15T10:30:00Z",
   "updated_at": "2025-01-20T14:00:00Z"
@@ -676,11 +676,11 @@ Returns the updated signal object with `is_activated: true`.
 ```json
 {
   "_id": "507f1f77bcf86cd799439012",
-  "name": "Tech Industry Leaders",
-  "query": "CTO OR \"VP of Engineering\"",
+  "name": "CRM Recommendations",
+  "query": "recommend OR \"looking for\" CRM",
   "frequency": 24,
   "is_activated": true,
-  "prompt": "Find senior tech leaders discussing AI strategy",
+  "prompt": "Find posts where people ask for or recommend CRM tools",
   "query_type": "search_keyword",
   "created_at": "2025-01-15T10:30:00Z",
   "updated_at": "2025-01-20T15:00:00Z"
@@ -925,15 +925,19 @@ The complete API-only workflow to create a signal and consume results:
 
 ---
 
-## Webhook Callback
+## Run Completion Callback
 
 If you provide a `webhook_url` when creating a signal, we'll POST to that URL every time a run completes — including the auto-triggered first run and all subsequent scheduled runs.
+
+:::note Not the same as Webhooks
+This is a lightweight callback that notifies you when a signal run finishes. It does **not** deliver posts or engagers — you still fetch those via the [Posts API](./posts.md) or [Engagers API](./engagers.md). For automatically pushing collected data to external platforms (Slack, n8n, etc.), see [Webhooks](./webhooks.md).
+:::
 
 ### Payload
 
 The callback payload matches the [Run Status](#run-status) response:
 
-```json
+```http
 POST https://customer.com/callback
 Content-Type: application/json
 
