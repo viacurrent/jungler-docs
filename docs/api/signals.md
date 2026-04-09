@@ -7,7 +7,7 @@ All API requests require authentication. See [API Overview](./index.md#authentic
 :::
 
 :::tip Response Format
-Null fields are omitted from responses. The fields present depend on the signal type — for example, keyword signals include `prompt` while profile signals include `query_identifier`.
+Null fields are omitted from responses. For example, `prompt` is only included for keyword signals that have one configured, and `query_identifier` is only included for profile and company signals.
 :::
 
 ## List Signals
@@ -77,7 +77,7 @@ Returns an array of signal objects. Fields that are `null` are omitted.
 | `query` | string | Always | Search query (keywords, profile URL, or company URL) |
 | `frequency` | integer | Always | Run frequency in hours (default: `24`) |
 | `is_activated` | boolean | Always | Whether the signal is active |
-| `prompt` | string | Keyword only | Custom AI filtering prompt |
+| `prompt` | string | Keyword only, when configured | Custom AI filtering prompt |
 | `query_type` | string | Always | Type of query: `search_keyword`, `user_profile`, `company_profile` |
 | `query_identifier` | string | Profile/company only | Username or company ID extracted from the URL |
 | `webhook_url` | string | When configured | HTTPS URL for run completion callbacks |
@@ -889,9 +889,18 @@ engagers = response.json()
 ```
 
 #### 403 Forbidden
+
+On **create** — workspace signal limit reached:
 ```json
 {
   "detail": "workspace_signal_limit_reached"
+}
+```
+
+On **read/update/delete** — signal doesn't belong to your workspace:
+```json
+{
+  "detail": "signal_not_in_workspace"
 }
 ```
 
