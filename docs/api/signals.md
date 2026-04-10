@@ -34,11 +34,11 @@ Returns an array of signal objects. Fields that are `null` are omitted.
 [
   {
     "_id": "507f1f77bcf86cd799439012",
-    "name": "CRM Recommendations",
-    "query": "recommend OR \"looking for\" CRM",
+    "name": "Brand Mentions",
+    "query": "lemlist OR \"heyreach\"",
     "frequency": 24,
     "is_activated": true,
-    "prompt": "Find posts where people ask for or recommend CRM tools",
+    "prompt": "Only mark relevant the posts that explicitly mention lemlist or HeyReach, the outreach tools",
     "query_type": "search_keyword",
     "created_at": "2024-01-10T08:00:00Z",
     "updated_at": "2024-01-15T10:30:00Z"
@@ -173,11 +173,11 @@ GET /api/signals/{signal_id}
 ```json
 {
   "_id": "507f1f77bcf86cd799439012",
-  "name": "CRM Recommendations",
-  "query": "recommend OR \"looking for\" CRM",
+  "name": "Brand Mentions",
+  "query": "lemlist OR \"heyreach\"",
   "frequency": 24,
   "is_activated": true,
-  "prompt": "Find posts where people ask for or recommend CRM tools",
+  "prompt": "Only mark relevant the posts that explicitly mention lemlist or HeyReach, the outreach tools",
   "query_type": "search_keyword",
   "created_at": "2024-01-10T08:00:00Z",
   "updated_at": "2024-01-15T10:30:00Z"
@@ -269,7 +269,7 @@ POST /api/signals
 | `webhook_url` | string | No | HTTPS URL to receive run completion callbacks (max 1000 characters) |
 
 The signal type (`query_type`) is automatically detected from the `query` string:
-- **Keywords** → `search_keyword` — e.g. `"recommend OR \"looking for\" CRM"`
+- **Keywords** → `search_keyword` — e.g. `"lemlist OR \"heyreach\""`
 - **Profile URL** → `user_profile` — e.g. `"https://social.com/in/vearnold"`
 - **Company URL** → `company_profile` — e.g. `"https://social.com/company/example"`
 
@@ -297,11 +297,11 @@ Returns `201 Created` with the signal object and initial run info:
 ```json
 {
   "_id": "507f1f77bcf86cd799439012",
-  "name": "CRM Recommendations",
-  "query": "recommend OR \"looking for\" CRM",
+  "name": "Brand Mentions",
+  "query": "lemlist OR \"heyreach\"",
   "frequency": 24,
   "is_activated": true,
-  "prompt": "Find posts where people ask for or recommend CRM tools",
+"prompt": "Only mark relevant the posts that explicitly mention lemlist or HeyReach, the outreach tools",
   "query_type": "search_keyword",
   "webhook_url": "https://customer.com/callback",
   "created_at": "2025-01-15T10:30:00Z",
@@ -330,9 +330,9 @@ curl -X POST https://production.viacurrent.com/api/signals \
      -H "Content-Type: application/json" \
      -d '{
        "workspace_id": "507f1f77bcf86cd799439013",
-       "name": "CRM Recommendations",
-       "query": "recommend OR \"looking for\" CRM",
-       "prompt": "Find posts where people ask for or recommend CRM tools",
+       "name": "Brand Mentions",
+       "query": "lemlist OR \"heyreach\"",
+       "prompt": "Only mark relevant the posts that explicitly mention lemlist or HeyReach, the outreach tools",
        "webhook_url": "https://customer.com/callback"
      }'
 ```
@@ -349,9 +349,9 @@ const response = await fetch('https://production.viacurrent.com/api/signals', {
   },
   body: JSON.stringify({
     workspace_id: '507f1f77bcf86cd799439013',
-    name: 'CRM Recommendations',
-    query: 'recommend OR "looking for" CRM',
-    prompt: 'Find posts where people ask for or recommend CRM tools',
+    name: 'Brand Mentions',
+    query: 'lemlist OR "heyreach"',
+    prompt: 'Only mark relevant the posts that explicitly mention lemlist or HeyReach, the outreach tools',
     webhook_url: 'https://customer.com/callback'
   })
 });
@@ -371,10 +371,10 @@ response = httpx.post(
     headers={"X-API-Key": "your_api_key_here"},
     json={
         "workspace_id": "507f1f77bcf86cd799439013",
-        "name": "CRM Recommendations",
-        "query": 'recommend OR "looking for" CRM',
-        "prompt": "Find posts where people ask for or recommend CRM tools",
-        "webhook_url": "https://customer.com/callback",
+        "name": "Brand Mentions",
+        "query": 'lemlist OR "heyreach"',
+        "prompt": "Only mark relevant the posts that explicitly mention lemlist or HeyReach, the outreach tools",
+        "webhook_url": "https://customer.com/callback"
     },
 )
 signal = response.json()
@@ -414,7 +414,7 @@ response = httpx.post(
         "workspace_id": "507f1f77bcf86cd799439013",
         "name": "Follow Arnold",
         "query": "https://social.com/in/vearnold",
-        "webhook_url": "https://customer.com/callback",
+        "webhook_url": "https://customer.com/callback"
     },
 )
 ```
@@ -452,7 +452,7 @@ response = httpx.post(
         "workspace_id": "507f1f77bcf86cd799439013",
         "name": "Acme Corp Posts",
         "query": "https://social.com/company/acme-corp",
-        "webhook_url": "https://customer.com/callback",
+        "webhook_url": "https://customer.com/callback"
     },
 )
 ```
@@ -530,9 +530,9 @@ create_response = httpx.post(
     headers=headers,
     json={
         "workspace_id": WORKSPACE_ID,
-        "name": "CRM Recommendations",
-        "query": 'recommend OR "looking for" CRM',
-        "prompt": "Find posts where people ask for or recommend CRM tools",
+        "name": "Brand Mentions",
+        "query": 'lemlist OR "heyreach"',
+        "prompt": "Only mark relevant the posts that explicitly mention lemlist or HeyReach, the outreach tools"
     },
 )
 signal = create_response.json()
@@ -574,9 +574,9 @@ curl -X POST https://production.viacurrent.com/api/signals \
      -H "Content-Type: application/json" \
      -d '{
        "workspace_id": "507f1f77bcf86cd799439013",
-       "name": "CRM Recommendations",
-       "query": "recommend OR \"looking for\" CRM",
-       "prompt": "Find posts where people ask for or recommend CRM tools"
+       "name": "Brand Mentions",
+       "query": "lemlist OR \"heyreach\"",
+       "prompt": "Only include posts that explicitly mention lemlist or HeyReach, the outreach tools"
      }'
 
 # Poll status (repeat every 10-30s until status is terminal)
@@ -610,11 +610,11 @@ Returns the updated signal object with `is_activated: false`.
 ```json
 {
   "_id": "507f1f77bcf86cd799439012",
-  "name": "CRM Recommendations",
-  "query": "recommend OR \"looking for\" CRM",
+  "name": "Brand Mentions",
+  "query": "lemlist OR \"heyreach\"",
   "frequency": 24,
   "is_activated": false,
-  "prompt": "Find posts where people ask for or recommend CRM tools",
+  "prompt": "Only mark relevant the posts that explicitly mention lemlist or HeyReach, the outreach tools",
   "query_type": "search_keyword",
   "created_at": "2025-01-15T10:30:00Z",
   "updated_at": "2025-01-20T14:00:00Z"
@@ -676,11 +676,11 @@ Returns the updated signal object with `is_activated: true`.
 ```json
 {
   "_id": "507f1f77bcf86cd799439012",
-  "name": "CRM Recommendations",
-  "query": "recommend OR \"looking for\" CRM",
+  "name": "Brand Mentions",
+  "query": "lemlist OR \"heyreach\"",
   "frequency": 24,
   "is_activated": true,
-  "prompt": "Find posts where people ask for or recommend CRM tools",
+  "prompt": "Only mark relevant the posts that explicitly mention lemlist or HeyReach, the outreach tools",
   "query_type": "search_keyword",
   "created_at": "2025-01-15T10:30:00Z",
   "updated_at": "2025-01-20T15:00:00Z"
