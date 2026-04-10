@@ -301,7 +301,7 @@ Returns `201 Created` with the signal object and initial run info:
   "query": "lemlist OR \"heyreach\"",
   "frequency": 24,
   "is_activated": true,
-"prompt": "Only mark relevant the posts that explicitly mention lemlist or HeyReach, the outreach tools",
+  "prompt": "Only mark relevant the posts that explicitly mention lemlist or HeyReach, the outreach tools",
   "query_type": "search_keyword",
   "webhook_url": "https://customer.com/callback",
   "created_at": "2025-01-15T10:30:00Z",
