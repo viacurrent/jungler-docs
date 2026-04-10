@@ -265,7 +265,7 @@ POST /api/signals
 | `name` | string | Yes | Signal name (1-69 characters) |
 | `query` | string | Yes | Search keywords, profile URL, or company URL (3-300 characters) |
 | `prompt` | string | No | AI filtering prompt for keyword signals only (3-3000 characters). Ignored for profile/company signals |
-| `prompt_name` | string | No | Name for the prompt (defaults to "AI filter"). Ignored for profile/company signals |
+| `prompt_name` | string | No | Name for the prompt (defaults to "AI filter"). Write-only — not returned in responses. Ignored for profile/company signals |
 | `webhook_url` | string | No | HTTPS URL to receive run completion callbacks (max 1000 characters) |
 
 The signal type (`query_type`) is automatically detected from the `query` string:
@@ -274,7 +274,7 @@ The signal type (`query_type`) is automatically detected from the `query` string
 - **Company URL** → `company_profile` — e.g. `"https://social.com/company/example"`
 
 :::info AI Filtering (Keyword Signals Only)
-The `prompt` and `prompt_name` fields are only used for **keyword signals**. They let you define custom AI criteria for filtering posts (see [AI Filtering](/ai-filtering)). For profile and company signals, these fields are ignored — all posts from the tracked profile are collected automatically.
+The `prompt` and `prompt_name` fields are only used for **keyword signals**. They let you define custom AI criteria for filtering posts (see [AI Filtering](../ai-filtering.md)). For profile and company signals, these fields are ignored — all posts from the tracked profile are collected automatically.
 :::
 
 :::note Enrichment for Profile/Company Signals
