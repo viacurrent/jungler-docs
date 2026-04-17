@@ -658,18 +658,23 @@ const headers = { 'X-API-Key': 'your_api_key_here' };
 const baseUrl = 'https://production.viacurrent.com/api/engagers/signal/SIGNAL_ID';
 
 // Page 1
-const response1 = await fetch(
-  `${baseUrl}?workspace_id=WS_ID&page=1&page_size=100`,
-  { headers }
-);
+const url1 = new URL(baseUrl);
+url1.searchParams.set('workspace_id', 'WS_ID');
+url1.searchParams.set('page', '1');
+url1.searchParams.set('page_size', '100');
+
+const response1 = await fetch(url1, { headers });
 const data1 = await response1.json();
 const snapshotTime = data1.snapshot_time;
 
-// Page 2 - use the same snapshot_time
-const response2 = await fetch(
-  `${baseUrl}?workspace_id=WS_ID&page=2&page_size=100&snapshot_time=${snapshotTime}`,
-  { headers }
-);
+// Page 2 - URLSearchParams encodes the + in snapshot_time automatically
+const url2 = new URL(baseUrl);
+url2.searchParams.set('workspace_id', 'WS_ID');
+url2.searchParams.set('page', '2');
+url2.searchParams.set('page_size', '100');
+url2.searchParams.set('snapshot_time', snapshotTime);
+
+const response2 = await fetch(url2, { headers });
 const data2 = await response2.json();
 ```
 
