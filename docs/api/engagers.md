@@ -255,6 +255,153 @@ print(f"Total engagers: {data['total']}")
 
 ---
 
+## Signal Contacts
+
+Retrieve paginated, deduplicated contacts from a signal. Each contact represents a unique person with aggregated engagement stats across all monitored posts. Only available for `user_profile` and `company_profile` signal types.
+
+:::note Rolling 30-day window
+Signal contacts are deduplicated over a **rolling 30-day window** — only engagements from the last ~30 days are included. Older engagements are archived automatically. This differs from workbook contacts, which are deduplicated across all collected data.
+:::
+
+```http
+GET /api/engagers/signal/{signal_id}/contacts
+```
+
+### Path Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `signal_id` | string | The signal ID to retrieve contacts for |
+
+### Query Parameters
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `workspace_id` | string | *(required)* | Workspace ID that owns this signal |
+| `page` | integer | `1` | Page number (1-indexed) |
+| `page_size` | integer | `500` | Items per page (1-500) |
+| `snapshot_time` | string | current time | ISO 8601 snapshot timestamp for consistent pagination |
+| `activity_filter` | string | *(all)* | Filter by activity: `commenters`, `reactors`, or comma-separated combinations |
+
+### Response
+
+```json
+{
+  "items": [
+    {
+      "name": "Jane Smith",
+      "first_name": "Jane",
+      "last_name": "Smith",
+      "urn": "urn:li:member:789",
+      "profile_type": "user",
+      "profile_url": "https://social.com/in/janesmith",
+      "profile_image_url": "https://...",
+      "description": "VP Engineering at TechCo",
+      "username": "janesmith",
+      "summary": "Building great teams...",
+      "company_name": "TechCo",
+      "company_website": "techco.com",
+      "title": "VP Engineering",
+      "company_icon_url": "https://...",
+      "loc_country": "United States",
+      "loc_region": "NA",
+      "loc_code": "US",
+      "loc_city": "San Francisco",
+      "loc_state": "California",
+      "company_size": "L",
+      "company_industry": "TECH_INFO_MEDIA",
+      "company_hq_loc_country": "United States",
+      "company_hq_loc_code": "US",
+      "authority": "L",
+      "function": "ENG",
+      "stats": {
+        "comments": 3,
+        "reactions": 1
+      },
+      "last_engaged_at": "2024-01-15T10:45:00Z"
+    }
+  ],
+  "total": 87,
+  "page": 1,
+  "page_size": 500,
+  "pages": 1,
+  "snapshot_time": "2024-01-15T12:00:00.000000+00:00"
+}
+```
+
+### Contact Fields
+
+Contacts include the same [author fields](#author-fields) as engagers, plus:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `stats` | object | Engagement counts: `{ "comments": 3, "reactions": 1 }` |
+| `last_engaged_at` | string \| null | Most recent engagement timestamp |
+
+### Example Request
+
+<Tabs>
+<TabItem value="curl" label="cURL" default>
+
+```bash
+# All contacts
+curl -H "X-API-Key: your_api_key_here" \
+     "https://production.viacurrent.com/api/engagers/signal/507f1f77bcf86cd799439012/contacts?workspace_id=507f1f77bcf86cd799439013&page=1&page_size=500"
+
+# Commenters only
+curl -H "X-API-Key: your_api_key_here" \
+     "https://production.viacurrent.com/api/engagers/signal/507f1f77bcf86cd799439012/contacts?workspace_id=507f1f77bcf86cd799439013&activity_filter=commenters"
+```
+
+</TabItem>
+<TabItem value="javascript" label="JavaScript">
+
+```javascript
+const headers = { 'X-API-Key': 'your_api_key_here' };
+const signalId = '507f1f77bcf86cd799439012';
+const workspaceId = '507f1f77bcf86cd799439013';
+
+const url = new URL(`https://production.viacurrent.com/api/engagers/signal/${signalId}/contacts`);
+url.searchParams.append('workspace_id', workspaceId);
+url.searchParams.append('page', '1');
+url.searchParams.append('page_size', '500');
+
+const response = await fetch(url, { headers });
+const data = await response.json();
+console.log(`Total contacts: ${data.total}`);
+```
+
+</TabItem>
+<TabItem value="python" label="Python">
+
+```python
+import httpx
+
+headers = {"X-API-Key": "your_api_key_here"}
+signal_id = "507f1f77bcf86cd799439012"
+
+response = httpx.get(
+    f"https://production.viacurrent.com/api/engagers/signal/{signal_id}/contacts",
+    headers=headers,
+    params={
+        "workspace_id": "507f1f77bcf86cd799439013",
+        "page": 1,
+        "page_size": 500,
+    },
+)
+data = response.json()
+print(f"Total contacts: {data['total']}")
+```
+
+</TabItem>
+</Tabs>
+
+### Rate Limiting
+
+- **60 requests per minute** per API key
+
+---
+
 ## Workbook Engagers
 
 Retrieve paginated engagers (commenters and reactors) from a workbook.
