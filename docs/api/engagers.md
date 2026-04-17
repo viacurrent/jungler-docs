@@ -629,7 +629,11 @@ All engager endpoints use the same pagination pattern as the [Posts API](./posts
 
 ### Consistent Pagination
 
-For consistent results across pages, reuse the `snapshot_time` from the first page:
+For consistent results across pages, reuse the `snapshot_time` from the first page.
+
+:::tip URL-encoding
+The `snapshot_time` value contains a `+` character (e.g. `+00:00`). When passing it as a query parameter, make sure your HTTP client URL-encodes it — an unencoded `+` is interpreted as a space. Most HTTP libraries (Python `httpx`, JavaScript `fetch` with `URL`/`URLSearchParams`) handle this automatically, but watch out when constructing URLs manually in cURL or string concatenation.
+:::
 
 <Tabs>
 <TabItem value="curl" label="cURL" default>
@@ -641,9 +645,9 @@ curl -H "X-API-Key: your_api_key_here" \
 
 # Response includes: "snapshot_time": "2024-01-15T12:00:00.000000+00:00"
 
-# Page 2 - reuse snapshot_time
+# Page 2 - reuse snapshot_time (URL-encode the +)
 curl -H "X-API-Key: your_api_key_here" \
-     "https://production.viacurrent.com/api/engagers/signal/SIGNAL_ID?workspace_id=WS_ID&page=2&page_size=100&snapshot_time=2024-01-15T12:00:00.000000+00:00"
+     "https://production.viacurrent.com/api/engagers/signal/SIGNAL_ID?workspace_id=WS_ID&page=2&page_size=100&snapshot_time=2024-01-15T12:00:00.000000%2B00:00"
 ```
 
 </TabItem>
