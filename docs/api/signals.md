@@ -939,7 +939,7 @@ The complete API-only workflow to create a signal and consume results:
 If you provide a `webhook_url` when creating a signal, we'll POST to that URL every time a run completes — including the auto-triggered first run and all subsequent scheduled runs.
 
 :::note Not the same as Webhooks
-This is a lightweight callback that notifies you when a signal run finishes. It does **not** deliver posts or engagers — you still fetch those via the [Posts API](./posts.md) or [Engagers API](./engagers.md). For automatically pushing collected data to external platforms (Slack, n8n, etc.), see [Webhooks](./webhooks.md).
+This is a lightweight callback that notifies you when a signal run finishes. It does **not** deliver posts or engagers — you still fetch those via the [Posts API](./posts.md) or [Engagers API](./engagers.md). For automatically pushing collected data to external platforms (Slack, n8n, etc.), see [Webhooks](../integrations/webhooks.md).
 :::
 
 ### Payload
@@ -976,4 +976,4 @@ Once you have signal IDs, you can:
 - [Retrieve posts from these signals](./posts.md)
 - [Get engagers for profile signals](./engagers.md#signal-engagers) (user_profile and company_profile types)
 - Filter posts by multiple signals simultaneously
-- [Send results to integrations via webhooks](./webhooks.md)
+- [Send results to integrations via webhooks](../integrations/webhooks.md)

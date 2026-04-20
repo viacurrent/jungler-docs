@@ -36,6 +36,18 @@
     box-sizing: border-box;
 }
 
+.scrollDivider {
+    height: 1px;
+    margin: 0 0.75rem;
+    background: transparent;
+    transition: background-color 0.15s;
+    flex-shrink: 0;
+}
+
+.scrollDividerVisible {
+    background: var(--card-border);
+}
+
 .contentWrapper {
     flex: 1;
     overflow-y: auto;
@@ -48,5 +60,11 @@
 
 .toggleContainer {
     margin: 0 0.75rem 0.75rem;
-    padding: 0.375rem 0.75rem 0.375rem 6px;
+    padding: 0.75rem 0.75rem 0.375rem 6px;
+    border-top: 1px solid transparent;
+    transition: border-color 0.15s;
+}
+
+.toggleContainerScrolled {
+    border-top-color: var(--card-border);
 }
