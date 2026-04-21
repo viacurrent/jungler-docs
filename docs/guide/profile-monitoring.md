@@ -11,13 +11,12 @@ Capture your ICPs (ideal customer profiles) engaging with your content, competit
 
 ## Setup
 
-Paste a LinkedIn profile URL. That's the whole setup.
+Paste a LinkedIn profile URL – that's the whole setup. On the first run, Jungler pulls in all posts from the past month and extracts every engager. After that, the signal updates every 24 hours automatically.
 
 <video autoPlay loop muted playsInline width="100%" style={{border: '1px solid var(--card-border)', borderRadius: '0.5rem', marginTop: '1rem', marginBottom: '1.5rem'}}>
   <source src="/video/jungler-demo.mp4" type="video/mp4" />
 </video>
 
-After the first run, the signal runs every 24 hours.
 
 | URL example | Type |
 |---|---|
@@ -35,28 +34,29 @@ Every engager comes enriched, so you can easily filter by your ICP.
 Screenshot of the engager list with the filter panel open.
 :::
 
-| Field | Example |
-|---|---|
-| Job function | Marketing, Engineering, Sales |
-| Seniority | Executive, Senior, Entry |
-| Company | Name, size, industry, website |
-| Location | Country, region |
+| Field | Description | Example |
+|---|---|---|
+| Region | Broad geographic region | EMEA, AMER, APAC |
+| Country | Country-level location | United States, Germany |
+| Job function | The engager's function | Marketing, Sales, Engineering |
+| Seniority | Seniority tier | Executive, Senior, Mid, Junior |
+| Job title | Exact title string | Head of Growth |
+| Company name | Current employer | Acme Corp |
+| Company size | Employee-count bucket | 51–200, 1001–5000 |
+| Company industry | Industry classification | SaaS, Fintech |
+| Company HQ | HQ country | United States |
+| Company website | Primary domain | acme.com |
 
 
 
 ## Playbooks
 
-**Monitor own profile**
-Track top-of-funnel prospects. Anyone engaging is paying attention to your buyer.
-
-**Monitoring company profile**
-Track top-of-funnel prospects. Anyone engaging is paying attention to your buyer.
-
-**Monitor competitor**
-Follow a competitor's page. Their engagers are your potential customers.
-
-**Industry leaders**
-Monitor people talking to your ICP. Their audience is your audience.
+| Playbook | What it does |
+|---|---|
+| **Monitor own profile** | Replay your own funnel. Anyone engaging with your personal posts is self-identifying as paying attention to you directly — usually the warmest top-of-funnel you'll get from social. |
+| **Monitor company profile** | Catch the broader, earlier-stage crowd that brand and marketing content attracts. Different signal from your personal profile — more volume, less intent, good for enrichment into nurture. |
+| **Monitor competitor** | Engagers on a competitor's posts are category-aware and already forming opinions. Publicly engaging with a competitor is itself a qualifier — they're evaluating, not just browsing. |
+| **Industry leaders** | Borrow an audience when yours is too small. Pick voices whose followers match your ICP, not whoever has the biggest follower count — a niche voice with the right audience beats a generic one with a bigger one. |
 
 
 

@@ -168,6 +168,7 @@ aside[class*='docSidebarContainer'] {
 }
 
 .navbar__item--login {
+    background: var(--ifm-background-surface-color);
     border: 1px solid var(--card-border);
     border-radius: 0.5rem;
     height: 2rem;
@@ -181,9 +182,13 @@ aside[class*='docSidebarContainer'] {
 }
 
 .navbar__item--login:hover {
-    background: var(--ifm-background-surface-color);
+    background: var(--brand-gray-light);
     color: var(--ifm-font-color-base) !important;
     text-decoration: none;
+}
+
+[data-theme='dark'] .navbar__item--login:hover {
+    background: oklch(0.32 0.02 236);
 }
 
 .navbar__item--cta {
@@ -629,7 +634,7 @@ article {
     letter-spacing: -0.02em;
     font-weight: 540;
     margin-top: 56px;
-    margin-bottom: 12px;
+    margin-bottom: 18px;
     padding-bottom: 0;
     border-bottom: none;
 }
@@ -749,13 +754,18 @@ article {
 
 /* Links in content */
 .markdown a {
-    color: var(--brand-green);
-    text-decoration: none;
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--brand-gray-dark);
     font-weight: 500;
+    transition: color 0.15s ease, text-decoration-color 0.15s ease;
 }
 
 .markdown a:hover {
-    text-decoration: underline;
+    color: var(--brand-green);
+    text-decoration-color: var(--brand-green);
 }
 
 /* Details/summary (collapsible sections) */
@@ -838,8 +848,14 @@ details[open]>summary::before {
 
 /* Images */
 .markdown img {
-    border-radius: 0.5rem;
+    border-radius: 8px;
     max-width: 100%;
+}
+
+/* Content screenshots (not inline icons in headings) — add border */
+.markdown p img {
+    border: 1px solid var(--card-border);
+    display: block;
 }
 
 /* Anti-aliasing — from jungler.ai */

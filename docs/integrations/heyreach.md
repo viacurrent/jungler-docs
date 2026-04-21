@@ -6,53 +6,40 @@ sidebar_label: HeyReach
 
 # <span className="heading-with-icon"><img src="/img/integrations/heyreach-icon.svg" alt="" /> HeyReach</span>
 
-Push qualified engagers from Jungler into a HeyReach campaign so outreach kicks off automatically the moment someone matches your ICP.
+Push engagers or post authors from Jungler into your HeyReach outreach campaigns automatically.
 
-:::note TODO
-This page is a placeholder. Final content, step numbering, and screenshots to be filled in based on the live Jungler → HeyReach integration flow.
-:::
+## Connecting HeyReach
 
----
+In HeyReach, go to [**Settings > Integrations > Public API**](https://app.heyreach.io/app/integrations/public-api/api).
 
-## Prepare your HeyReach campaign
+1. Copy your API key. Click **New API key** to generate one if you don't have it yet.
 
-_Describe what needs to be set up on the HeyReach side — campaign, lead list, required API key or webhook, etc._
+![Copy HeyReach API key](/img/integrations/heyreach/heyreach-api-key.png)
 
-:::note TODO
-Add screenshot of the HeyReach campaign / API key screen.
-:::
+Then open Jungler. Go to [**Settings > Integrations > HeyReach**](https://app.jungler.ai/settings/integrations/heyreach).
 
----
+2. Click **Connect**.
+3. Paste your API key and click **Connect**.
 
-## Connect HeyReach in Jungler
+![Connect HeyReach in Jungler](/img/integrations/heyreach/heyreach-connect-jungler.png)
 
-_Go to **Settings → Integrations → HeyReach** in the Jungler dashboard._
+## Adding a configuration
 
-1. TODO — paste the HeyReach API key (or webhook URL).
-2. TODO — pick the target campaign / lead list.
-3. TODO — choose which signal to sync from.
-4. TODO — apply filters to target only qualified engagers.
+Each configuration routes a set of signals to one HeyReach campaign.
 
-:::note TODO
-Add screenshot of the HeyReach configuration pop-up in Jungler.
-:::
+NB! You need at least one campaign in HeyReach before creating a configuration in Jungler.
 
----
+1. Under **Configurations**, click **Add new configuration** and choose **Send posts** or **Send engagers**.
 
-## What gets pushed
+![Add new configuration dropdown](/img/integrations/heyreach/heyreach-create-conf.png)
 
-_Describe which engager fields map to HeyReach lead fields (name, profile URL, company, etc.) and how deduplication works._
+2. Name the configuration (e.g., *Hot leads to HeyReach*).
+3. Pick the target **Campaign** from the dropdown.
+4. Under **Select signals to sync**, tick the signals to include.
+5. Under **Fields to send**, tick which fields to sync to HeyReach.
+6. Use **Filters** to narrow which leads are sent. Leave empty to send all.
+7. Click **Create configuration** and pick a historic sync range — last 24 hours, 7 days, 31 days, or no historic data.
 
-:::note TODO
-Add example of a synced lead inside HeyReach.
-:::
+![Historic sync options](/img/integrations/heyreach/heyreach-historic-sync.png)
 
----
-
-## Troubleshooting
-
-- **Leads aren't arriving** — TODO
-- **Duplicate leads** — TODO
-- **API key invalid** — TODO
-
-See also: [Webhooks](./webhooks.md) for a custom alternative.
+Repeat to route different signals to different campaigns.

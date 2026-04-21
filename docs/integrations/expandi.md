@@ -6,53 +6,38 @@ sidebar_label: Expandi
 
 # <span className="heading-with-icon"><img src="/img/integrations/expandi-icon.svg" alt="" /> Expandi</span>
 
-Route engagers from Jungler into an Expandi outreach sequence so your campaigns stay topped up with fresh, qualified leads.
+Push engagers or post authors from Jungler into your Expandi outreach campaigns automatically.
 
-:::note TODO
-This page is a placeholder. Final content, step numbering, and screenshots to be filled in based on the live Jungler → Expandi integration flow.
-:::
+## Connecting Expandi
 
----
+In Expandi, go to **Integrations** and click **View keys** on the *Expandi API credentials* card to get your **API key** and **API secret**.
 
-## Prepare your Expandi campaign
+![Expandi API credentials](/img/integrations/expandi/expandi-api-keys.png)
 
-_Describe what to set up on the Expandi side — the campaign, the "Search & Filter" webhook, required permissions._
+Then open Jungler. Go to [**Settings > Integrations > Expandi**](https://app.jungler.ai/settings/integrations/expandi).
 
-:::note TODO
-Add screenshot of the Expandi webhook / campaign screen.
-:::
+1. Click **Connect**.
+2. Paste your **API key** and **API secret**, then click **Connect**.
 
----
+![Connect Expandi in Jungler](/img/integrations/expandi/expandi-connect-jungler.png)
 
-## Connect Expandi in Jungler
+## Adding a configuration
 
-_Go to **Settings → Integrations → Expandi** in the Jungler dashboard._
+Each configuration routes a set of signals to one Expandi campaign.
 
-1. TODO — paste the Expandi webhook URL.
-2. TODO — pick the target campaign.
-3. TODO — choose which signal to sync from.
-4. TODO — apply filters.
+NB! You need at least one campaign in Expandi before creating a configuration in Jungler.
 
-:::note TODO
-Add screenshot of the Expandi configuration pop-up in Jungler.
-:::
+1. Under **Configurations**, click **Add new configuration** and choose **Send posts** or **Send engagers**.
 
----
+![Add new configuration dropdown](/img/integrations/expandi/expandi-create-conf.png)
 
-## What gets pushed
+2. Name the configuration (e.g., *Hot leads to Expandi*).
+3. Pick the target **LinkedIn account** and **Campaign** from the dropdowns.
+4. Under **Select signals to sync**, tick the signals to include.
+5. Under **Fields to send**, tick which fields to sync to Expandi.
+6. Use **Filters** to narrow which leads are sent. Leave empty to send all.
+7. Click **Create configuration** and pick a historic sync range — last 24 hours, 7 days, 31 days, or no historic data.
 
-_Describe which engager fields map to Expandi fields and how the profile URL is used as the primary identifier._
+![Historic sync options](/img/integrations/expandi/expandi-historic-sync.png)
 
-:::note TODO
-Add example of a synced lead inside Expandi.
-:::
-
----
-
-## Troubleshooting
-
-- **Leads aren't arriving** — TODO
-- **Wrong profile URLs** — TODO
-- **Campaign paused unexpectedly** — TODO
-
-See also: [Webhooks](./webhooks.md) for a custom alternative.
+Repeat to route different signals to different campaigns.

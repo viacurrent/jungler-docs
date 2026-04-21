@@ -6,53 +6,35 @@ sidebar_label: Slack
 
 # <span className="heading-with-icon"><img src="/img/integrations/slack-icon.png" alt="" /> Slack</span>
 
-Send new signals and engagers from Jungler directly into a Slack channel, so your team sees opportunities the moment they surface.
+Automatically send filtered posts or engagers to Slack channels.
 
-:::note TODO
-This page is a placeholder. Final content, step numbering, and screenshots to be filled in based on the live Jungler → Slack integration flow.
-:::
+## Connecting Slack
 
----
+Open Jungler. Go to [**Settings > Integrations > Slack**](https://app.jungler.ai/settings/integrations/slack).
 
-## Setting up Slack
+1. Click **Connect**
+2. You'll be redirected to Slack. Pick the **workspace** you want to connect and click **Allow**.
 
-_Walk the user through authorizing the Jungler Slack app and picking a target workspace / channel._
+![Slack authorization screen](/img/integrations/slack/slack-redirect.png)
 
-:::note TODO
-Add screenshot of the Slack app authorization screen.
-:::
+3. Slack will send you back to Jungler.
 
----
+## Adding a configuration
 
-## Configure the integration in Jungler
+Each configuration routes a set of signals to one Slack channel.
 
-_Go to **Settings → Integrations → Slack** in the Jungler dashboard and describe the connection steps._
+1. Under **Configurations**, click **Add new configuration** and choose **Send posts** or **Send engagers**.
 
-1. TODO — how to connect the authorized Slack workspace.
-2. TODO — how to pick the destination channel.
-3. TODO — how to choose between posts and engagers.
-4. TODO — how to apply filters.
+![Add Slack configuration pop-up](/img/integrations/slack/slack-add-new-conf.png)
 
-:::note TODO
-Add screenshot of the Slack configuration pop-up in Jungler.
-:::
+2. Name the configuration (e.g., *Product updates*).
+3. Pick the **Slack channel** to send to. (If your Slack workspace has many channels, the channel list can take up to a minute to load. This is due to Slack's rate limits.)
+4. Under **Select signals to sync**, tick the signals to include.
+5. Use **Filters** to narrow which engagers or posts get sent. Leave empty to send all.
+6. Click **Create configuration**.
 
----
+If the configuration was successful, you'll get a confirmation message in your Slack channel immediately.
 
-## What gets sent to Slack
+![Slack confirmation message](/img/integrations/slack/slack-success.png)
 
-_Describe the format of messages that arrive in Slack — author, post preview, link back to Jungler, etc._
-
-:::note TODO
-Add example Slack message screenshot.
-:::
-
----
-
-## Troubleshooting
-
-- **Messages aren't arriving** — TODO
-- **Channel is too noisy** — TODO (point at filters)
-- **Want a different format** — TODO
-
-See also: [Webhooks](./webhooks.md) for a custom alternative.
+Repeat to route different signals into different channels.

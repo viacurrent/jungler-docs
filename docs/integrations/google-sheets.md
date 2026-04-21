@@ -6,54 +6,43 @@ sidebar_label: Google Sheets
 
 # <span className="heading-with-icon"><img src="/img/integrations/sheets-icon.png" alt="" /> Google Sheets</span>
 
-Append posts and engagers from Jungler to a Google Sheet — useful for reporting, sharing with non-technical teammates, or feeding lightweight automations.
+Push ICP engagers or posts from Jungler to Google Sheets automatically.
 
-:::note TODO
-This page is a placeholder. Final content, step numbering, and screenshots to be filled in based on the live Jungler → Google Sheets integration flow.
-:::
+## Sharing your Google Sheet
 
----
+Open Jungler. Go to [**Settings > Integrations > Google Sheets**](https://app.jungler.ai/settings/integrations/google-sheets).
 
-## Prepare your Google Sheet
+1. Copy the service account email under **Setup**.
 
-_Describe the target sheet / tab layout Jungler expects — column headers, tab name, etc._
+![Copy Jungler's service account email](/img/integrations/google-sheets/google-service-account.png)
 
-:::note TODO
-Add screenshot of a pre-configured sheet.
-:::
+2. Open your Google Sheet and click **Share** in the top right.
+3. Paste the service account email and grant it **Editor** access.
 
----
+## Testing the connection (optional)
 
-## Connect Google Sheets in Jungler
+Back on the Jungler Google Sheets page:
 
-_Go to **Settings → Integrations → Google Sheets** in the Jungler dashboard._
+1. Paste your Google Sheets URL under **Test connection** and click **Test**.
+2. Wait for the **Connection successful** confirmation.
 
-1. TODO — authorize the Google account.
-2. TODO — pick the target spreadsheet.
-3. TODO — pick the target tab.
-4. TODO — choose between posts and engagers.
-5. TODO — apply filters.
+## Adding a configuration
 
-:::note TODO
-Add screenshot of the Google Sheets configuration pop-up in Jungler.
-:::
+Each configuration routes a set of signals to one Google Sheet tab.
 
----
+1. Under **Configurations**, click **Add new configuration** and choose **Send posts** or **Send engagers**.
 
-## How rows are written
+![Add new configuration dropdown](/img/integrations/google-sheets/google-creating-conf.png)
 
-_Explain what columns Jungler populates, how deduplication works, and delivery cadence._
+2. Name the configuration (e.g., *Hot leads*).
+3. Paste the **Google Sheets URL** and enter the **Sheet tab name** (e.g., *Sheet1*).
 
-:::note TODO
-Add example row screenshot.
-:::
+![Google Sheets configuration form](/img/integrations/google-sheets/google-url-and-tab.png)
 
----
+4. Under **Select signals to sync**, tick the signals to include.
+5. Use **Filters** to narrow which contacts or posts are sent. Leave empty to send all.
+6. Click **Create configuration** and pick a historic sync range — last 24 hours, 7 days, 31 days, or no historic data.
 
-## Troubleshooting
+![Historic sync options](/img/integrations/google-sheets/google-historic-sync.png)
 
-- **Rows aren't appearing** — TODO
-- **Authorization expired** — TODO
-- **Wrong columns** — TODO
-
-See also: [Webhooks](./webhooks.md) for a custom alternative.
+Repeat to route different signals to different sheets or tabs.

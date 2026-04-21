@@ -6,43 +6,44 @@ sidebar_label: Clay
 
 # <span className="heading-with-icon"><img src="/img/integrations/clay-icon.png" alt="" /> Clay</span>
 
-Integrating Clay with Jungler enables you to push filtered contacts that match your ICP criteria to a Clay table automatically.
+Push ICP engagers or posts from Jungler to Clay tables automatically.
 
-## Adding webhook as a source in your Clay table
+## Creating a webhook in Clay
 
-If your Clay table does not already monitor a Webhook for incoming data, you'll need to add Webhook as a source of data for your table. Follow these steps:
+Open the Clay table you want to send data to.
 
-1. Click **Actions**, then **Sources**, then **Webhook**.
-2. Select **Monitor Webhook** in the list of available options.
-3. Click Copy to **copy** the Webhook URL to your clipboard to paste in the Jungler dashboard.
+1. Click **Actions** > **Sources** > **Webhook**.
+2. Select **Monitor Webhook**.
+3. Click **Copy** to copy the webhook URL.
 
-![Adding webhook source in Clay](/img/integrations/clay/playbook-clay-1.png)
+![Copy webhook URL in Clay](/img/integrations/clay/clay-webhook.png)
 
-## Testing
+## Testing the connection (optional)
 
-Go to Jungler and click on your profile icon on the top right corner, and then navigate from **Settings** to **Integrations** ([https://app.jungler.ai/settings/integrations/clay](https://app.jungler.ai/settings/integrations/clay)).
+Open Jungler. Go to [**Settings > Integrations > Clay**](https://app.jungler.ai/settings/integrations/clay).
 
-To test your integration, follow these steps:
+1. Paste the Clay webhook URL you just copied and click **Test**.
+2. Wait for the **Connection successful** confirmation.
 
-1. Enter the URL of your Clay Webhook and click the "Test" button to run it.
-2. After testing the URL, you will send a test payload to the provided URL, simulating the data that would be sent during actual use.
-3. Observe the bottom of the "Test connection" box for feedback. These notifications will inform you whether the test event was successful.
+![Testing the Clay connection](/img/integrations/clay/clay-test.png)
 
-![Testing the Clay integration](/img/integrations/clay/playbook-clay-2.png)
+## Adding a configuration
 
-## Add new webhook
+Each configuration routes a set of signals to one Clay webhook.
 
-Here's how you can start pushing data to a Clay table:
+1. Under **Configurations**, click **Add new configuration** and choose **Send posts** or **Send engagers**.
 
-1. Below **Configured webhooks** at the bottom of the screen, click **+ Add new webhook** and choose whether you want to send posts or to send engagers (commenters and reactors). The Clay configuration pop-up box now opens up.
-2. Insert the URL of your Clay webhook to **Clay Webhook URL**.
-3. Choose how much historical data to sync on the first run with the **Historic sync** option.
-4. **Select signals to sync** to choose the signal from which you'd want to send data to Clay.
-5. Apply any **Filters** to only send contacts that match your criteria. Leave empty to send all engagers.
-6. Click the **Create configuration** button for activation.
+![Add new configuration dropdown](/img/integrations/clay/clay-add-new-conf.png)
 
-![Clay webhook configuration](/img/integrations/clay/playbook-clay-3.png)
+2. Name the configuration (e.g., *Jungler lead-magnets*).
+3. Paste your **Clay Webhook URL**.
+4. Under **Select signals to sync**, tick the signals to include.
+5. Use **Filters** to narrow which contacts are sent. Leave empty to send all.
 
-![Clay configuration complete](/img/integrations/clay/playbook-clay-5.png)
+![Clay configuration form](/img/integrations/clay/clay-config-screen.png)
 
-Congratulations – you've now set up your Jungler → Clay integration.
+6. If your ready, click **Create configuration** and pick a historic sync range — last 24 hours, 7 days, 31 days, or no historic data.
+
+![Historic sync options](/img/integrations/clay/clay-historic-sync.png)
+
+Repeat to route different signals to different Clay tables.
