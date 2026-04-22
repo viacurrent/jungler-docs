@@ -169,7 +169,7 @@ print(response.json())
 
 ### Extract Post Interactions
 
-Want to get comments and reactions from a specific post? See the [Workbooks API Quick Start](./api/workbooks.md#quick-start).
+Want to get comments and reactions from a specific post? See the [Workbooks API Quick Start](./workbooks.md#quick-start).
 
 ### Advanced Filtering
 

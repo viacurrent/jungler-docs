@@ -3,11 +3,39 @@ sidebar_position: 1
 slug: /
 ---
 
+import Link from '@docusaurus/Link';
+
 # Welcome to Jungler
 
 Jungler watches social media for the conversations and people that matter to you — and hands you the data in a form your team can actually use.
 
-You get three tools, each tuned for a different question.
+## Products
+
+Three tools, each tuned for a different question.
+
+<div className="integration-grid">
+  <Link to="/guide/profile-monitoring" className="integration-card">
+    <span className="product-icon product-icon-profile" aria-hidden="true"></span>
+    <div className="integration-card-body">
+      <div className="integration-card-title">Profile engagement</div>
+      <div className="integration-card-subtitle">Monitor who's engaging</div>
+    </div>
+  </Link>
+  <Link to="/guide/post-engagement" className="integration-card">
+    <span className="product-icon product-icon-post" aria-hidden="true"></span>
+    <div className="integration-card-body">
+      <div className="integration-card-title">Post engagement</div>
+      <div className="integration-card-subtitle">Harvest a specific post</div>
+    </div>
+  </Link>
+  <Link to="/guide/keyword-monitoring" className="integration-card">
+    <span className="product-icon product-icon-keyword" aria-hidden="true"></span>
+    <div className="integration-card-body">
+      <div className="integration-card-title">Keyword monitoring</div>
+      <div className="integration-card-subtitle">Track your brand</div>
+    </div>
+  </Link>
+</div>
 
 ## Profile engagement monitoring
 
@@ -27,6 +55,6 @@ All three feed the same place: your signals dashboard, the [API](./api/index.md)
 
 ## Getting started
 
-Start with [How Jungler Works](./guide/how-it-works.md) for a quick tour. If you're building against the API, jump to the [API overview](./api/index.md).
+Start with [Profile engagement](./guide/profile-monitoring.md) to see how Jungler works in practice. If you're building against the API, jump to the [API overview](./api/index.md).
 
 Questions: **team@jungler.ai**.

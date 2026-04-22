@@ -8,6 +8,7 @@ import Link from '@docusaurus/Link';
 type MenuItem = {
     label: string;
     href: string;
+    iconClass?: string;
 };
 
 type MenuCategory = {
@@ -20,21 +21,32 @@ const menu: (MenuItem | MenuCategory)[] = [
     {
         label: 'Guide',
         items: [
-            { label: 'How Jungler Works', href: '/how-it-works' },
-            { label: 'What to Search For', href: '/search-ideas' },
-            { label: 'Search Syntax', href: '/search-syntax' },
-            { label: 'AI Filtering', href: '/ai-filtering' },
+            { label: 'Profile engagement', href: '/guide/profile-monitoring', iconClass: 'sidebar-icon sidebar-icon-profile' },
+            { label: 'Post engagement', href: '/guide/post-engagement', iconClass: 'sidebar-icon sidebar-icon-post' },
+            { label: 'Keyword monitoring', href: '/guide/keyword-monitoring', iconClass: 'sidebar-icon sidebar-icon-keyword' },
         ],
     },
     {
-        label: 'API Reference',
+        label: 'Integrations',
         items: [
-            { label: 'Quick Start', href: '/quick-start' },
-            { label: 'Workspaces API', href: '/api/workspaces' },
-            { label: 'Searches API', href: '/api/searches' },
-            { label: 'Posts API', href: '/api/posts' },
-            { label: 'Workbooks API', href: '/api/workbooks' },
-            { label: 'Webhooks', href: '/api/webhooks' },
+            { label: 'Clay', href: '/integrations/clay', iconClass: 'sidebar-icon sidebar-icon-clay' },
+            { label: 'Slack', href: '/integrations/slack', iconClass: 'sidebar-icon sidebar-icon-slack' },
+            { label: 'Google Sheets', href: '/integrations/google-sheets', iconClass: 'sidebar-icon sidebar-icon-sheets' },
+            { label: 'HeyReach', href: '/integrations/heyreach', iconClass: 'sidebar-icon sidebar-icon-heyreach' },
+            { label: 'Expandi', href: '/integrations/expandi', iconClass: 'sidebar-icon sidebar-icon-expandi' },
+            { label: 'Webhooks', href: '/integrations/webhooks', iconClass: 'sidebar-icon sidebar-icon-webhook' },
+        ],
+    },
+    {
+        label: 'API',
+        items: [
+            { label: 'Overview', href: '/api' },
+            { label: 'Quick Start', href: '/api/quick-start' },
+            { label: 'Workspaces', href: '/api/workspaces' },
+            { label: 'Signals', href: '/api/signals' },
+            { label: 'Posts', href: '/api/posts' },
+            { label: 'Engagers', href: '/api/engagers' },
+            { label: 'Workbooks', href: '/api/workbooks' },
         ],
     },
 ];
@@ -54,7 +66,7 @@ function CategoryItem({
     onNavigate: () => void;
 }) {
     const hasActive = category.items.some((item) => isActive(item.href, pathname));
-    const [expanded, setExpanded] = useState(hasActive);
+    const [expanded, setExpanded] = useState(true);
 
     return (
         <li className={clsx('menu__list-item', { 'menu__list-item--collapsed': !expanded })}>
@@ -69,7 +81,7 @@ function CategoryItem({
             </button>
             <Collapsible lazy as="ul" className="menu__list" collapsed={!expanded}>
                 {category.items.map((item) => (
-                    <li key={item.href} className="menu__list-item">
+                    <li key={item.href} className={clsx('menu__list-item', item.iconClass)}>
                         <Link
                             className={clsx('menu__link', {
                                 'menu__link--active': isActive(item.href, pathname),

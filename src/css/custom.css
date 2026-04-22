@@ -347,6 +347,33 @@ aside[class*='docSidebarContainer'] {
     background-image: url('/img/integrations/webhook-icon.png');
 }
 
+/* Lucide sidebar icons — inherit text color via mask-image */
+.sidebar-icon-profile > .menu__link::before,
+.sidebar-icon-post > .menu__link::before,
+.sidebar-icon-keyword > .menu__link::before {
+    background-color: currentColor;
+    background-image: none;
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    opacity: 0.85;
+}
+.sidebar-icon-profile > .menu__link::before {
+    mask-image: url('/img/icons/user-round.svg');
+    -webkit-mask-image: url('/img/icons/user-round.svg');
+}
+.sidebar-icon-post > .menu__link::before {
+    mask-image: url('/img/icons/square.svg');
+    -webkit-mask-image: url('/img/icons/square.svg');
+}
+.sidebar-icon-keyword > .menu__link::before {
+    mask-image: url('/img/icons/text-search.svg');
+    -webkit-mask-image: url('/img/icons/text-search.svg');
+}
+
 /* Single-line truncation for sidebar labels */
 .menu__link > span {
     display: block;
@@ -1182,6 +1209,11 @@ th {
     font-family: var(--ifm-font-family-base);
 }
 
+td,
+th {
+    vertical-align: top;
+}
+
 td:last-child,
 th:last-child {
     border-right: 0;
@@ -1245,6 +1277,33 @@ td b {
     height: 24px;
     flex-shrink: 0;
     object-fit: contain;
+}
+
+.integration-card .product-icon {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    background-color: var(--ifm-font-color-base);
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    opacity: 0.85;
+}
+
+.product-icon-profile {
+    mask-image: url('/img/icons/user-round.svg');
+    -webkit-mask-image: url('/img/icons/user-round.svg');
+}
+.product-icon-post {
+    mask-image: url('/img/icons/square.svg');
+    -webkit-mask-image: url('/img/icons/square.svg');
+}
+.product-icon-keyword {
+    mask-image: url('/img/icons/text-search.svg');
+    -webkit-mask-image: url('/img/icons/text-search.svg');
 }
 
 .integration-card-body {
@@ -1667,6 +1726,7 @@ html[data-theme-switching] * {
 
     .navbar-sidebar__brand {
         border-bottom: 1px solid var(--card-border);
+        box-shadow: none !important;
         padding: 0 16px;
         min-height: var(--ifm-navbar-height);
         max-height: var(--ifm-navbar-height);

@@ -18,20 +18,9 @@ const sidebars = {
             label: 'Guide',
             collapsed: false,
             items: [
-                'how-it-works',
-                'search-ideas',
-                'search-syntax',
-                'ai-filtering',
-            ],
-        },
-        {
-            type: 'category',
-            label: 'Guide (Draft)',
-            collapsed: false,
-            items: [
-                'guide/profile-monitoring',
-                'guide/post-engagement',
-                'guide/keyword-monitoring',
+                { type: 'doc', id: 'guide/profile-monitoring', className: 'sidebar-icon sidebar-icon-profile' },
+                { type: 'doc', id: 'guide/post-engagement', className: 'sidebar-icon sidebar-icon-post' },
+                { type: 'doc', id: 'guide/keyword-monitoring', className: 'sidebar-icon sidebar-icon-keyword' },
             ],
         },
         {
@@ -53,7 +42,7 @@ const sidebars = {
             collapsed: false,
             items: [
                 'api/index',
-                'quick-start',
+                'api/quick-start',
                 'api/workspaces',
                 'api/signals',
                 'api/posts',

@@ -4,63 +4,53 @@ sidebar_label: Profile engagement
 ---
 
 import Link from '@docusaurus/Link';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
-# Profile engagement monitoring
+# Profile engagement
 
-Capture your ICPs (ideal customer profiles) engaging with your content, competitors, or industry influencers.
+Capture your ICPs (ideal customer profiles) engaging with your content, competitors, and industry influencers.
 
 ## Setup
 
-Paste a LinkedIn profile URL – that's the whole setup. On the first run, Jungler pulls in all posts from the past month and extracts every engager. After that, the signal updates every 24 hours automatically.
+Go to [Jungler](https://app.jungler.ai/profiles/new) and paste a LinkedIn profile URL – that's the whole setup.
 
-<video autoPlay loop muted playsInline width="100%" style={{border: '1px solid var(--card-border)', borderRadius: '0.5rem', marginTop: '1rem', marginBottom: '1.5rem'}}>
-  <source src="/video/jungler-demo.mp4" type="video/mp4" />
+On the first run, Jungler pulls in all posts from the past month and extracts every engager the post has. After that, the signal updates every 24 hours automatically.
+
+<video autoPlay loop muted playsInline width="100%" style={{border: '1px solid var(--card-border)', borderRadius: '0.5rem', marginTop: '1rem', display: 'block'}}>
+  <source src="/img/profile-monitoring/jungler-demo.mp4" type="video/mp4" />
 </video>
 
+## Explore results
 
-| URL example | Type |
-|---|---|
-| `https://www.linkedin.com/in/junglerhendrik/` | **User profile** |
-| `https://www.linkedin.com/company/junglerai` | **Company profile** |
+Every engager comes enriched, so you can easily find your ICPs. Explore the profile's posts, engagement, and analytics.
 
-
-
-
-## Filtering
-
-Every engager comes enriched, so you can easily filter by your ICP.
-
-:::note Image placeholder
-Screenshot of the engager list with the filter panel open.
-:::
-
-| Field | Description | Example |
-|---|---|---|
-| Region | Broad geographic region | EMEA, AMER, APAC |
-| Country | Country-level location | United States, Germany |
-| Job function | The engager's function | Marketing, Sales, Engineering |
-| Seniority | Seniority tier | Executive, Senior, Mid, Junior |
-| Job title | Exact title string | Head of Growth |
-| Company name | Current employer | Acme Corp |
-| Company size | Employee-count bucket | 51–200, 1001–5000 |
-| Company industry | Industry classification | SaaS, Fintech |
-| Company HQ | HQ country | United States |
-| Company website | Primary domain | acme.com |
-
+<Tabs>
+  <TabItem value="posts" label="Posts" default>
+    <img src="/img/profile-monitoring/jungler-posts.png" alt="Profile posts view" style={{border: '1px solid var(--card-border)', borderRadius: '0 0 8px 8px'}} />
+  </TabItem>
+  <TabItem value="engagement" label="Engagement">
+    <img src="/img/profile-monitoring/jungler-engagers.png" alt="Profile engagement view" style={{border: '1px solid var(--card-border)', borderRadius: '0 0 8px 8px'}} />
+  </TabItem>
+  <TabItem value="analytics" label="Analytics">
+    <img src="/img/profile-monitoring/jungler-analytics.png" alt="Profile analytics view" style={{border: '1px solid var(--card-border)', borderRadius: '0 0 8px 8px'}} />
+  </TabItem>
+</Tabs>
 
 
 ## Playbooks
 
-| Playbook | What it does |
+The most common profile engagement playbooks.
+
+| Playbook | Description |
 |---|---|
-| **Monitor own profile** | Replay your own funnel. Anyone engaging with your personal posts is self-identifying as paying attention to you directly — usually the warmest top-of-funnel you'll get from social. |
-| **Monitor company profile** | Catch the broader, earlier-stage crowd that brand and marketing content attracts. Different signal from your personal profile — more volume, less intent, good for enrichment into nurture. |
-| **Monitor competitor** | Engagers on a competitor's posts are category-aware and already forming opinions. Publicly engaging with a competitor is itself a qualifier — they're evaluating, not just browsing. |
-| **Industry leaders** | Borrow an audience when yours is too small. Pick voices whose followers match your ICP, not whoever has the biggest follower count — a niche voice with the right audience beats a generic one with a bigger one. |
+| **Your own profile** | The easiest win. Anyone engaging with your posts already knows you. They've read your take, liked it, maybe commented. That's not a cold lead — that's someone who opted in. Outbound response rates here blow past anything you'll get from a raw ICP list. |
+| **Company profile** | People engaging with your company updates are raising their hand. They're curious, evaluating, or already sold and looking for a reason to reach out. Don't make them wait. |
+| **Competitor profiles** | If someone's engaging with your competitor's posts, they're in-market. They're comparing, forming opinions, maybe frustrated with what they have. These leads already understand the category — you just need to give them a better option. |
+| **Industry leaders** | Borrow someone else's audience. Find voices whose followers look like your ICP — not the biggest accounts, the most *relevant* ones. A niche creator with 5K of the right followers beats a thought leader with 200K randoms. Think of it as social media targeting for outbound. |
 
 
-
-## Integrations
+## Next steps
 
 Route qualified engagers to the tools you already use.
 
