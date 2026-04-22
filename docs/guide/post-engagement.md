@@ -5,17 +5,13 @@ sidebar_label: Post engagement
 
 # Post engagement
 
-Extract every commenter and reactor from any LinkedIn post using its URL. All engagers are enriched by deafault. All posts are managed in workbooks (just a collection of posts).
+Extract every engager from any LinkedIn post. All engagers come enriched by default. Posts are grouped into workbooks — a collection of posts.
 
 ## Setup
 
-Go to [Workbooks](https://app.jungler.ai/workbooks) and create a new one. Paste a LinkedIn post URL, and pick reactions, comments, or both. Click **Get engagers**.
+Go to [Workbooks](https://app.jungler.ai/workbooks) and create a new one. Paste a LinkedIn post URL, pick reactions, comments, or both, then click **Get engagers**.
 
-Add more posts to the same workbook to build a combined lead list across all of them. One workbook, one deduped list.
-
-:::note Image placeholder
-Screenshot of the "Extract post engagement" modal.
-:::
+![Create new workbook](/img/post-engagement/workbooks-create-new.png)
 
 Each post takes a few minutes to extract. Unlike signals, a workbook is a one-off pull — not a scheduled watch.
 
@@ -23,16 +19,12 @@ Each post takes a few minutes to extract. Unlike signals, a workbook is a one-of
 
 Every engager comes enriched. Filter on any field to isolate your ICP.
 
-:::note Image placeholder
-Screenshot of the populated workbook with the filter panel open.
-:::
-
 ## Playbooks
 
 | Playbook | Description |
 |---|---|
-| **Lead magnets** | Collect all lead magnet engagers to one workbook to run a one-off outreach campaign. |
+| **Lead magnets** | Collect engagers from all your lead magnet posts into one workbook and run a one-off outreach campaign. |
 
 ## Next steps
 
-Workbooks are export-only — there's no scheduled route to an integration. Download a CSV, Excel or JSON.
+Workbooks are export-only — there's no scheduled route to an integration. Download as CSV, Excel, or JSON.

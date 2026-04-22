@@ -239,7 +239,7 @@ response = httpx.get(
   </TabItem>
 </Tabs>
 
-See the [Posts API documentation](./api/posts.md) for all available filters.
+See the [Posts API documentation](./posts.md) for all available filters.
 
 ## Common Issues
 
@@ -271,7 +271,7 @@ See the [Posts API documentation](./api/posts.md) for all available filters.
 
 ## Further Reading
 
-- [API](./api/index.md) - Complete API documentation
-- [Posts API](./api/posts.md) - Detailed filtering options
-- [Workbooks API](./api/workbooks.md) - Extract post interactions
-- [Signals API](./api/signals.md) - Manage signals
+- [API](./index.md) - Complete API documentation
+- [Posts API](./posts.md) - Detailed filtering options
+- [Workbooks API](./workbooks.md) - Extract post interactions
+- [Signals API](./signals.md) - Manage signals

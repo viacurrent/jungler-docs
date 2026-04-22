@@ -1257,7 +1257,7 @@ td b {
 .integration-card {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
     padding: 12px 16px;
     border: 1px solid var(--card-border);
     border-radius: 0.5rem;
@@ -1304,6 +1304,10 @@ td b {
 .product-icon-keyword {
     mask-image: url('/img/icons/text-search.svg');
     -webkit-mask-image: url('/img/icons/text-search.svg');
+}
+.product-icon-api {
+    mask-image: url('/img/icons/sparkle.svg');
+    -webkit-mask-image: url('/img/icons/sparkle.svg');
 }
 
 .integration-card-body {
