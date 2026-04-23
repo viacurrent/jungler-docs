@@ -1,4 +1,10 @@
-# Webhooks
+---
+sidebar_position: 7
+title: Webhooks
+sidebar_label: Webhooks
+---
+
+# <span className="heading-with-icon"><img src="/img/integrations/webhook-icon.png" alt="" /> Webhooks</span>
 
 Webhooks automatically deliver data from Jungler to external endpoints like n8n, Zapier, Make, or custom URLs whenever new data is collected.
 

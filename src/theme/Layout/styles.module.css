@@ -20,6 +20,8 @@ body {
 @media (max-width: 996px) {
     .docPageWrapper {
         margin-top: 0;
+        overflow: visible;
+        flex: 1 0 auto;
     }
 }
 

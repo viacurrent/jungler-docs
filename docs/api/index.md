@@ -57,7 +57,7 @@ When you exceed the rate limit, you'll receive a `429 Too Many Requests` respons
 - **[Posts](./posts.md)** - Retrieve and filter posts
 - **[Engagers](./engagers.md)** - Retrieve interactions (comments, reactions) and contacts
 - **[Workbooks](./workbooks.md)** - Create extraction tasks for specific posts
-- **[Webhooks](./webhooks.md)** - Send data to external platforms automatically
+- **[Webhooks](../integrations/webhooks.md)** - Send data to external platforms automatically
 
 ## Quick Start
 

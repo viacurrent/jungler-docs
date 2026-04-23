@@ -3,64 +3,92 @@ sidebar_position: 1
 slug: /
 ---
 
+import Link from '@docusaurus/Link';
+
 # Welcome to Jungler
 
-Jungler is a social media intelligence platform that helps you discover, analyze, and act on relevant signals.
+Jungler finds people who are already looking for you — and hands you the leads in a form your team can actually use.
 
-## What is Jungler?
+## Products
 
-Jungler continuously monitors social media for posts matching your search criteria, enriches them with AI-powered insights, and provides tools to engage with the most relevant content and people.
+Find warm ICP leads.
 
-## Key Features
+<div className="integration-grid">
+  <Link to="/guide/profile-monitoring" className="integration-card">
+    <span className="product-icon product-icon-profile" aria-hidden="true"></span>
+    <div className="integration-card-body">
+      <div className="integration-card-title">Profile engagement</div>
+      <div className="integration-card-subtitle">Monitor who's engaging</div>
+    </div>
+  </Link>
+  <Link to="/guide/post-engagement" className="integration-card">
+    <span className="product-icon product-icon-post" aria-hidden="true"></span>
+    <div className="integration-card-body">
+      <div className="integration-card-title">Post engagement</div>
+      <div className="integration-card-subtitle">Harvest a specific post</div>
+    </div>
+  </Link>
+  <Link to="/guide/keyword-monitoring" className="integration-card">
+    <span className="product-icon product-icon-keyword" aria-hidden="true"></span>
+    <div className="integration-card-body">
+      <div className="integration-card-title">Keyword monitoring</div>
+      <div className="integration-card-subtitle">Track your brand</div>
+    </div>
+  </Link>
+  <Link to="/api" className="integration-card">
+    <span className="product-icon product-icon-api" aria-hidden="true"></span>
+    <div className="integration-card-body">
+      <div className="integration-card-title">API</div>
+      <div className="integration-card-subtitle">Social data for AI</div>
+    </div>
+  </Link>
+</div>
 
-### Smart Searches
-Create custom searches to track social media conversations about specific topics, industries, or roles. Our AI continuously collects and classifies relevant posts.
+## Integrations
 
-### AI-Powered Analysis
-Every post is automatically analyzed for:
-- **Relevance** - How well it matches your search intent
-- **Sentiment** - Positive, negative, or neutral tone
-- **Author insights** - Function, seniority level, company size, industry
-- **Content type** - Post, article, poll, etc.
+Route qualified leads to the tools you already use.
 
-### Workbooks
-Extract and analyze interactions from any post:
-- **Comments** - See who's engaging and what they're saying
-- **Reactions** - Track who's interested in the content
-- **Contacts** - Export deduplicated contact lists with enriched data
-
-### Developer API
-Access your data programmatically with our REST API:
-- Filter and export posts with extensive criteria
-- Extract post interactions at scale
-- Integrate Jungler data into your workflows
-
-## Getting Started
-
-### For Users
-
-1. **Create a workspace** - Organize your searches and data
-2. **Set up searches** - Define what conversations you want to track
-3. **Analyze posts** - Use filters to find the most relevant content
-4. **Extract contacts** - Build targeted lists from post interactions
-
-### For Developers
-
-1. **[Get an API key](./api/index.md)** - Access your data programmatically
-2. **[Explore the API](./api/index.md)** - Learn about available endpoints
-3. **[Try examples](./api/index.md)** - See common use cases in action
-
-## Quick Links
-
-- [API](./api/index.md) - Complete API documentation
-- [Workspaces API](./api/workspaces.md) - Manage your workspaces
-- [Signals API](./api/signals.md) - Work with signals
-- [Posts API](./api/posts.md) - Retrieve and filter posts
-- [Engagers API](./api/engagers.md) - Retrieve post interactions and contacts
-- [Workbooks API](./api/workbooks.md) - Create extraction tasks for specific posts
-
-## Need Help?
-
-- **Email**: team@jungler.ai
-- **GitHub**: [viacurrent/jungler-docs](https://github.com/viacurrent/jungler-docs)
-
+<div className="integration-grid">
+  <Link to="/integrations/clay" className="integration-card">
+    <img src="/img/integrations/clay-icon.png" alt="" />
+    <div className="integration-card-body">
+      <div className="integration-card-title">Clay</div>
+      <div className="integration-card-subtitle">Email enrichment</div>
+    </div>
+  </Link>
+  <Link to="/integrations/slack" className="integration-card">
+    <img src="/img/integrations/slack-icon.png" alt="" />
+    <div className="integration-card-body">
+      <div className="integration-card-title">Slack</div>
+      <div className="integration-card-subtitle">Real-time alerts</div>
+    </div>
+  </Link>
+  <Link to="/integrations/google-sheets" className="integration-card">
+    <img src="/img/integrations/sheets-icon.png" alt="" />
+    <div className="integration-card-body">
+      <div className="integration-card-title">Google Sheets</div>
+      <div className="integration-card-subtitle">Export lead lists</div>
+    </div>
+  </Link>
+  <Link to="/integrations/heyreach" className="integration-card">
+    <img src="/img/integrations/heyreach-icon.svg" alt="" />
+    <div className="integration-card-body">
+      <div className="integration-card-title">HeyReach</div>
+      <div className="integration-card-subtitle">LinkedIn outreach</div>
+    </div>
+  </Link>
+  <Link to="/integrations/expandi" className="integration-card">
+    <img src="/img/integrations/expandi-icon.svg" alt="" />
+    <div className="integration-card-body">
+      <div className="integration-card-title">Expandi</div>
+      <div className="integration-card-subtitle">LinkedIn outreach</div>
+    </div>
+  </Link>
+  <Link to="/integrations/webhooks" className="integration-card">
+    <img src="/img/integrations/webhook-icon.png" alt="" />
+    <div className="integration-card-body">
+      <div className="integration-card-title">Webhooks</div>
+      <div className="integration-card-subtitle">n8n, Zapier, Make</div>
+    </div>
+  </Link>
+</div>
