@@ -13,7 +13,7 @@ Track mentions of your brand, competitors, and industry terms across LinkedIn. E
 
 Go to [Jungler](https://app.jungler.ai/searches/new) and create a keyword monitoring. Start with your brand or competitor name.
 
-The first run pulls about a month of historical posts — capped at ~250 post due to platform limits. After that, the signal runs every 24 hours and pulls up to ~250 new posts per 24h.
+The first run pulls about a month of historical posts — capped at ~250 posts due to platform limits. After that, the signal runs every 24 hours and pulls up to ~250 new posts per 24h.
 
 ## Use cases
 

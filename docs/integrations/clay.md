@@ -42,7 +42,7 @@ Each configuration routes a set of signals to one Clay webhook.
 
 ![Clay configuration form](/img/integrations/clay/clay-config-screen.png)
 
-6. If your ready, click **Create configuration** and pick a historic sync range — last 24 hours, 7 days, 31 days, or no historic data.
+6. If you're ready, click **Create configuration** and pick a historic sync range — last 24 hours, 7 days, 31 days, or no historic data.
 
 ![Historic sync options](/img/integrations/clay/clay-historic-sync.png)
 
