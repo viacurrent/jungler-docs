@@ -1635,6 +1635,14 @@ html[data-theme-switching] * {
 /* ─── Mobile ─── */
 @media (max-width: 996px) {
 
+    /* Wide tables scroll horizontally instead of being clipped by docMainContainer's overflow-x: hidden */
+    .theme-doc-markdown table {
+        display: block;
+        overflow-x: auto;
+        max-width: 100%;
+        -webkit-overflow-scrolling: touch;
+    }
+
     /* Sticky navbar with solid background */
     .navbar {
         background: var(--ifm-background-color) !important;
