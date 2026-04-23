@@ -1,5 +1,12 @@
 ---
 sidebar_position: 2
+description: Make your first Jungler API call in minutes — authenticate, list workspaces, and pull enriched LinkedIn engagers with curl and Python examples.
+keywords:
+    - jungler api
+    - linkedin api
+    - api quick start
+    - api authentication
+    - api key
 ---
 
 # Quick Start

@@ -1,6 +1,13 @@
 ---
 sidebar_position: 3
 sidebar_label: Keyword monitoring
+description: Set up keyword monitoring in Jungler to track brand, competitor, and industry mentions on LinkedIn — every matching post captured and author enriched.
+keywords:
+    - linkedin keyword monitoring
+    - brand monitoring
+    - competitor tracking
+    - linkedin mentions
+    - boolean search
 ---
 
 import Link from '@docusaurus/Link';

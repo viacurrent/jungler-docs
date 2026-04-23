@@ -2,6 +2,7 @@
 sidebar_position: 4
 title: Google Sheets
 sidebar_label: Google Sheets
+description: Export Jungler engagers and posts to Google Sheets automatically. One-time service account setup, then every signal writes to your sheet in real time.
 ---
 
 # <span className="heading-with-icon"><img src="/img/integrations/sheets-icon.png" alt="" /> Google Sheets</span>

@@ -1,5 +1,6 @@
 ---
 sidebar_label: Overview
+description: Jungler API overview — authentication, base URL, rate limits, and a map of every endpoint for accessing signals, posts, workbooks, and engagers.
 ---
 
 # API Overview

@@ -26,7 +26,39 @@ const config = {
         locales: ['en'],
     },
 
-    plugins: ['./plugins/raw-docs.js'],
+    plugins: [
+        './plugins/raw-docs.js',
+        [
+            '@docusaurus/plugin-client-redirects',
+            {
+                redirects: [
+                    // Pre-refresh URLs under the old /docs/* prefix (before routeBasePath: '/' was set on 2026-04-02)
+                    { from: '/docs/intro', to: '/' },
+                    { from: '/docs/quick-start', to: '/api/quick-start' },
+                    { from: '/docs/how-it-works', to: '/' },
+                    { from: '/docs/ai-filtering', to: '/guide/keyword-monitoring' },
+                    { from: '/docs/search-ideas', to: '/guide/keyword-monitoring' },
+                    { from: '/docs/search-syntax', to: '/guide/keyword-monitoring' },
+                    { from: '/docs/api', to: '/api' },
+                    { from: '/docs/api/posts', to: '/api/posts' },
+                    { from: '/docs/api/signals', to: '/api/signals' },
+                    { from: '/docs/api/searches', to: '/api/signals' },
+                    { from: '/docs/api/workbooks', to: '/api/workbooks' },
+                    { from: '/docs/api/engagers', to: '/api/engagers' },
+                    { from: '/docs/api/workspaces', to: '/api/workspaces' },
+                    { from: '/docs/api/webhooks', to: '/integrations/webhooks' },
+
+                    // Post-routeBasePath, pre-refresh URLs that now 404
+                    { from: '/quick-start', to: '/api/quick-start' },
+                    { from: '/how-it-works', to: '/' },
+                    { from: '/ai-filtering', to: '/guide/keyword-monitoring' },
+                    { from: '/search-ideas', to: '/guide/keyword-monitoring' },
+                    { from: '/search-syntax', to: '/guide/keyword-monitoring' },
+                    { from: '/api/webhooks', to: '/integrations/webhooks' },
+                ],
+            },
+        ],
+    ],
 
     presets: [
         [
@@ -40,12 +72,18 @@ const config = {
                 theme: {
                     customCss: './src/css/custom.css',
                 },
+                sitemap: {
+                    changefreq: 'weekly',
+                    priority: 0.5,
+                    ignorePatterns: ['/search', '/404.html'],
+                    filename: 'sitemap.xml',
+                },
             },
         ],
     ],
 
     themeConfig: {
-        image: 'img/jungler-social-card.jpg',
+        image: 'img/jungler-social-card.png',
         colorMode: {
             respectPrefersColorScheme: true,
         },

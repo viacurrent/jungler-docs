@@ -2,6 +2,13 @@
 sidebar_position: 7
 title: Webhooks
 sidebar_label: Webhooks
+description: Deliver Jungler data to n8n, Zapier, Make, or any custom endpoint via webhooks — real-time delivery of enriched engagers and posts as they arrive.
+keywords:
+    - jungler webhooks
+    - linkedin webhook
+    - n8n integration
+    - zapier integration
+    - make integration
 ---
 
 # <span className="heading-with-icon"><img src="/img/integrations/webhook-icon.png" alt="" /> Webhooks</span>

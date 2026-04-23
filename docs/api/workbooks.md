@@ -1,3 +1,7 @@
+---
+description: Workbooks API reference — create temporary workbooks to extract comments, reactions, and contact data from any LinkedIn post on demand.
+---
+
 # Workbooks API
 
 The Workbooks API allows you to create temporary workbooks that extract post interactions (comments, reactions) and contact information from posts.
