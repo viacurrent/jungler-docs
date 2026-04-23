@@ -1,6 +1,13 @@
 ---
 sidebar_position: 2
 sidebar_label: Profile engagement
+description: Capture ICPs engaging with your content and competitors on LinkedIn. Profile monitoring turns every engagement into an enriched, outreach-ready lead.
+keywords:
+    - linkedin profile monitoring
+    - icp tracking
+    - engagement tracking
+    - lead generation
+    - linkedin engagers
 ---
 
 import Link from '@docusaurus/Link';

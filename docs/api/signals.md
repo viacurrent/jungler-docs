@@ -1,3 +1,7 @@
+---
+description: Signals API reference — create, list, and manage Jungler signals (saved searches) for keyword, profile, and company-based LinkedIn monitoring.
+---
+
 # Signals API
 
 The Signals API allows you to create, manage, and monitor your signals (saved searches).

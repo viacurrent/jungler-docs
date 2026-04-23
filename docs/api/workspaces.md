@@ -1,3 +1,7 @@
+---
+description: Workspaces API reference — list every Jungler workspace your API key can access, with IDs needed for downstream signals and posts endpoints.
+---
+
 # Workspaces API
 
 The Workspaces API allows you to list all workspaces that you have access to.

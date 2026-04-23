@@ -1,3 +1,7 @@
+---
+description: Posts API reference — retrieve and filter LinkedIn posts collected by your Jungler signals, by workspace, signal, company size, industry, and more.
+---
+
 # Posts API
 
 The Posts API allows you to retrieve and filter posts collected by your signals.

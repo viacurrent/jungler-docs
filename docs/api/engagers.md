@@ -1,3 +1,7 @@
+---
+description: Engagers API reference — fetch unified, deduplicated LinkedIn post engagers with enriched contact data from both signals and workbooks.
+---
+
 # Engagers API
 
 The Engagers API provides unified access to post interactions (comments, reactions) and deduplicated contact information from both signals and workbooks.

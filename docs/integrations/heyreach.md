@@ -2,6 +2,7 @@
 sidebar_position: 5
 title: HeyReach
 sidebar_label: HeyReach
+description: Stream Jungler engagers and post authors directly into HeyReach outreach campaigns — fully automated, filtered, and enriched by default.
 ---
 
 # <span className="heading-with-icon"><img src="/img/integrations/heyreach-icon.svg" alt="" /> HeyReach</span>

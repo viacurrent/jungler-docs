@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 slug: /
+description: Jungler docs — set up LinkedIn monitoring, track engagement, and push enriched leads into your sales stack via API and integrations.
 ---
 
 import Link from '@docusaurus/Link';

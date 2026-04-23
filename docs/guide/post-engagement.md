@@ -1,6 +1,7 @@
 ---
 sidebar_position: 4
 sidebar_label: Post engagement
+description: Extract every engager from any LinkedIn post with Jungler workbooks — reactions, comments, and enriched contact details, exported in one click.
 ---
 
 # Post engagement

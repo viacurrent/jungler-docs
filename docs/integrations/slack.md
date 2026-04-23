@@ -2,6 +2,7 @@
 sidebar_position: 3
 title: Slack
 sidebar_label: Slack
+description: Send filtered Jungler posts and engagers to any Slack channel automatically. Get your team alerts the moment a qualified engagement lands.
 ---
 
 # <span className="heading-with-icon"><img src="/img/integrations/slack-icon.png" alt="" /> Slack</span>
