@@ -226,8 +226,8 @@ If you provide a `webhook_url` when creating a workbook run, we'll send a comple
 - We send an HTTP `POST` request with a JSON payload.
 - A `2xx` response is treated as successful delivery.
 - If your endpoint does not respond within 5 seconds, or returns a non-`2xx` status code, the callback is considered failed.
-- Workbook run callbacks are attempted exactly once and are **not retried**, so your endpoint should be highly available.
-  - If you re-submit the same work or create another run on your side, design your processing to be idempotent; this duplicate-safe handling recommendation applies to your own re-submissions, not to repeated delivery attempts for the same callback.
+- If delivery fails, we retry the callback once after 30 seconds.
+- Because a callback may be delivered more than once, your endpoint should process callbacks idempotently.
 
 **Payload example:**
 
@@ -365,14 +365,15 @@ while True:
         headers=headers
     )
     data = response.json()
-== "success":
+
+    if data["status"] == "success":
         workbook_id = data["result"]["workbook_id"]
         break
     if data["status"] == "failure":
         raise RuntimeError(data.get("error", "Workbook extraction failed"))
 
     time.sleep(10)  # Wait 10 seconds before checking again
-workbook_id = data["result"]["workbook_id"]
+
 ```
 
 </TabItem>
