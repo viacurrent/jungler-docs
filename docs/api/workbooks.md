@@ -226,7 +226,8 @@ If you provide a `webhook_url` when creating a workbook run, we'll send a comple
 - We send an HTTP `POST` request with a JSON payload.
 - A `2xx` response is treated as successful delivery.
 - If your endpoint does not respond within 5 seconds, or returns a non-`2xx` status code, the callback is considered failed.
-- Workbook run callbacks are attempted exactly once and are **not retried**, so your endpoint should be highly available and able to process duplicate-safe requests if you choose to re-submit work on your side.
+- Workbook run callbacks are attempted exactly once and are **not retried**, so your endpoint should be highly available.
+  - If you re-submit the same work or create another run on your side, design your processing to be idempotent; this duplicate-safe handling recommendation applies to your own re-submissions, not to repeated delivery attempts for the same callback.
 
 **Payload example:**
 
@@ -236,8 +237,8 @@ If you provide a `webhook_url` when creating a workbook run, we'll send a comple
   "run_id": "507f1f77bcf86cd799439099",
   "status": "success",
   "started_at": "2025-01-15T10:30:00Z",
-  "completed_at": "2025-01-15T10:35:00Z",
-  "duration_ms": 300000,
+  "completed_at": "2025-01-15T10:33:00Z",
+  "duration_ms": 180000,
   "error": null
 }
 ```
@@ -333,9 +334,12 @@ while (true) {
   );
   const data = await response.json();
 
-  if (data.status === "success" || data.status === "failure") {
+  if (data.status === "success") {
     workbookId = data.result?.workbook_id;
     break;
+  }
+  if (data.status === "failure") {
+    throw new Error(data.error || "Workbook creation failed");
   }
 
   await new Promise((resolve) => setTimeout(resolve, 10000)); // Wait 10 seconds
@@ -361,12 +365,13 @@ while True:
         headers=headers
     )
     data = response.json()
-
-    if data["status"] in ["success", "failure"]:
+== "success":
+        workbook_id = data["result"]["workbook_id"]
         break
+    if data["status"] == "failure":
+        raise RuntimeError(data.get("error", "Workbook extraction failed"))
 
     time.sleep(10)  # Wait 10 seconds before checking again
-
 workbook_id = data["result"]["workbook_id"]
 ```
 
