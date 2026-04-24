@@ -187,12 +187,12 @@ POST /api/workbooks
 }
 ```
 
-| Field          | Type   | Required | Description                                                                    |
-| -------------- | ------ | -------- | ------------------------------------------------------------------------------ |
-| `workspace_id` | string | Yes      | The workspace ID                                                               |
-| `post_url`     | string | Yes      | Post URL                                                                       |
-| `data_types`   | array  | Yes      | Types of data to extract: `comment`, `reaction` (post data is always included) |
-| `webhook_url`  | string | No       | HTTPS URL called once when this run completes (max 1000 chars)                 |
+| Field          | Type   | Required | Description                                                                          |
+| -------------- | ------ | -------- | ------------------------------------------------------------------------------------ |
+| `workspace_id` | string | Yes      | The workspace ID                                                                     |
+| `post_url`     | string | Yes      | Post URL                                                                             |
+| `data_types`   | array  | Yes      | Types of data to extract: `comment`, `reaction` (post data is always included)       |
+| `webhook_url`  | string | No       | HTTPS URL called when this run completes, may be retried on failure (max 1000 chars) |
 
 ### Response
 
@@ -218,7 +218,9 @@ Returns a task ID for tracking the extraction progress, and a workbook ID for re
 
 If you provide a `webhook_url` when creating a workbook run, we'll send a completion callback to that URL when the extraction finishes, whether it succeeds or fails.
 
-> This callback is the per-run completion notification for Workbooks API requests. It is separate from the platform's broader Webhooks integration.
+:::note Not the same as Webhooks
+This callback is the per-run completion notification for Workbooks API requests. It is separate from the platform's broader [Webhooks integration](./../integrations/webhooks.md).
+:::
 
 #### Delivery
 
@@ -339,7 +341,7 @@ while (true) {
     break;
   }
   if (data.status === "failure") {
-    throw new Error(data.error || "Workbook creation failed");
+    throw new Error(data.error || "Workbook extraction failed");
   }
 
   await new Promise((resolve) => setTimeout(resolve, 10000)); // Wait 10 seconds
