@@ -102,7 +102,7 @@ The extraction typically takes 1-3 minutes. Poll the [task status](#get-task-sta
 
 ### 3. Retrieve Your Data
 
-Once complete, use the workbook ID from the task result to access collected data via the [Engagers API](./engagers.md):
+Once complete, use the workbook ID from the creation response (also available via task status or webhook payload) to access collected data via the [Engagers API](./engagers.md):
 
 <Tabs>
   <TabItem value="curl" label="cURL" default>
@@ -216,7 +216,17 @@ Returns a task ID for tracking the extraction progress, and a workbook ID for re
 
 ### Webhook Callbacks
 
-If you provide a `webhook_url` when creating a workbook run, we'll POST to that URL exactly once when the extraction completes (either successfully or fails).
+If you provide a `webhook_url` when creating a workbook run, we'll send a completion callback to that URL when the extraction finishes, whether it succeeds or fails.
+
+> This callback is the per-run completion notification for Workbooks API requests. It is separate from the platform's broader Webhooks integration.
+
+#### Delivery
+
+- `webhook_url` must be an `https://` URL.
+- We send an HTTP `POST` request with a JSON payload.
+- A `2xx` response is treated as successful delivery.
+- If your endpoint does not respond within 5 seconds, or returns a non-`2xx` status code, the callback is considered failed.
+- Workbook run callbacks are attempted exactly once and are **not retried**, so your endpoint should be highly available and able to process duplicate-safe requests if you choose to re-submit work on your side.
 
 **Payload example:**
 
@@ -231,6 +241,8 @@ If you provide a `webhook_url` when creating a workbook run, we'll POST to that 
   "error": null
 }
 ```
+
+The `run_id` field uniquely identifies this specific extraction attempt. You can safely ignore it, but it may be useful for support and debugging purposes.
 
 ### Rate Limiting
 
