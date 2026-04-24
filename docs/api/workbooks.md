@@ -33,7 +33,8 @@ curl -X POST \
      -d '{
        "post_url": "https://www.social.com/posts/username_activity-1234567890",
        "data_types": ["comment", "reaction"],
-       "workspace_id": "507f1f77bcf86cd799439011"
+       "workspace_id": "507f1f77bcf86cd799439011",
+       "webhook_url": "https://customer.com/callback"
      }' \
      https://production.viacurrent.com/api/workbooks
 ```
@@ -42,18 +43,22 @@ curl -X POST \
   <TabItem value="javascript" label="JavaScript">
 
 ```javascript
-const response = await fetch('https://production.viacurrent.com/api/workbooks', {
-  method: 'POST',
-  headers: {
-    'X-API-Key': 'your_api_key_here',
-    'Content-Type': 'application/json'
+const response = await fetch(
+  "https://production.viacurrent.com/api/workbooks",
+  {
+    method: "POST",
+    headers: {
+      "X-API-Key": "your_api_key_here",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      post_url: "https://www.social.com/posts/username_activity-1234567890",
+      data_types: ["comment", "reaction"],
+      workspace_id: "507f1f77bcf86cd799439011",
+      webhook_url: "https://customer.com/callback",
+    }),
   },
-  body: JSON.stringify({
-    post_url: 'https://www.social.com/posts/username_activity-1234567890',
-    data_types: ['comment', 'reaction'],
-    workspace_id: '507f1f77bcf86cd799439011'
-  })
-});
+);
 
 const result = await response.json();
 console.log(result);
@@ -71,7 +76,8 @@ response = httpx.post(
     json={
         'post_url': 'https://www.social.com/posts/username_activity-1234567890',
         'data_types': ['comment', 'reaction'],
-        'workspace_id': '507f1f77bcf86cd799439011'
+        'workspace_id': '507f1f77bcf86cd799439011',
+        'webhook_url': 'https://customer.com/callback'
     }
 )
 print(response.json())
@@ -81,16 +87,18 @@ print(response.json())
 </Tabs>
 
 **Response:**
+
 ```json
 {
   "task_id": "abc123-def456-ghi789",
-  "status": "PENDING"
+  "status": "queued",
+  "workbook_id": "507f1f77bcf86cd799439012"
 }
 ```
 
 ### 2. Wait for Completion
 
-The extraction typically takes 1-3 minutes. Poll the [task status](#get-task-status) endpoint until it completes.
+The extraction typically takes 1-3 minutes. Poll the [task status](#get-task-status) endpoint until it completes, or provide a `webhook_url` in your request to receive a callback.
 
 ### 3. Retrieve Your Data
 
@@ -113,20 +121,20 @@ curl -H "X-API-Key: your_api_key_here" \
   <TabItem value="javascript" label="JavaScript">
 
 ```javascript
-const headers = { 'X-API-Key': 'your_api_key_here' };
-const workbookId = '507f1f77bcf86cd799439012';
+const headers = { "X-API-Key": "your_api_key_here" };
+const workbookId = "507f1f77bcf86cd799439012";
 
 // Get all engagers (comments + reactions)
 const engagersResponse = await fetch(
   `https://production.viacurrent.com/api/engagers/workbook/${workbookId}?page=1&page_size=100`,
-  { headers }
+  { headers },
 );
 const engagers = await engagersResponse.json();
 
 // Get deduplicated contacts
 const contactsResponse = await fetch(
   `https://production.viacurrent.com/api/engagers/workbook/${workbookId}/contacts?page=1&page_size=500`,
-  { headers }
+  { headers },
 );
 const contacts = await contactsResponse.json();
 ```
@@ -174,32 +182,55 @@ POST /api/workbooks
 {
   "workspace_id": "507f1f77bcf86cd799439013",
   "post_url": "https://www.social.com/feed/update/urn:li:activity:...",
-  "data_types": ["comment", "reaction"]
+  "data_types": ["comment", "reaction"],
+  "webhook_url": "https://customer.com/callback"
 }
 ```
 
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| `workspace_id` | string | Yes | The workspace ID |
-| `post_url` | string | Yes | Post URL |
-| `data_types` | array | Yes | Types of data to extract: `comment`, `reaction` (post data is always included) |
+| Field          | Type   | Required | Description                                                                    |
+| -------------- | ------ | -------- | ------------------------------------------------------------------------------ |
+| `workspace_id` | string | Yes      | The workspace ID                                                               |
+| `post_url`     | string | Yes      | Post URL                                                                       |
+| `data_types`   | array  | Yes      | Types of data to extract: `comment`, `reaction` (post data is always included) |
+| `webhook_url`  | string | No       | HTTPS URL called once when this run completes (max 1000 chars)                 |
 
 ### Response
 
-Returns a task ID for tracking the extraction progress.
+Returns a task ID for tracking the extraction progress, and a workbook ID for retrieving the data.
 
 ```json
 {
   "task_id": "abc123-def456-ghi789",
-  "status": "PENDING"
+  "status": "queued",
+  "workbook_id": "507f1f77bcf86cd799439012"
 }
 ```
 
 **Status values:**
-- `PENDING` - Task is queued
-- `STARTED` - Extraction in progress
-- `SUCCESS` - Extraction complete
-- `FAILURE` - Extraction failed
+
+- `queued` - Task is queued
+- `pending` - Celery task picked up, preparing
+- `running` - Task is currently executing
+- `success` - Extraction complete
+- `failure` - Extraction failed
+
+### Webhook Callbacks
+
+If you provide a `webhook_url` when creating a workbook run, we'll POST to that URL exactly once when the extraction completes (either successfully or fails).
+
+**Payload example:**
+
+```json
+{
+  "workbook_id": "507f1f77bcf86cd799439012",
+  "run_id": "507f1f77bcf86cd799439099",
+  "status": "success",
+  "started_at": "2025-01-15T10:30:00Z",
+  "completed_at": "2025-01-15T10:35:00Z",
+  "duration_ms": 300000,
+  "error": null
+}
+```
 
 ### Rate Limiting
 
@@ -217,8 +248,8 @@ GET /api/tasks/{task_id}/status
 
 ### Path Parameters
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
+| Parameter | Type   | Description                                 |
+| --------- | ------ | ------------------------------------------- |
 | `task_id` | string | The task ID returned from workbook creation |
 
 ### Response
@@ -278,24 +309,24 @@ curl -H "X-API-Key: your_api_key_here" \
 <TabItem value="javascript" label="JavaScript">
 
 ```javascript
-const taskId = 'abc123-def456-ghi789';
-const headers = { 'X-API-Key': 'your_api_key_here' };
+const taskId = "abc123-def456-ghi789";
+const headers = { "X-API-Key": "your_api_key_here" };
 
 // Poll for completion
 let workbookId;
 while (true) {
   const response = await fetch(
     `https://production.viacurrent.com/api/tasks/${taskId}/status`,
-    { headers }
+    { headers },
   );
   const data = await response.json();
-  
-  if (data.status === 'success' || data.status === 'failure') {
+
+  if (data.status === "success" || data.status === "failure") {
     workbookId = data.result?.workbook_id;
     break;
   }
-  
-  await new Promise(resolve => setTimeout(resolve, 10000)); // Wait 10 seconds
+
+  await new Promise((resolve) => setTimeout(resolve, 10000)); // Wait 10 seconds
 }
 
 console.log(`Workbook ID: ${workbookId}`);
@@ -318,10 +349,10 @@ while True:
         headers=headers
     )
     data = response.json()
-    
+
     if data["status"] in ["success", "failure"]:
         break
-    
+
     time.sleep(10)  # Wait 10 seconds before checking again
 
 workbook_id = data["result"]["workbook_id"]
@@ -339,6 +370,7 @@ workbook_id = data["result"]["workbook_id"]
 ## Error Responses
 
 #### 400 Bad Request
+
 ```json
 {
   "detail": "This operation is only supported for temporary workbooks."
@@ -346,12 +378,14 @@ workbook_id = data["result"]["workbook_id"]
 ```
 
 **Common causes:**
+
 - Invalid post URL format
 - Missing required fields
 
 **Solution:** Verify your post URL is valid and all required fields are provided.
 
 #### 403 Forbidden
+
 ```json
 {
   "detail": "No access to workspace"
@@ -361,6 +395,7 @@ workbook_id = data["result"]["workbook_id"]
 **Solution:** Verify you have access to the workspace ID you're using.
 
 #### 409 Conflict
+
 ```json
 {
   "detail": "task_blocked_by_another_task"
@@ -372,6 +407,7 @@ workbook_id = data["result"]["workbook_id"]
 **Solution:** Wait for the existing task to complete before creating a new one.
 
 #### 422 Validation Error
+
 ```json
 {
   "detail": "Invalid post URL format"
@@ -379,10 +415,12 @@ workbook_id = data["result"]["workbook_id"]
 ```
 
 **Solution:** Check that your post URL format is correct. Valid formats:
+
 - `https://www.social.com/posts/username_activity-1234567890`
 - `https://www.social.com/feed/update/urn:li:activity:...`
 
 #### 429 Too Many Requests
+
 ```json
 {
   "detail": "Rate limit exceeded"
@@ -398,6 +436,7 @@ workbook_id = data["result"]["workbook_id"]
 ### 12-Hour Data Window
 
 Workbook data expires after 12 hours. Make sure to:
+
 - Download all required data within this timeframe
 - Save the workbook ID immediately after creation
 - Extract all needed information via the [Engagers API](./engagers.md) before expiration
@@ -413,5 +452,6 @@ Workbook data expires after 12 hours. Make sure to:
 ## Next Steps
 
 Once your workbook extraction is complete:
+
 - [Retrieve engagers](./engagers.md#workbook-engagers) — paginated comments and reactions
 - [Retrieve contacts](./engagers.md#workbook-contacts) — deduplicated contact list with enrichment data
