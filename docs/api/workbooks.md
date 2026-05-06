@@ -375,19 +375,19 @@ headers = {"X-API-Key": "your_api_key_here"}
 
 # Poll for completion
 while True:
-  response = httpx.get(
-    f"https://production.viacurrent.com/api/workbooks/runs/{run_id}",
-    headers=headers,
-  )
-  data = response.json()
+    response = httpx.get(
+        f"https://production.viacurrent.com/api/workbooks/runs/{run_id}",
+        headers=headers,
+    )
+    data = response.json()
 
-  if data["status"] in {"success", "success_credits_exhausted"}:
-    workbook_id = data["workbook_id"]
-    break
-  if data["status"] == "failed":
-    raise RuntimeError(data.get("error", "Workbook extraction failed"))
+    if data["status"] in {"success", "success_credits_exhausted"}:
+        workbook_id = data["workbook_id"]
+        break
+    if data["status"] == "failed":
+        raise RuntimeError(data.get("error", "Workbook extraction failed"))
 
-  time.sleep(10)  # Wait 10 seconds before checking again
+    time.sleep(10)  # Wait 10 seconds before checking again
 
 ```
 
