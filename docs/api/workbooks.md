@@ -18,7 +18,7 @@ Workbook data is stored in temporary workbooks that **expire after 12 hours**. M
 
 Extract interactions from a post in 3 steps:
 
-### 1. Create a Collection Task
+### 1. Create a Workbook Run
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -90,7 +90,7 @@ print(response.json())
 
 ```json
 {
-  "task_id": "abc123-def456-ghi789",
+  "run_id": "507f1f77bcf86cd799439099",
   "status": "queued",
   "workbook_id": "507f1f77bcf86cd799439012"
 }
@@ -98,11 +98,11 @@ print(response.json())
 
 ### 2. Wait for Completion
 
-The extraction typically takes 1-3 minutes. Poll the [task status](#get-task-status) endpoint until it completes, or provide a `webhook_url` in your request to receive a callback.
+The extraction typically takes 1-3 minutes. Poll the [run status](#get-run-status) endpoint until it completes, or provide a `webhook_url` in your request to receive a callback.
 
 ### 3. Retrieve Your Data
 
-Once complete, use the workbook ID from the creation response (also available via task status or webhook payload) to access collected data via the [Engagers API](./engagers.md):
+Once complete, use the workbook ID from the creation response (also available via run status or webhook payload) to access collected data via the [Engagers API](./engagers.md):
 
 <Tabs>
   <TabItem value="curl" label="cURL" default>
@@ -196,23 +196,29 @@ POST /api/workbooks
 
 ### Response
 
-Returns a task ID for tracking the extraction progress, and a workbook ID for retrieving the data.
+Returns a run ID for tracking the extraction progress, and a workbook ID for retrieving the data.
 
 ```json
 {
-  "task_id": "abc123-def456-ghi789",
+  "run_id": "507f1f77bcf86cd799439099",
   "status": "queued",
   "workbook_id": "507f1f77bcf86cd799439012"
 }
 ```
 
+| Field | Description |
+|-------|-------------|
+| `run_id` | Stable ID for this extraction attempt. Use it with `GET /api/workbooks/runs/{run_id}`. |
+| `status` | Initial run status, usually `queued`. |
+| `workbook_id` | Temporary workbook ID used to fetch engagers or contacts after completion. |
+
 **Status values:**
 
-- `queued` - Task is queued
-- `pending` - Celery task picked up, preparing
-- `running` - Task is currently executing
+- `queued` - Run is queued and waiting for a workspace execution slot
+- `running` - Run is currently executing
 - `success` - Extraction complete
-- `failure` - Extraction failed
+- `success_credits_exhausted` - Extraction completed, but the workspace ran out of credits
+- `failed` - Extraction failed
 
 ### Webhook Callbacks
 
@@ -249,33 +255,38 @@ The `run_id` field uniquely identifies this specific extraction attempt. You can
 
 ### Rate Limiting
 
-- **6 requests per minute** per API key
+- **30 requests per minute** per API key
 
 ---
 
-## Get Task Status
+## Get Run Status
 
-Monitor the progress of your workbook extraction task.
+Monitor the progress of one workbook extraction run.
 
 ```http
-GET /api/tasks/{task_id}/status
+GET /api/workbooks/runs/{run_id}
 ```
 
 ### Path Parameters
 
-| Parameter | Type   | Description                                 |
-| --------- | ------ | ------------------------------------------- |
-| `task_id` | string | The task ID returned from workbook creation |
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `run_id` | string | The run ID returned from workbook creation |
 
 ### Response
 
 <Tabs>
-<TabItem value="pending" label="In Progress">
+<TabItem value="running" label="In Progress">
 
 ```json
 {
-  "task_id": "abc123-def456-ghi789",
-  "status": "running"
+  "workbook_id": "507f1f77bcf86cd799439012",
+  "run_id": "507f1f77bcf86cd799439099",
+  "status": "running",
+  "started_at": "2024-01-15T10:30:00Z",
+  "completed_at": null,
+  "duration_ms": null,
+  "error": null
 }
 ```
 
@@ -284,25 +295,27 @@ GET /api/tasks/{task_id}/status
 
 ```json
 {
-  "task_id": "abc123-def456-ghi789",
+  "workbook_id": "507f1f77bcf86cd799439012",
+  "run_id": "507f1f77bcf86cd799439099",
   "status": "success",
-  "completed_at": "2024-01-15T10:30:00Z",
-  "result": {
-    "workbook_id": "507f1f77bcf86cd799439012",
-    "items_collected": 150,
-    "success": true
-  }
+  "started_at": "2024-01-15T10:30:00Z",
+  "completed_at": "2024-01-15T10:33:00Z",
+  "duration_ms": 180000,
+  "error": null
 }
 ```
 
 </TabItem>
-<TabItem value="failure" label="Failed">
+<TabItem value="failed" label="Failed">
 
 ```json
 {
-  "task_id": "abc123-def456-ghi789",
-  "status": "failure",
+  "workbook_id": "507f1f77bcf86cd799439012",
+  "run_id": "507f1f77bcf86cd799439099",
+  "status": "failed",
+  "started_at": "2024-01-15T10:30:00Z",
   "completed_at": "2024-01-15T10:35:00Z",
+  "duration_ms": 300000,
   "error": "Post not found or access denied"
 }
 ```
@@ -317,30 +330,30 @@ GET /api/tasks/{task_id}/status
 
 ```bash
 curl -H "X-API-Key: your_api_key_here" \
-     https://production.viacurrent.com/api/tasks/abc123-def456-ghi789/status
+  https://production.viacurrent.com/api/workbooks/runs/507f1f77bcf86cd799439099
 ```
 
 </TabItem>
 <TabItem value="javascript" label="JavaScript">
 
 ```javascript
-const taskId = "abc123-def456-ghi789";
+const runId = "507f1f77bcf86cd799439099";
 const headers = { "X-API-Key": "your_api_key_here" };
 
 // Poll for completion
 let workbookId;
 while (true) {
   const response = await fetch(
-    `https://production.viacurrent.com/api/tasks/${taskId}/status`,
+    `https://production.viacurrent.com/api/workbooks/runs/${runId}`,
     { headers },
   );
   const data = await response.json();
 
-  if (data.status === "success") {
-    workbookId = data.result?.workbook_id;
+  if (data.status === "success" || data.status === "success_credits_exhausted") {
+    workbookId = data.workbook_id;
     break;
   }
-  if (data.status === "failure") {
+  if (data.status === "failed") {
     throw new Error(data.error || "Workbook extraction failed");
   }
 
@@ -357,21 +370,21 @@ console.log(`Workbook ID: ${workbookId}`);
 import httpx
 import time
 
-task_id = "abc123-def456-ghi789"
+run_id = "507f1f77bcf86cd799439099"
 headers = {"X-API-Key": "your_api_key_here"}
 
 # Poll for completion
 while True:
     response = httpx.get(
-        f"https://production.viacurrent.com/api/tasks/{task_id}/status",
-        headers=headers
+        f"https://production.viacurrent.com/api/workbooks/runs/{run_id}",
+        headers=headers,
     )
     data = response.json()
 
-    if data["status"] == "success":
-        workbook_id = data["result"]["workbook_id"]
+    if data["status"] in {"success", "success_credits_exhausted"}:
+        workbook_id = data["workbook_id"]
         break
-    if data["status"] == "failure":
+    if data["status"] == "failed":
         raise RuntimeError(data.get("error", "Workbook extraction failed"))
 
     time.sleep(10)  # Wait 10 seconds before checking again
@@ -384,6 +397,10 @@ while True:
 ### Rate Limiting
 
 - **60 requests per minute** per API key
+
+### Workbook ID Status Compatibility
+
+`GET /api/workbooks/{workbook_id}/run` remains available for compatibility, but it returns the latest run for that workbook. Prefer `GET /api/workbooks/runs/{run_id}` for deterministic polling.
 
 ---
 
@@ -414,18 +431,6 @@ while True:
 
 **Solution:** Verify you have access to the workspace ID you're using.
 
-#### 409 Conflict
-
-```json
-{
-  "detail": "task_blocked_by_another_task"
-}
-```
-
-**Cause:** A collection task is already running for this post.
-
-**Solution:** Wait for the existing task to complete before creating a new one.
-
 #### 422 Validation Error
 
 ```json
@@ -447,7 +452,7 @@ while True:
 }
 ```
 
-**Solution:** Wait before making additional requests. POST requests are limited to 6/minute.
+**Solution:** Wait before making additional requests. POST requests are limited to 30/minute.
 
 ---
 
@@ -461,9 +466,10 @@ Workbook data expires after 12 hours. Make sure to:
 - Save the workbook ID immediately after creation
 - Extract all needed information via the [Engagers API](./engagers.md) before expiration
 
-### Task Limitations
+### Run Limitations
 
-- Only one extraction task can run per post at a time
+- Public requests create a fresh temporary workbook for each run
+- Up to two workbook runs per workspace execute at the same time; additional runs remain queued
 - Extraction typically takes 1-3 minutes depending on post size
 - Large posts (1000+ interactions) may take longer
 

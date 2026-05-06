@@ -42,6 +42,17 @@ GET /api/posts
 | `sort_by` | string | `posted_at` | Field to sort by: `posted_at`, `created_at`, or `weight` |
 | `sort_direction` | string | `desc` | Sort direction: `asc` or `desc` |
 
+#### Date Fields
+
+Posts expose two different timestamps:
+
+- `posted_at` is when the post was published online.
+- `created_at` is when Jungler first captured the post.
+
+Use `posted_after` / `posted_before` when you care about the real age of the post, such as posts published 7-8 days ago. Use `created_after` / `created_before` for incremental syncs based on when posts became available in Jungler. On a first pull or backfill, many older posts may have very similar `created_at` values because Jungler captured them together.
+
+Use one date family per request. The API rejects requests that combine `created_*` and `posted_*` filters.
+
 #### Filter Parameters
 
 | Parameter | Type | Description |
@@ -51,8 +62,10 @@ GET /api/posts
 | `sentiment` | string | Sentiment: `positive`, `negative`, `neutral` |
 | `author` | string | Comma-separated author types |
 | `lang` | string | Comma-separated language codes (e.g., `en`, `es`, `fr`, `de`) |
-| `created_after` | string | ISO 8601 date (YYYY-MM-DD or YYYY-MM-DDTHH:MM:SS) |
-| `created_before` | string | ISO 8601 date (max 31 days range) |
+| `created_after` | string | ISO 8601 date for when Jungler first captured the post |
+| `created_before` | string | ISO 8601 date for when Jungler first captured the post (max 31 days range) |
+| `posted_after` | string | ISO 8601 date for when the post was published online |
+| `posted_before` | string | ISO 8601 date for when the post was published online (max 31 days range) |
 | `country` | string | Comma-separated ISO country codes to include |
 | `country_exclude` | string | Comma-separated ISO country codes to exclude |
 | `function` | string | Functions: `ENG` (Engineering/IT), `PRD` (Product), `MKT` (Marketing), `SAL` (Sales), `FIN` (Finance), `OPS` (Operations), `HR` (Human Resources), `CS` (Customer Success), `LEG` (Legal), `DA` (Data/Analytics), `DSN` (Design/UX), `EDU` (Education/Academia), `AMB` (Ambiguous/Consultant), `GEN` (General Management), `UNMAPPED` |
