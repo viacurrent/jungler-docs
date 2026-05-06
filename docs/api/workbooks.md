@@ -18,7 +18,7 @@ Workbook data is stored in temporary workbooks that **expire after 12 hours**. M
 
 Extract interactions from a post in 3 steps:
 
-### 1. Create a Collection Run
+### 1. Create a Workbook Run
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -276,7 +276,7 @@ GET /api/workbooks/runs/{run_id}
 ### Response
 
 <Tabs>
-<TabItem value="pending" label="In Progress">
+<TabItem value="running" label="In Progress">
 
 ```json
 {
