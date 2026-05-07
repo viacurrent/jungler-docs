@@ -241,7 +241,7 @@ This callback is the per-run completion notification for Workbooks API requests.
 
 ```json
 {
-  "schedule_id": "65aaa1112223334445556666",
+  "schedule_id": null,
   "workbook_id": "507f1f77bcf86cd799439012",
   "run_id": "507f1f77bcf86cd799439099",
   "status": "success",
@@ -266,7 +266,7 @@ This callback is the per-run completion notification for Workbooks API requests.
 }
 ```
 
-The same payload shape is returned by the run status endpoints. `schedule_id` is set for scheduled workbook runs and is `null` or omitted for immediate workbook runs. Counts and post metadata are included after the run reaches a terminal status. Use `credits_exhausted: true` or `status: "success_credits_exhausted"` to detect partial results caused by credit limits.
+The same payload shape is returned by the run status endpoints. `schedule_id` is `null` for immediate workbook webhooks and set to the originating schedule ID for scheduled workbook runs; polling responses may omit null fields. Counts and post metadata are included after the run reaches a terminal status. Use `credits_exhausted: true` or `status: "success_credits_exhausted"` to detect partial results caused by credit limits.
 
 ### Rate Limiting
 
@@ -402,10 +402,12 @@ Conflict response example:
     "status": "dispatched",
     "run_id": "507f1f77bcf86cd799439099",
     "workbook_id": "507f1f77bcf86cd799439012",
-    "detail": "schedule_in_status_dispatched"
+    "message": "schedule_in_status_dispatched"
   }
 }
 ```
+
+The conflict body is structured so clients can decide whether to wait, inspect the dispatched run, or stop retrying. `message` contains the conflict reason returned by the API.
 
 ### Scheduled Run Completion
 
