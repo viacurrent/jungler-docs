@@ -268,8 +268,8 @@ POST /api/signals
 | `workspace_id` | string | Yes | The workspace ID to create the signal in |
 | `name` | string | Yes | Signal name (1-69 characters) |
 | `query` | string | Yes | Search keywords, profile URL, or company URL (3-300 characters) |
-| `prompt` | string | No | AI filtering prompt for keyword signals only (3-3000 characters). Ignored for profile/company signals |
-| `prompt_name` | string | No | Name for the prompt (defaults to "AI filter"). Write-only — not returned in responses. Ignored for profile/company signals |
+| `prompt` | string | No | Optional custom AI filtering prompt for keyword signals (3-3000 characters). Ignored for profile/company signals |
+| `prompt_name` | string | No | Optional display name for the prompt (defaults to "AI filter"). Write-only — not returned in responses. Ignored for profile/company signals |
 | `webhook_url` | string | No | HTTPS URL to receive run completion callbacks (max 1000 characters) |
 | `initial_window` | string | No | First-run history window for profile/company signals: `past_month` (default), `past_week`, or `none`. Write-only — not returned in responses. Non-default values are rejected for keyword signals |
 
@@ -279,7 +279,9 @@ The signal type (`query_type`) is automatically detected from the `query` string
 - **Company URL** → `company_profile` — e.g. `"https://social.com/company/example"`
 
 :::info AI Filtering (Keyword Signals Only)
-The `prompt` and `prompt_name` fields are only used for **keyword signals**. They let you define custom AI criteria for filtering posts. For profile and company signals, these fields are ignored — all posts from the tracked profile are collected automatically.
+Keyword signals can be created with only `workspace_id`, `name`, and `query`. Add `prompt` only when you want custom AI criteria for filtering posts.
+
+For profile and company signals, `prompt` and `prompt_name` have no effect and are ignored — posts from the tracked profile or company are collected automatically.
 :::
 
 :::note Enrichment for Profile/Company Signals
@@ -332,7 +334,7 @@ Returns `201 Created` with the signal object and initial run info:
 
 ### Example Requests
 
-#### Keyword Signal (with AI filtering)
+#### Keyword Signal (optional custom filtering)
 
 <Tabs>
 <TabItem value="curl" label="cURL" default>
@@ -397,7 +399,7 @@ print(f"Signal created: {signal['_id']}, first run: {signal['run']['run_id']}")
 </TabItem>
 </Tabs>
 
-#### Profile Signal (no prompt needed)
+#### Profile Signal
 
 <Tabs>
 <TabItem value="curl" label="cURL" default>
@@ -437,7 +439,7 @@ response = httpx.post(
 </TabItem>
 </Tabs>
 
-#### Company Signal (no prompt needed)
+#### Company Signal
 
 <Tabs>
 <TabItem value="curl" label="cURL" default>
