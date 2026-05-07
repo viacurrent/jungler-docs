@@ -46,6 +46,10 @@ API requests are rate-limited per endpoint:
 | GET /engagers/* | 60/minute |
 | POST /workbooks | 30/minute |
 | `GET /workbooks/runs/{run_id}` | 60/minute |
+| `POST /workbooks/schedules` | 30/minute |
+| `GET /workbooks/schedules` | 60/minute |
+| `GET /workbooks/schedules/{schedule_id}` | 60/minute |
+| `DELETE /workbooks/schedules/{schedule_id}` | 30/minute |
 
 When you exceed the rate limit, you'll receive a `429 Too Many Requests` response.
 
@@ -57,7 +61,7 @@ When you exceed the rate limit, you'll receive a `429 Too Many Requests` respons
 - **[Signals](./signals.md)** - List and retrieve signal configurations
 - **[Posts](./posts.md)** - Retrieve and filter posts
 - **[Engagers](./engagers.md)** - Retrieve interactions (comments, reactions) and contacts
-- **[Workbooks](./workbooks.md)** - Create extraction tasks for specific posts
+- **[Workbooks](./workbooks.md)** - Create immediate or scheduled extraction runs for specific posts
 - **[Webhooks](../integrations/webhooks.md)** - Send data to external platforms automatically
 
 ## Quick Start

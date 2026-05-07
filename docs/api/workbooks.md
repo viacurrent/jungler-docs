@@ -1,17 +1,17 @@
 ---
-description: Workbooks API reference — create temporary workbooks to extract comments, reactions, and contact data from any LinkedIn post on demand.
+description: Workbooks API reference — create or schedule temporary workbook runs to extract comments, reactions, and contact data from any LinkedIn post.
 ---
 
 # Workbooks API
 
-The Workbooks API allows you to create temporary workbooks that extract post interactions (comments, reactions) and contact information from posts.
+The Workbooks API allows you to create temporary workbooks that extract post interactions (comments, reactions) and contact information from posts, either immediately or at a scheduled future time.
 
 :::info Authentication Required
 All API requests require authentication. See [API Overview](./index.md#authentication) for details.
 :::
 
 :::warning Data Expiration
-Workbook data is stored in temporary workbooks that **expire after 12 hours**. Make sure to retrieve all data you need within this timeframe using the [Engagers API](./engagers.md).
+Workbook data is stored in temporary workbooks that **expire after 12 hours**. For immediate runs, this window starts when you create the workbook. For scheduled runs, it starts when the dispatcher creates the workbook at dispatch time. Make sure to retrieve all data you need within this timeframe using the [Engagers API](./engagers.md).
 :::
 
 ## Quick Start
@@ -241,21 +241,183 @@ This callback is the per-run completion notification for Workbooks API requests.
 
 ```json
 {
+  "schedule_id": "65aaa1112223334445556666",
   "workbook_id": "507f1f77bcf86cd799439012",
   "run_id": "507f1f77bcf86cd799439099",
   "status": "success",
   "started_at": "2025-01-15T10:30:00Z",
   "completed_at": "2025-01-15T10:33:00Z",
   "duration_ms": 180000,
+  "post_url": "https://www.social.com/posts/example_activity-1234",
+  "post_urn": "urn:li:activity:1234",
+  "items_collected": 42,
+  "items_available": 60,
+  "credits_consumed": 43.0,
+  "credits_exhausted": false,
+  "counts": {
+    "posts": 1,
+    "comments": 12,
+    "reactions": 30,
+    "raw_engagements": 42,
+    "unique_contacts": 35
+  },
+  "results_expire_at": "2025-01-15T22:30:00Z",
   "error": null
 }
 ```
 
-The `run_id` field uniquely identifies this specific extraction attempt. You can safely ignore it, but it may be useful for support and debugging purposes.
+The same payload shape is returned by the run status endpoints. `schedule_id` is set for scheduled workbook runs and is `null` or omitted for immediate workbook runs. Counts and post metadata are included after the run reaches a terminal status. Use `credits_exhausted: true` or `status: "success_credits_exhausted"` to detect partial results caused by credit limits.
 
 ### Rate Limiting
 
 - **30 requests per minute** per API key
+
+---
+
+## Schedule a Workbook Run
+
+Schedule a future workbook extraction for a single post. Scheduled runs use the same temporary workbook and [Engagers API](./engagers.md) retrieval flow as immediate `POST /api/workbooks` runs.
+
+```http
+POST /api/workbooks/schedules
+```
+
+:::warning Completion Webhook Required
+Scheduled workbook runs require `webhook_url`. The dispatched workbook is temporary and expires 12 hours after dispatch, so the webhook is the reliable way to know when results are ready.
+:::
+
+### Request Body
+
+```json
+{
+  "workspace_id": "507f1f77bcf86cd799439013",
+  "post_url": "https://www.social.com/feed/update/urn:li:activity:1234567890",
+  "data_types": ["comment", "reaction"],
+  "scheduled_at": "2026-05-13T10:00:00Z",
+  "webhook_url": "https://customer.com/callback",
+  "idempotency_key": "optional-customer-key"
+}
+```
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `workspace_id` | string | Yes | The workspace ID |
+| `post_url` | string | Yes | LinkedIn post URL |
+| `data_types` | array | Yes | Types of data to extract: `comment`, `reaction` (case-insensitive; post data is always included) |
+| `scheduled_at` | string | Yes | UTC ISO 8601 timestamp. Must be at least 60 seconds in the future and no more than 30 days ahead |
+| `webhook_url` | string | Yes | HTTPS URL called once when the dispatched run completes (max 1000 chars) |
+| `idempotency_key` | string | No | Customer-supplied key scoped to the workspace. Replays return the original schedule instead of creating a duplicate |
+
+### Response
+
+First-time creation returns `201 Created`. If `idempotency_key` matches an existing schedule in the same workspace, the API returns `200 OK` with the original schedule response.
+
+```json
+{
+  "schedule_id": "65aaa1112223334445556666",
+  "status": "scheduled",
+  "scheduled_at": "2026-05-13T10:00:00Z",
+  "dispatcher_pickup_window": {
+    "from": "2026-05-13T10:00:00Z",
+    "to": "2026-05-13T10:04:00Z"
+  }
+}
+```
+
+`dispatcher_pickup_window` is the expected scheduler pickup window. Dispatch is best-effort and can slip under worker load; completion also depends on workbook queue wait and run duration.
+
+### List Schedules
+
+```http
+GET /api/workbooks/schedules?workspace_id=507f1f77bcf86cd799439013&page=1&page_size=50
+```
+
+| Query parameter | Type | Required | Description |
+|-----------------|------|----------|-------------|
+| `workspace_id` | string | Yes | Workspace ID |
+| `status` | string | No | Filter by `scheduled`, `dispatching`, `dispatched`, `cancelled`, or `failed` |
+| `page` | integer | No | Page number, default `1` |
+| `page_size` | integer | No | Items per page, default `50`, max `100` |
+| `snapshot_time` | string | No | ISO 8601 timestamp used to keep pagination stable across requests |
+
+```json
+{
+  "items": [
+    {
+      "schedule_id": "65aaa1112223334445556666",
+      "workspace_id": "507f1f77bcf86cd799439013",
+      "post_url": "https://www.social.com/feed/update/urn:li:activity:1234567890",
+      "post_urn": "urn:li:activity:1234567890",
+      "data_types": ["comment", "reaction"],
+      "webhook_url": "https://customer.com/callback",
+      "scheduled_at": "2026-05-13T10:00:00Z",
+      "status": "scheduled",
+      "workbook_id": null,
+      "run_id": null,
+      "dispatching_at": null,
+      "completed_at": null,
+      "error_message": null,
+      "idempotency_key": "optional-customer-key",
+      "created_at": "2026-05-08T12:00:00Z",
+      "updated_at": "2026-05-08T12:00:00Z"
+    }
+  ],
+  "total": 1,
+  "page": 1,
+  "page_size": 50,
+  "pages": 1,
+  "snapshot_time": "2026-05-08T12:05:00Z"
+}
+```
+
+### Get a Schedule
+
+```http
+GET /api/workbooks/schedules/{schedule_id}
+```
+
+Returns the same schedule object used in the list response.
+
+### Cancel a Schedule
+
+```http
+DELETE /api/workbooks/schedules/{schedule_id}
+```
+
+Cancellation is allowed before dispatch.
+
+| Current status | Result |
+|----------------|--------|
+| `scheduled` | Returns `200 OK` with the schedule changed to `cancelled` |
+| `cancelled` / `failed` | Returns `200 OK` idempotently with the current row |
+| `dispatching` | Returns `409 Conflict` with current status and any known `run_id` / `workbook_id` |
+| `dispatched` | Returns `409 Conflict` with `run_id` and `workbook_id`; cancelling an already-created workbook run is not part of this API |
+
+Conflict response example:
+
+```json
+{
+  "detail": {
+    "schedule_id": "65aaa1112223334445556666",
+    "status": "dispatched",
+    "run_id": "507f1f77bcf86cd799439099",
+    "workbook_id": "507f1f77bcf86cd799439012",
+    "detail": "schedule_in_status_dispatched"
+  }
+}
+```
+
+### Scheduled Run Completion
+
+When the schedule dispatches, the API creates a temporary workbook and a real workbook run. The completion webhook fires once when that run reaches a terminal status, using the same payload documented in [Webhook Callbacks](#webhook-callbacks). The payload includes `schedule_id`, `workbook_id`, `run_id`, summary counts, credit usage, and `results_expire_at` so your automation can decide whether to fetch engagers or contacts.
+
+If the workspace has no credits at dispatch time, the schedule is still dispatched. The run completes as `success_credits_exhausted` if credits are still unavailable when the worker runs, and the completion webhook includes `credits_exhausted: true`.
+
+### Rate Limiting
+
+- **30 requests per minute** per API key for `POST /api/workbooks/schedules`
+- **60 requests per minute** per API key for `GET /api/workbooks/schedules` and `GET /api/workbooks/schedules/{schedule_id}`
+- **30 requests per minute** per API key for `DELETE /api/workbooks/schedules/{schedule_id}`
 
 ---
 
@@ -284,6 +446,10 @@ GET /api/workbooks/runs/{run_id}
   "run_id": "507f1f77bcf86cd799439099",
   "status": "running",
   "started_at": "2024-01-15T10:30:00Z",
+  "items_collected": 0,
+  "items_available": 0,
+  "credits_consumed": 0.0,
+  "credits_exhausted": false,
   "completed_at": null,
   "duration_ms": null,
   "error": null
@@ -295,12 +461,27 @@ GET /api/workbooks/runs/{run_id}
 
 ```json
 {
+  "schedule_id": "65aaa1112223334445556666",
   "workbook_id": "507f1f77bcf86cd799439012",
   "run_id": "507f1f77bcf86cd799439099",
   "status": "success",
   "started_at": "2024-01-15T10:30:00Z",
   "completed_at": "2024-01-15T10:33:00Z",
   "duration_ms": 180000,
+  "post_url": "https://www.social.com/posts/example_activity-1234",
+  "post_urn": "urn:li:activity:1234",
+  "items_collected": 42,
+  "items_available": 60,
+  "credits_consumed": 43.0,
+  "credits_exhausted": false,
+  "counts": {
+    "posts": 1,
+    "comments": 12,
+    "reactions": 30,
+    "raw_engagements": 42,
+    "unique_contacts": 35
+  },
+  "results_expire_at": "2024-01-15T22:30:00Z",
   "error": null
 }
 ```
