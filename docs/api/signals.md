@@ -287,7 +287,7 @@ When creating `user_profile` or `company_profile` signals, the API validates and
 :::
 
 :::info First Run Window (Profile/Company Signals Only)
-`initial_window` controls how much historical content the first run backfills for `user_profile` and `company_profile` signals. Use `past_month` to include roughly the last month, `past_week` to include roughly the last week, or `none` to start from signal creation time without historic backfill.
+`initial_window` controls how much historical content the first run backfills for `user_profile` and `company_profile` signals. Use `past_month` to include roughly the last month, `past_week` to include roughly the last week, or `none` to start from signal creation time without historical backfill.
 
 This setting only changes the initial backfill window. Subsequent scheduled runs continue from the signal checkpoint. Keyword signals do not use this setting; sending `past_week` or `none` with a keyword query returns a validation error.
 :::
