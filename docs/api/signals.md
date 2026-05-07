@@ -271,6 +271,7 @@ POST /api/signals
 | `prompt` | string | No | AI filtering prompt for keyword signals only (3-3000 characters). Ignored for profile/company signals |
 | `prompt_name` | string | No | Name for the prompt (defaults to "AI filter"). Write-only — not returned in responses. Ignored for profile/company signals |
 | `webhook_url` | string | No | HTTPS URL to receive run completion callbacks (max 1000 characters) |
+| `initial_window` | string | No | First-run history window for profile/company signals: `past_month` (default), `past_week`, or `none`. Write-only — not returned in responses. Non-default values are rejected for keyword signals |
 
 The signal type (`query_type`) is automatically detected from the `query` string:
 - **Keywords** → `search_keyword` — e.g. `"lemlist OR \"heyreach\""`
@@ -285,12 +286,20 @@ The `prompt` and `prompt_name` fields are only used for **keyword signals**. The
 When creating `user_profile` or `company_profile` signals, the API validates and enriches the profile synchronously. This means the request may take **5-15 seconds** for these signal types. Keyword signals are instant.
 :::
 
+:::info First Run Window (Profile/Company Signals Only)
+`initial_window` controls how much historical content the first run backfills for `user_profile` and `company_profile` signals. Use `past_month` to include roughly the last month, `past_week` to include roughly the last week, or `none` to start from signal creation time without historic backfill.
+
+This setting only changes the initial backfill window. Subsequent scheduled runs continue from the signal checkpoint. Keyword signals do not use this setting; sending `past_week` or `none` with a keyword query returns a validation error.
+:::
+
 ### Run Lifecycle
 
 Signals run **automatically** on a ~24-hour schedule:
 
 1. **First run** starts immediately when the signal is created
 2. **Subsequent runs** are triggered automatically every ~24 hours
+
+For profile/company signals, the first run honors `initial_window` when deciding how much historical content to fetch.
 
 There is no endpoint to manually trigger additional runs. Use [Run Status](#run-status) to poll for completion, or provide a `webhook_url` to receive a callback when each run finishes.
 
@@ -401,7 +410,8 @@ curl -X POST https://production.viacurrent.com/api/signals \
        "workspace_id": "507f1f77bcf86cd799439013",
        "name": "Follow Arnold",
        "query": "https://social.com/in/vearnold",
-       "webhook_url": "https://customer.com/callback"
+       "webhook_url": "https://customer.com/callback",
+       "initial_window": "past_week"
      }'
 ```
 
@@ -418,7 +428,8 @@ response = httpx.post(
         "workspace_id": "507f1f77bcf86cd799439013",
         "name": "Follow Arnold",
         "query": "https://social.com/in/vearnold",
-        "webhook_url": "https://customer.com/callback"
+        "webhook_url": "https://customer.com/callback",
+        "initial_window": "past_week"
     },
 )
 ```
@@ -439,7 +450,8 @@ curl -X POST https://production.viacurrent.com/api/signals \
        "workspace_id": "507f1f77bcf86cd799439013",
        "name": "Acme Corp Posts",
        "query": "https://social.com/company/acme-corp",
-       "webhook_url": "https://customer.com/callback"
+       "webhook_url": "https://customer.com/callback",
+       "initial_window": "none"
      }'
 ```
 
@@ -456,7 +468,8 @@ response = httpx.post(
         "workspace_id": "507f1f77bcf86cd799439013",
         "name": "Acme Corp Posts",
         "query": "https://social.com/company/acme-corp",
-        "webhook_url": "https://customer.com/callback"
+        "webhook_url": "https://customer.com/callback",
+        "initial_window": "none"
     },
 )
 ```
