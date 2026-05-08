@@ -439,7 +439,7 @@ GET /api/workbooks/runs/{run_id}
 
 ### Response
 
-Polling responses may omit fields whose value is `null`. The in-progress example below is an immediate workbook run, so `schedule_id` is omitted. Scheduled workbook runs include `schedule_id` in their run status responses.
+Polling responses may omit fields whose value is `null`. The in-progress example below is an immediate workbook run, so `schedule_id` is omitted. The completed example is a scheduled workbook run; immediate completed runs return the same shape without `schedule_id`.
 
 <Tabs>
 <TabItem value="running" label="In Progress">
@@ -461,7 +461,7 @@ Polling responses may omit fields whose value is `null`. The in-progress example
 ```
 
 </TabItem>
-<TabItem value="success" label="Completed">
+<TabItem value="success" label="Completed (Scheduled)">
 
 ```json
 {
