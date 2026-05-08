@@ -34,17 +34,17 @@ API requests are rate-limited per endpoint:
 
 | Endpoint | Rate Limit |
 |----------|------------|
-| GET /workspaces | 30/minute |
-| GET /signals | 30/minute |
+| `GET /workspaces` | 30/minute |
+| `GET /signals` | 30/minute |
 | `GET /signals/{signal_id}` | 60/minute |
-| POST /signals | 6/minute |
+| `POST /signals` | 6/minute |
 | `GET /signals/{signal_id}/run` | 60/minute |
 | `PUT /signals/{signal_id}/activate` | 6/minute |
 | `PUT /signals/{signal_id}/deactivate` | 6/minute |
 | `DELETE /signals/{signal_id}` | 6/minute |
-| GET /posts | 60/minute |
-| GET /engagers/* | 60/minute |
-| POST /workbooks | 30/minute |
+| `GET /posts` | 60/minute |
+| `GET /engagers/*` | 60/minute |
+| `POST /workbooks` | 30/minute |
 | `GET /workbooks/runs/{run_id}` | 60/minute |
 | `POST /workbooks/schedules` | 30/minute |
 | `GET /workbooks/schedules` | 60/minute |

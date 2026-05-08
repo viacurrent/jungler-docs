@@ -266,7 +266,7 @@ This callback is the per-run completion notification for Workbooks API requests.
 }
 ```
 
-The same payload shape is returned by the run status endpoints. `schedule_id` is `null` for immediate workbook webhooks and set to the originating schedule ID for scheduled workbook runs; polling responses may omit null fields. Counts and post metadata are included after the run reaches a terminal status. Use `credits_exhausted: true` or `status: "success_credits_exhausted"` to detect partial results caused by credit limits.
+Webhook payloads and run status responses share the same core run fields. The example above shows a completed immediate-run webhook payload: `schedule_id` is `null` for immediate workbook webhooks and set to the originating schedule ID for scheduled workbook runs. Polling responses may omit fields whose value is `null`. Counts, `post_url`, and `results_expire_at` are populated after the run reaches a terminal status, so in-progress polling responses may omit them. Use `credits_exhausted: true` or `status: "success_credits_exhausted"` to detect partial results caused by credit limits.
 
 ### Rate Limiting
 
