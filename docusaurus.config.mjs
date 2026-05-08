@@ -1,6 +1,6 @@
 import { themes as prismThemes } from 'prism-react-renderer';
 
-const posthogKey = process.env.POSTHOG_KEY;
+const posthogKey = process.env.NODE_ENV === 'production' ? process.env.POSTHOG_KEY : undefined;
 
 const config = {
     title: 'Jungler Docs',

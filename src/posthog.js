@@ -16,6 +16,8 @@ if (enabled) {
         capture_pageview: false,
         session_recording: {
             sampleRate: 0.2,
+            maskAllInputs: true,
+            maskTextSelector: '*',
         },
     });
 
