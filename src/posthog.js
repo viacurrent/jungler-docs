@@ -13,10 +13,13 @@ const enabled =
 if (enabled) {
     posthog.init(POSTHOG_KEY, {
         api_host: POSTHOG_HOST,
+        capture_pageview: false,
         session_recording: {
             sampleRate: 0.2,
         },
     });
+
+    posthog.capture('$pageview');
 }
 
 export function onRouteDidUpdate({ location, previousLocation }) {
