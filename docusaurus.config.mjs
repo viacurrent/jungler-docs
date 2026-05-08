@@ -1,5 +1,7 @@
 import { themes as prismThemes } from 'prism-react-renderer';
 
+const posthogKey = process.env.NODE_ENV === 'production' ? process.env.POSTHOG_KEY : undefined;
+
 const config = {
     title: 'Jungler Docs',
     tagline: '',
@@ -25,6 +27,10 @@ const config = {
         defaultLocale: 'en',
         locales: ['en'],
     },
+
+    clientModules: posthogKey ? ['./src/posthog.js'] : [],
+
+    customFields: posthogKey ? { posthogKey } : {},
 
     plugins: [
         './plugins/raw-docs.js',

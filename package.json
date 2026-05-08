@@ -22,6 +22,7 @@
         "@mdx-js/react": "^3.0.0",
         "clsx": "^2.0.0",
         "lucide-react": "^1.7.0",
+        "posthog-js": "^1.372.10",
         "prism-react-renderer": "^2.3.0",
         "react": "^19.0.0",
         "react-dom": "^19.0.0"
@@ -45,6 +46,6 @@
         ]
     },
     "engines": {
-        "node": ">=20.0"
+        "node": ">=20.6.0"
     }
 }
