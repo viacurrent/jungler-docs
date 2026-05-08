@@ -30,22 +30,26 @@ X-API-Key: your_api_key_here
 
 ## Rate Limiting
 
-API requests are rate-limited per endpoint:
+API requests are rate-limited per endpoint. The [Base URL](#base-url) already includes `/api`, so paths in this table are relative to that API root. For example, `GET /workspaces` means `GET https://production.viacurrent.com/api/workspaces`. Endpoint snippets elsewhere may show the full request path from the domain root, such as `GET /api/workspaces`.
 
 | Endpoint | Rate Limit |
 |----------|------------|
-| GET /workspaces | 30/minute |
-| GET /signals | 30/minute |
+| `GET /workspaces` | 30/minute |
+| `GET /signals` | 30/minute |
 | `GET /signals/{signal_id}` | 60/minute |
-| POST /signals | 6/minute |
+| `POST /signals` | 6/minute |
 | `GET /signals/{signal_id}/run` | 60/minute |
 | `PUT /signals/{signal_id}/activate` | 6/minute |
 | `PUT /signals/{signal_id}/deactivate` | 6/minute |
 | `DELETE /signals/{signal_id}` | 6/minute |
-| GET /posts | 60/minute |
-| GET /engagers/* | 60/minute |
-| POST /workbooks | 30/minute |
+| `GET /posts` | 60/minute |
+| `GET /engagers/*` | 60/minute |
+| `POST /workbooks` | 30/minute |
 | `GET /workbooks/runs/{run_id}` | 60/minute |
+| `POST /workbooks/schedules` | 30/minute |
+| `GET /workbooks/schedules` | 60/minute |
+| `GET /workbooks/schedules/{schedule_id}` | 60/minute |
+| `DELETE /workbooks/schedules/{schedule_id}` | 30/minute |
 
 When you exceed the rate limit, you'll receive a `429 Too Many Requests` response.
 
@@ -57,7 +61,7 @@ When you exceed the rate limit, you'll receive a `429 Too Many Requests` respons
 - **[Signals](./signals.md)** - List and retrieve signal configurations
 - **[Posts](./posts.md)** - Retrieve and filter posts
 - **[Engagers](./engagers.md)** - Retrieve interactions (comments, reactions) and contacts
-- **[Workbooks](./workbooks.md)** - Create extraction tasks for specific posts
+- **[Workbooks](./workbooks.md)** - Create immediate or scheduled extraction runs for specific posts
 - **[Webhooks](../integrations/webhooks.md)** - Send data to external platforms automatically
 
 ## Quick Start
@@ -94,6 +98,8 @@ All API responses use JSON format. Successful responses have a `2xx` status code
   "detail": "Error message description"
 }
 ```
+
+Most errors return a string in `detail`. Some endpoints return a structured object in `detail` when clients need machine-readable context, such as a conflicting resource status and related IDs.
 
 ## Common HTTP Status Codes
 

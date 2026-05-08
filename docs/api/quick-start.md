@@ -270,11 +270,11 @@ See the [Posts API documentation](./posts.md) for all available filters.
 
 | Endpoint | Rate Limit |
 |----------|------------|
-| GET /workspaces | 30/minute |
-| GET /signals | 30/minute |
-| GET /posts | 60/minute |
-| POST /workbooks | 6/minute |
-| GET /engagers/* | 60/minute |
+| `GET /workspaces` | 30/minute |
+| `GET /signals` | 30/minute |
+| `GET /posts` | 60/minute |
+| `POST /workbooks` | 30/minute |
+| `GET /engagers/*` | 60/minute |
 
 ## Further Reading
 
