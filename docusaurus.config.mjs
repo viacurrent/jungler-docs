@@ -26,6 +26,12 @@ const config = {
         locales: ['en'],
     },
 
+    clientModules: ['./src/posthog.js'],
+
+    customFields: {
+        posthogKey: process.env.POSTHOG_KEY,
+    },
+
     plugins: [
         './plugins/raw-docs.js',
         [
