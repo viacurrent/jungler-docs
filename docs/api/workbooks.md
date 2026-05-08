@@ -340,6 +340,12 @@ GET /api/workbooks/schedules?workspace_id=507f1f77bcf86cd799439013&page=1&page_s
 | `page_size` | integer | No | Items per page, default `50`, max `100` |
 | `snapshot_time` | string | No | ISO 8601 timestamp used to keep pagination stable across requests |
 
+:::tip Consistent pagination
+To paginate over a stable snapshot, request page 1 without `snapshot_time`, then reuse the `snapshot_time` returned in that response on page 2 and later requests. Do not generate a new timestamp for each page, or you may paginate over a moving result set.
+
+If the timestamp includes a timezone offset such as `+00:00`, URL-encode the `+` as `%2B` when constructing query strings manually, for example `2026-05-08T12:05:00%2B00:00`. A `Z` suffix does not need this encoding.
+:::
+
 ```json
 {
   "items": [
