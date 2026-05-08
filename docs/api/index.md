@@ -30,7 +30,7 @@ X-API-Key: your_api_key_here
 
 ## Rate Limiting
 
-API requests are rate-limited per endpoint:
+API requests are rate-limited per endpoint. Paths in this table are relative to the [Base URL](#base-url), which already includes `/api`.
 
 | Endpoint | Rate Limit |
 |----------|------------|

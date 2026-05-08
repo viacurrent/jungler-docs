@@ -191,7 +191,7 @@ POST /api/workbooks
 | -------------- | ------ | -------- | ------------------------------------------------------------------------------------ |
 | `workspace_id` | string | Yes      | The workspace ID                                                                     |
 | `post_url`     | string | Yes      | Post URL                                                                             |
-| `data_types`   | array  | Yes      | Types of data to extract: `comment`, `reaction` (post data is always included)       |
+| `data_types`   | array  | Yes      | Types of data to extract: `comment`, `reaction` (case-insensitive; post data is always included) |
 | `webhook_url`  | string | No       | HTTPS URL called when this run completes, may be retried on failure (max 1000 chars) |
 
 ### Response
@@ -438,6 +438,8 @@ GET /api/workbooks/runs/{run_id}
 | `run_id` | string | The run ID returned from workbook creation |
 
 ### Response
+
+Polling responses may omit fields whose value is `null`. The in-progress example below is an immediate workbook run, so `schedule_id` is omitted. Scheduled workbook runs include `schedule_id` in their run status responses.
 
 <Tabs>
 <TabItem value="running" label="In Progress">
