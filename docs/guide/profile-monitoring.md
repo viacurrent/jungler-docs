@@ -20,9 +20,9 @@ Capture your ICPs (ideal customer profiles) engaging with your content, competit
 
 ## Setup
 
-Go to [Jungler](https://app.jungler.ai/profiles/new) and paste a LinkedIn profile URL – that's the whole setup.
+Go to Jungler, click "New", choose "Profile monitoring" and paste a LinkedIn profile URL — that's the whole setup.
 
-On the first run, Jungler pulls in all posts from the past month and extracts every engager the post has. After that, the signal updates every 24 hours automatically.
+On the first run, Jungler pulls in all posts from the time range you set under "Historic posts" and extracts everyone who engaged with them. After that, the signal updates every 24 hours automatically.
 
 <video autoPlay loop muted playsInline width="100%" style={{border: '1px solid var(--card-border)', borderRadius: '0.5rem', marginTop: '1rem', display: 'block'}}>
   <source src="/img/profile-monitoring/jungler-demo.mp4" type="video/mp4" />
