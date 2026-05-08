@@ -99,6 +99,8 @@ All API responses use JSON format. Successful responses have a `2xx` status code
 }
 ```
 
+Most errors return a string in `detail`. Some endpoints return a structured object in `detail` when clients need machine-readable context, such as a conflicting resource status and related IDs.
+
 ## Common HTTP Status Codes
 
 | Code | Description |

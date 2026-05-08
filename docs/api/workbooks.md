@@ -305,7 +305,7 @@ Scheduled workbook runs require `webhook_url`. The dispatched workbook is tempor
 | `post_url` | string | Yes | LinkedIn post URL |
 | `data_types` | array | Yes | Types of data to extract: `comment`, `reaction` (case-insensitive; post data is always included) |
 | `scheduled_at` | string | Yes | UTC ISO 8601 timestamp. Must be at least 60 seconds in the future and no more than 30 days ahead |
-| `webhook_url` | string | Yes | HTTPS URL called once when the dispatched run completes (max 1000 chars) |
+| `webhook_url` | string | Yes | HTTPS URL called when the dispatched run completes; delivery may be retried, so handlers should be idempotent (max 1000 chars) |
 | `idempotency_key` | string | No | Customer-supplied key scoped to the workspace. Replays return the original schedule instead of creating a duplicate |
 
 ### Response
@@ -411,7 +411,7 @@ The conflict body is structured so clients can decide whether to wait, inspect t
 
 ### Scheduled Run Completion
 
-When the schedule dispatches, the API creates a temporary workbook and a real workbook run. The completion webhook fires once when that run reaches a terminal status, using the same payload documented in [Webhook Callbacks](#webhook-callbacks). The payload includes `schedule_id`, `workbook_id`, `run_id`, summary counts, credit usage, and `results_expire_at` so your automation can decide whether to fetch engagers or contacts.
+When the schedule dispatches, the API creates a temporary workbook and a real workbook run. A completion webhook is sent when that run reaches a terminal status, using the same payload documented in [Webhook Callbacks](#webhook-callbacks). Delivery may be retried, so webhook handlers should be idempotent. The payload includes `schedule_id`, `workbook_id`, `run_id`, summary counts, credit usage, and `results_expire_at` so your automation can decide whether to fetch engagers or contacts.
 
 If the workspace has no credits at dispatch time, the schedule is still dispatched. The run completes as `success_credits_exhausted` if credits are still unavailable when the worker runs, and the completion webhook includes `credits_exhausted: true`.
 
