@@ -283,6 +283,20 @@ function SearchPageContent(): ReactNode {
                     <form
                         className={styles.searchForm}
                         onSubmit={(e) => e.preventDefault()}>
+                        <svg
+                            className={styles.searchFormIcon}
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            aria-hidden="true">
+                            <circle cx="11" cy="11" r="8" />
+                            <path d="m21 21-4.3-4.3" />
+                        </svg>
                         <input
                             type="search"
                             name="q"
@@ -300,6 +314,32 @@ function SearchPageContent(): ReactNode {
                             autoComplete="off"
                             autoFocus
                         />
+                        {searchQuery && (
+                            <button
+                                type="button"
+                                className={styles.searchFormClear}
+                                aria-label={translate({
+                                    id: 'theme.SearchPage.clearLabel',
+                                    message: 'Clear search',
+                                })}
+                                onClick={() => setSearchQuery('')}>
+                                {/* Same X shape DocSearch uses in the popup. */}
+                                <svg
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 20 20"
+                                    aria-hidden="true">
+                                    <path
+                                        d="M10 10l5.09-5.09L10 10l5.09 5.09L10 10zm0 0L4.91 4.91 10 10l-5.09 5.09L10 10z"
+                                        stroke="currentColor"
+                                        fill="none"
+                                        fillRule="evenodd"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                    />
+                                </svg>
+                            </button>
+                        )}
                     </form>
 
                     {!!searchResultState.totalResults && (

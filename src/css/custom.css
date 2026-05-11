@@ -1387,6 +1387,8 @@ html {
 :root {
     --docsearch-primary-color: #2B9C64;
     --docsearch-highlight-color: #2B9C64;
+    /* Default is 56px; match the SearchPage form height (48px). */
+    --docsearch-searchbox-initial-height: 48px;
     --docsearch-searchbox-background: var(--ifm-background-surface-color);
     --docsearch-searchbox-shadow: none;
     --docsearch-subtle-color: var(--card-border);
@@ -1438,10 +1440,6 @@ html {
     opacity: 0.6;
 }
 
-.DocSearch-Form:focus-within {
-    border: 2px solid #2B9C64 !important;
-}
-
 .DocSearch-Modal {
     border-radius: 0.5rem !important;
     border: 1px solid var(--card-border);
@@ -1452,11 +1450,32 @@ html {
     padding: 0.75rem !important;
 }
 
+/* Keep border width constant between idle and focus so contents don't jump
+   by 1px when the green focus state kicks in. Force vertical centering on
+   the icon / input / clear button. Fixed 40px height to match the
+   SearchPage form. */
 .DocSearch-Form {
     border-radius: 0.5rem !important;
     background: var(--ifm-background-surface-color) !important;
-    border: 1px solid var(--card-border) !important;
+    border: 2px solid var(--card-border) !important;
     box-shadow: none !important;
+    display: flex !important;
+    align-items: center !important;
+    min-height: 0 !important;
+    height: 48px !important;
+    padding: 0 0.875rem !important;
+    gap: 0.5rem !important;
+    box-sizing: border-box !important;
+}
+
+.DocSearch-Form:focus-within {
+    border-color: #2B9C64 !important;
+}
+
+/* DocSearch ships padding-block-start: 4px on the input which makes the
+   placeholder sit a bit below the icon/clear button. Zero it out. */
+.DocSearch-Input {
+    padding-block-start: 0 !important;
 }
 
 .DocSearch-Input {
@@ -1498,7 +1517,7 @@ html {
 }
 
 .DocSearch-Hit {
-    padding-bottom: 6px !important;
+    padding-bottom: 8px !important;
 }
 
 /* Override all Algolia blue/purple colors with brand */

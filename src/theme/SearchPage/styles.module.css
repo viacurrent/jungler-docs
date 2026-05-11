@@ -22,26 +22,66 @@
     color: var(--ifm-font-color-base);
 }
 
+/* Form acts as the "input box" — holds icon + input + clear button. The
+   actual <input> is transparent and unstyled inside it. 2px border is
+   constant width so contents don't jitter when focus flips on the green. */
 .searchForm {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     margin-bottom: 1rem;
-}
-
-.searchQueryInput {
+    height: 48px;
     border-radius: 0.5rem;
-    border: 1px solid var(--card-border);
+    border: 2px solid var(--card-border);
     background: var(--ifm-background-surface-color);
-    color: var(--ifm-font-color-base);
-    font: var(--ifm-font-size-base) var(--ifm-font-family-base);
-    font-size: 0.9375rem;
-    padding: 0.75rem 1rem;
-    width: 100%;
+    padding: 0 0.875rem;
     box-sizing: border-box;
     transition: border-color var(--ifm-transition-fast) ease;
 }
 
-.searchQueryInput:focus {
+.searchForm:focus-within {
     border-color: var(--docsearch-primary-color, #2B9C64);
+}
+
+.searchFormIcon {
+    color: var(--ifm-font-color-base);
+    opacity: 0.6;
+    flex-shrink: 0;
+}
+
+.searchFormClear {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    color: var(--ifm-font-color-base);
+    opacity: 0.6;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.searchFormClear:hover {
+    opacity: 1;
+}
+
+.searchQueryInput {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    background: transparent;
+    color: var(--ifm-font-color-base);
+    font: var(--ifm-font-size-base) var(--ifm-font-family-base);
+    font-size: 0.9375rem;
+    padding: 0;
     outline: none;
+    /* Hide the native clear button — we have our own. */
+    appearance: none;
+}
+
+.searchQueryInput::-webkit-search-cancel-button {
+    display: none;
 }
 
 .searchQueryInput::placeholder {
@@ -61,7 +101,7 @@
 .searchResultsList {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
 }
 
 /* Matches .integration-card from custom.css: same padding, border, hover. */
