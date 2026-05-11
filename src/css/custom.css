@@ -1472,12 +1472,33 @@ html {
     color: #999999 !important;
 }
 
+/* Match the SearchPage result cards: 1px border, surface background,
+   subtle box-shadow on hover/selection. */
 .DocSearch-Hit a {
     border-radius: 0.5rem !important;
-    border: none !important;
+    border: 1px solid var(--card-border) !important;
     box-shadow: none !important;
     background: var(--ifm-background-surface-color) !important;
-    padding: 16px !important;
+    padding: 10px 14px !important;
+    transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease !important;
+}
+
+.DocSearch-Hit a:hover {
+    box-shadow: var(--card-shadow) !important;
+}
+
+/* DocSearch fixes a hit's inner container to --docsearch-hit-height (~56px),
+   which makes every popup card visually huge. Let it shrink to content. */
+.DocSearch-Hit-Container {
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+}
+
+.DocSearch-Hit {
+    padding-bottom: 6px !important;
 }
 
 /* Override all Algolia blue/purple colors with brand */
@@ -1520,12 +1541,13 @@ mark.DocSearch-Hit-path-highlight {
 }
 
 .DocSearch-Hit[aria-selected='true'] a {
-    background: var(--card-border) !important;
+    background: var(--ifm-background-surface-color) !important;
+    box-shadow: var(--card-shadow) !important;
     color: var(--ifm-font-color-base) !important;
 }
 
 [data-theme='dark'] .DocSearch-Hit[aria-selected='true'] a {
-    background: oklch(0.2859 0.0199 236.32) !important;
+    background: var(--ifm-background-surface-color) !important;
 }
 
 .DocSearch-Hit[aria-selected='true'] .DocSearch-Hit-title,

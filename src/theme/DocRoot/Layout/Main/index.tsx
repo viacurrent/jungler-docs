@@ -12,7 +12,7 @@ export default function DocRootLayoutMain({
     children: React.ReactNode;
 }) {
     const sidebar = useDocsSidebar();
-    const { pathname } = useLocation();
+    const { pathname, hash } = useLocation();
     const mainRef = useRef<HTMLElement>(null);
     const rafRef = useRef<number>(0);
 
@@ -24,11 +24,13 @@ export default function DocRootLayoutMain({
         });
     }, []);
 
+    // Reset scroll to top on path change — but not when navigating to a hash,
+    // since in that case the caller wants us at that section, not at top.
     useEffect(() => {
-        if (mainRef.current) {
+        if (mainRef.current && !hash) {
             mainRef.current.scrollTop = 0;
         }
-    }, [pathname]);
+    }, [pathname, hash]);
 
     return (
         <main
