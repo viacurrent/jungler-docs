@@ -93,7 +93,15 @@ function stripAnchor(url: string): string {
 // a few frames (or 2s elapses).
 function scrollToHashWhenReady(hash: string) {
     if (!hash) return;
-    const id = decodeURIComponent(hash.replace(/^#/, ''));
+    // A malformed percent-sequence (e.g. "#%") makes decodeURIComponent
+    // throw URIError. The raw fragment is a serviceable fallback.
+    const raw = hash.replace(/^#/, '');
+    let id: string;
+    try {
+        id = decodeURIComponent(raw);
+    } catch {
+        id = raw;
+    }
     if (!id) return;
     const start = Date.now();
     let lastTop: number | null = null;
@@ -180,7 +188,10 @@ function SearchPageContent(): ReactNode {
     const algoliaHelper = useMemo(() => {
         const client = liteClient(appId, apiKey);
         return algoliaSearchHelper(client, indexName, {
-            // @ts-ignore
+            // @ts-expect-error — algoliasearch-helper's typings omit
+            // `hitsPerPage` on the constructor options object, but the
+            // library accepts it at runtime. If they ever add the type
+            // this comment will start failing the build, prompting cleanup.
             hitsPerPage: 200,
             advancedSyntax: true,
             disjunctiveFacets: contextualSearch

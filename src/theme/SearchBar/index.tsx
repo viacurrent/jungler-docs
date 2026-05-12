@@ -52,7 +52,15 @@ function stripAnchor(url: string): string {
 // stabilises (or we give up after 2s).
 function scrollToHashWhenReady(hash: string) {
     if (!hash) return;
-    const id = decodeURIComponent(hash.replace(/^#/, ''));
+    // A malformed percent-sequence (e.g. "#%") makes decodeURIComponent
+    // throw URIError. The raw fragment is a serviceable fallback.
+    const raw = hash.replace(/^#/, '');
+    let id: string;
+    try {
+        id = decodeURIComponent(raw);
+    } catch {
+        id = raw;
+    }
     if (!id) return;
     const start = Date.now();
     let lastTop: number | null = null;
