@@ -2,6 +2,7 @@
 import React, {
     type ReactNode,
     useEffect,
+    useMemo,
     useReducer,
 } from 'react';
 
@@ -117,6 +118,10 @@ function scrollToHashWhenReady(hash: string) {
     setTimeout(tick, 50);
 }
 
+// Explicit hierarchy order. lvl0 ("Documentation") is intentionally omitted
+// from breadcrumbs because every page in this index has the same value there.
+const HIERARCHY_LEVELS = ['lvl1', 'lvl2', 'lvl3', 'lvl4', 'lvl5', 'lvl6'] as const;
+
 // Algolia indexes one record per heading on a page, so a single page often
 // comes back as 4–10 separate hits. Keep the first (highest-ranked) hit per
 // underlying page.
@@ -169,25 +174,27 @@ function SearchPageContent(): ReactNode {
         initialSearchResultState,
     );
 
-    const disjunctiveFacets = contextualSearch
-        ? ['language', 'docusaurus_tag']
-        : [];
+    // Build the Algolia helper once per index/key combo. Previously this was
+    // recreated every render, and the .on('result', …) handler below was
+    // re-registered each time, leaking listeners.
+    const algoliaHelper = useMemo(() => {
+        const client = liteClient(appId, apiKey);
+        return algoliaSearchHelper(client, indexName, {
+            // @ts-ignore
+            hitsPerPage: 200,
+            advancedSyntax: true,
+            disjunctiveFacets: contextualSearch
+                ? ['language', 'docusaurus_tag']
+                : [],
+        });
+    }, [appId, apiKey, indexName, contextualSearch]);
 
-    const algoliaClient = liteClient(appId, apiKey);
-    // Fetch a large batch up front so we don't need infinite scroll. The
-    // index has many anchor-level records per page, and pagination through
-    // those would show "Fetching new results…" while adding almost no new
-    // unique pages.
-    const algoliaHelper = algoliaSearchHelper(algoliaClient, indexName, {
-        // @ts-ignore
-        hitsPerPage: 200,
-        advancedSyntax: true,
-        disjunctiveFacets,
-    });
-
-    algoliaHelper.on(
-        'result',
-        ({ results: { query, hits, nbHits } }) => {
+    useEffect(() => {
+        const onResult = ({
+            results: { query, hits, nbHits },
+        }: {
+            results: { query: string; hits: any[]; nbHits: number };
+        }) => {
             if (query === '' || !Array.isArray(hits)) {
                 searchResultStateDispatcher({ type: 'reset' });
                 return;
@@ -217,13 +224,20 @@ function SearchPageContent(): ReactNode {
                     _highlightResult: { hierarchy: { [key: string]: { value: string } } };
                     _snippetResult: { content?: { value: string } };
                 }) => {
-                    // Drop lvl0 ("Documentation") — every page has the same
-                    // value there, so it's noise in the breadcrumbs.
-                    const titles = Object.keys(hierarchy)
-                        .filter((key) => key !== 'lvl0')
-                        .map((key) => sanitizeValue(hierarchy[key]!.value));
+                    // Walk the levels in a fixed order. Object key order on a
+                    // JSON response isn't guaranteed, so don't trust it.
+                    const titles = HIERARCHY_LEVELS
+                        .map((level) => hierarchy[level]?.value)
+                        .filter((v): v is string => typeof v === 'string')
+                        .map(sanitizeValue);
+                    const title =
+                        titles.pop() ??
+                        // Last-resort fallback: lvl0 (which we normally hide)
+                        // or a placeholder, so we never throw on a malformed
+                        // record.
+                        (hierarchy.lvl0 ? sanitizeValue(hierarchy.lvl0.value) : '(untitled)');
                     return {
-                        title: titles.pop()!,
+                        title,
                         url: processSearchResultUrl(url),
                         summary: snippet.content
                             ? `${sanitizeValue(snippet.content.value)}...`
@@ -242,8 +256,13 @@ function SearchPageContent(): ReactNode {
                     loading: false,
                 },
             });
-        },
-    );
+        };
+
+        algoliaHelper.on('result', onResult);
+        return () => {
+            algoliaHelper.removeListener('result', onResult);
+        };
+    }, [algoliaHelper, processSearchResultUrl]);
 
     const makeSearch = useEvent(() => {
         if (contextualSearch) {

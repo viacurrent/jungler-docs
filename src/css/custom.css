@@ -1452,7 +1452,7 @@ html {
 
 /* Keep border width constant between idle and focus so contents don't jump
    by 1px when the green focus state kicks in. Force vertical centering on
-   the icon / input / clear button. Fixed 40px height to match the
+   the icon / input / clear button. Fixed 48px height to match the
    SearchPage form. */
 .DocSearch-Form {
     border-radius: 0.5rem !important;

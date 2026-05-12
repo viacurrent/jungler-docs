@@ -155,10 +155,11 @@ function ResultsFooter({ state, onClose }: { state: any; onClose: () => void }) 
     const createSearchLink = useSearchLinkCreator();
     return (
         <Link to={createSearchLink(state.query)} onClick={onClose}>
-            <Translate
-                id="theme.SearchBar.seeAll"
-                values={{ count: state.context.nbHits }}>
-                {'See all {count} results'}
+            {/* Intentionally no count: state.context.nbHits is the raw Algolia
+                hit total, which is inflated relative to what users actually
+                see after we filter content-type hits and dedupe by page. */}
+            <Translate id="theme.SearchBar.seeAll">
+                See all results
             </Translate>
         </Link>
     );
