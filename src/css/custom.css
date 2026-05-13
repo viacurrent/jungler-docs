@@ -1387,6 +1387,8 @@ html {
 :root {
     --docsearch-primary-color: #2B9C64;
     --docsearch-highlight-color: #2B9C64;
+    /* Default is 56px; match the SearchPage form height (48px). */
+    --docsearch-searchbox-initial-height: 48px;
     --docsearch-searchbox-background: var(--ifm-background-surface-color);
     --docsearch-searchbox-shadow: none;
     --docsearch-subtle-color: var(--card-border);
@@ -1438,10 +1440,6 @@ html {
     opacity: 0.6;
 }
 
-.DocSearch-Form:focus-within {
-    border: 2px solid #2B9C64 !important;
-}
-
 .DocSearch-Modal {
     border-radius: 0.5rem !important;
     border: 1px solid var(--card-border);
@@ -1452,11 +1450,32 @@ html {
     padding: 0.75rem !important;
 }
 
+/* Keep border width constant between idle and focus so contents don't jump
+   by 1px when the green focus state kicks in. Force vertical centering on
+   the icon / input / clear button. Fixed 48px height to match the
+   SearchPage form. */
 .DocSearch-Form {
     border-radius: 0.5rem !important;
     background: var(--ifm-background-surface-color) !important;
-    border: 1px solid var(--card-border) !important;
+    border: 2px solid var(--card-border) !important;
     box-shadow: none !important;
+    display: flex !important;
+    align-items: center !important;
+    min-height: 0 !important;
+    height: 48px !important;
+    padding: 0 0.875rem !important;
+    gap: 0.5rem !important;
+    box-sizing: border-box !important;
+}
+
+.DocSearch-Form:focus-within {
+    border-color: #2B9C64 !important;
+}
+
+/* DocSearch ships padding-block-start: 4px on the input which makes the
+   placeholder sit a bit below the icon/clear button. Zero it out. */
+.DocSearch-Input {
+    padding-block-start: 0 !important;
 }
 
 .DocSearch-Input {
@@ -1472,12 +1491,33 @@ html {
     color: #999999 !important;
 }
 
+/* Match the SearchPage result cards: 1px border, surface background,
+   subtle box-shadow on hover/selection. */
 .DocSearch-Hit a {
     border-radius: 0.5rem !important;
-    border: none !important;
+    border: 1px solid var(--card-border) !important;
     box-shadow: none !important;
     background: var(--ifm-background-surface-color) !important;
-    padding: 16px !important;
+    padding: 10px 14px !important;
+    transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease !important;
+}
+
+.DocSearch-Hit a:hover {
+    box-shadow: var(--card-shadow) !important;
+}
+
+/* DocSearch fixes a hit's inner container to --docsearch-hit-height (~56px),
+   which makes every popup card visually huge. Let it shrink to content. */
+.DocSearch-Hit-Container {
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+}
+
+.DocSearch-Hit {
+    padding-bottom: 8px !important;
 }
 
 /* Override all Algolia blue/purple colors with brand */
@@ -1520,12 +1560,13 @@ mark.DocSearch-Hit-path-highlight {
 }
 
 .DocSearch-Hit[aria-selected='true'] a {
-    background: var(--card-border) !important;
+    background: var(--ifm-background-surface-color) !important;
+    box-shadow: var(--card-shadow) !important;
     color: var(--ifm-font-color-base) !important;
 }
 
 [data-theme='dark'] .DocSearch-Hit[aria-selected='true'] a {
-    background: oklch(0.2859 0.0199 236.32) !important;
+    background: var(--ifm-background-surface-color) !important;
 }
 
 .DocSearch-Hit[aria-selected='true'] .DocSearch-Hit-title,
