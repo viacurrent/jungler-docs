@@ -62,10 +62,10 @@ Use one date family per request. The API rejects requests that combine `created_
 | `sentiment` | string | Sentiment: `positive`, `negative`, `neutral` |
 | `author` | string | Comma-separated author types |
 | `lang` | string | Comma-separated language codes (e.g., `en`, `es`, `fr`, `de`) |
-| `created_after` | string | Inclusive lower-bound ISO 8601 date for when Jungler first captured the post |
-| `created_before` | string | Inclusive upper-bound ISO 8601 date for when Jungler first captured the post |
-| `posted_after` | string | Inclusive lower-bound ISO 8601 date for when the post was published online |
-| `posted_before` | string | Inclusive upper-bound ISO 8601 date for when the post was published online |
+| `created_after` | string | Inclusive lower-bound ISO 8601 timestamp for when Jungler first captured the post |
+| `created_before` | string | Inclusive upper-bound ISO 8601 timestamp for when Jungler first captured the post |
+| `posted_after` | string | Inclusive lower-bound ISO 8601 timestamp for when the post was published online |
+| `posted_before` | string | Inclusive upper-bound ISO 8601 timestamp for when the post was published online |
 | `country` | string | Comma-separated ISO country codes to include |
 | `country_exclude` | string | Comma-separated ISO country codes to exclude |
 | `function` | string | Functions: `ENG` (Engineering/IT), `PRD` (Product), `MKT` (Marketing), `SAL` (Sales), `FIN` (Finance), `OPS` (Operations), `HR` (Human Resources), `CS` (Customer Success), `LEG` (Legal), `DA` (Data/Analytics), `DSN` (Design/UX), `EDU` (Education/Academia), `AMB` (Ambiguous/Consultant), `GEN` (General Management), `UNMAPPED` |
@@ -287,8 +287,8 @@ response = httpx.get(url, headers=headers, params=params)
 - Posts are retained for 180 days based on the post's `posted_at` timestamp; posts with a `posted_at` older than 180 days are archived and not returned by this endpoint
 - Date range in a single request cannot exceed 180 days, whether you filter by `created_*` or `posted_*`
 - Use ISO 8601 format: `YYYY-MM-DD` or `YYYY-MM-DDTHH:MM:SS`
-- `created_after` must be before `created_before`
-- `posted_after` must be before `posted_before`
+- `created_after` must be strictly earlier than `created_before`; equal timestamps are rejected
+- `posted_after` must be strictly earlier than `posted_before`; equal timestamps are rejected
 
 ### Error Responses
 
