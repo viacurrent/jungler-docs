@@ -40,7 +40,7 @@ GET /api/engagers/signal/{signal_id}
 | `page_size` | integer | `100` | Items per page (1-500) |
 | `snapshot_time` | string | current time | ISO 8601 snapshot timestamp for consistent pagination |
 | `engagement_type` | string | *(all)* | Filter by type: `COMMENT` or `REACTION` |
-| `post_time_period` | string | *(180d)* | Restrict to engagements on posts published in the last `day`, `week`, `month`, or `three_months` |
+| `post_time_period` | string | *(none)* | Restrict to engagements on posts published in the last `day`, `week`, `month`, or `three_months`. Omit to include the full 180-day retention window |
 
 ### Response
 
@@ -268,8 +268,8 @@ print(f"Total engagers: {data['total']}")
 
 Retrieve paginated, deduplicated contacts from a signal. Each contact represents a unique person with aggregated engagement stats across all monitored posts. Only available for `user_profile` and `company_profile` signal types.
 
-:::note Rolling 30-day window
-Signal contacts are deduplicated over a **rolling 30-day window** — only engagements from the last ~30 days are included. Older engagements are archived automatically. This differs from workbook contacts, which are deduplicated across all collected data.
+:::note Signal contacts vs. workbook contacts
+Signal contacts are deduplicated across the full 180-day retention window of engagements available for the signal. Use `post_time_period` to narrow to a shorter window. Workbook contacts are deduplicated across all data collected for the workbook.
 :::
 
 ```http
@@ -291,7 +291,7 @@ GET /api/engagers/signal/{signal_id}/contacts
 | `page_size` | integer | `500` | Items per page (1-500) |
 | `snapshot_time` | string | current time | ISO 8601 snapshot timestamp for consistent pagination |
 | `activity_filter` | string | *(all)* | Filter by activity: `commenters`, `reactors`, or comma-separated combinations |
-| `post_time_period` | string | *(180d)* | Restrict to contacts who engaged in the last `day`, `week`, `month`, or `three_months`. When set, `stats.comments` and `stats.reactions` are recomputed to reflect only that window |
+| `post_time_period` | string | *(none)* | Restrict to contacts who engaged in the last `day`, `week`, `month`, or `three_months`. When set, `stats.comments` and `stats.reactions` are recomputed to reflect only that window. Omit to include the full 180-day retention window |
 
 ### Response
 
@@ -434,7 +434,7 @@ GET /api/engagers/workbook/{workbook_id}
 | `page_size` | integer | `100` | Items per page (1-500) |
 | `snapshot_time` | string | current time | ISO 8601 snapshot timestamp for consistent pagination |
 | `engagement_type` | string | *(all)* | Filter by type: `COMMENT` or `REACTION` |
-| `post_time_period` | string | *(180d)* | Restrict to engagements on posts published in the last `day`, `week`, `month`, or `three_months` |
+| `post_time_period` | string | *(none)* | Restrict to engagements on posts published in the last `day`, `week`, `month`, or `three_months`. Omit to include the full 180-day retention window |
 
 ### Response
 
@@ -511,7 +511,7 @@ GET /api/engagers/workbook/{workbook_id}/contacts
 | `page_size` | integer | `500` | Items per page (1-500) |
 | `snapshot_time` | string | current time | ISO 8601 snapshot timestamp for consistent pagination |
 | `activity_filter` | string | *(all)* | Filter by activity: `commenters`, `reactors`, or comma-separated combinations |
-| `post_time_period` | string | *(180d)* | Restrict to contacts who engaged in the last `day`, `week`, `month`, or `three_months`. When set, `stats.comments` and `stats.reactions` are recomputed to reflect only that window |
+| `post_time_period` | string | *(none)* | Restrict to contacts who engaged in the last `day`, `week`, `month`, or `three_months`. When set, `stats.comments` and `stats.reactions` are recomputed to reflect only that window. Omit to include the full 180-day retention window |
 
 ### Response
 
