@@ -40,7 +40,7 @@ GET /api/engagers/signal/{signal_id}
 | `page_size` | integer | `100` | Items per page (1-500) |
 | `snapshot_time` | string | current time | ISO 8601 snapshot timestamp for consistent pagination |
 | `engagement_type` | string | *(all)* | Filter by type: `COMMENT` or `REACTION` |
-| `post_time_period` | string | *(all)* | Restrict to engagements on posts published in the last `day`, `week`, `month`, or `three_months`. Omit to include the full 180-day retention window |
+| `post_time_period` | string | *(all)* | Restrict to engagements on posts published in the named recent period bucket: `day`, `week`, `month`, or `three_months`. Uses a small ingestion-lag buffer around the cutoff. Omit to include the full 180-day retention window |
 
 ### Response
 
@@ -291,7 +291,7 @@ GET /api/engagers/signal/{signal_id}/contacts
 | `page_size` | integer | `500` | Items per page (1-500) |
 | `snapshot_time` | string | current time | ISO 8601 snapshot timestamp for consistent pagination |
 | `activity_filter` | string | *(all)* | Filter by activity: `commenters`, `reactors`, or comma-separated combinations |
-| `post_time_period` | string | *(all)* | Restrict to contacts who engaged with posts published in the last `day`, `week`, `month`, or `three_months`. When set, this filter affects which contacts are returned; `stats.comments` and `stats.reactions` remain totals for the full retention window. Omit to include the full 180-day retention window |
+| `post_time_period` | string | *(all)* | Restrict to contacts who engaged with posts published in the named recent period bucket: `day`, `week`, `month`, or `three_months`. Uses a small ingestion-lag buffer around the cutoff. When set, this filter affects which contacts are returned; `stats.comments` and `stats.reactions` remain totals for the full retention window. Omit to include the full 180-day retention window |
 
 ### Response
 
@@ -434,7 +434,7 @@ GET /api/engagers/workbook/{workbook_id}
 | `page_size` | integer | `100` | Items per page (1-500) |
 | `snapshot_time` | string | current time | ISO 8601 snapshot timestamp for consistent pagination |
 | `engagement_type` | string | *(all)* | Filter by type: `COMMENT` or `REACTION` |
-| `post_time_period` | string | *(all)* | Restrict to engagements on posts published in the last `day`, `week`, `month`, or `three_months`. Omit to include the full 180-day retention window |
+| `post_time_period` | string | *(all)* | Restrict to engagements on posts published in the named recent period bucket: `day`, `week`, `month`, or `three_months`. Uses a small ingestion-lag buffer around the cutoff. Omit to include the full 180-day retention window |
 
 ### Response
 
@@ -511,7 +511,7 @@ GET /api/engagers/workbook/{workbook_id}/contacts
 | `page_size` | integer | `500` | Items per page (1-500) |
 | `snapshot_time` | string | current time | ISO 8601 snapshot timestamp for consistent pagination |
 | `activity_filter` | string | *(all)* | Filter by activity: `commenters`, `reactors`, or comma-separated combinations |
-| `post_time_period` | string | *(all)* | Restrict to contacts who engaged with posts published in the last `day`, `week`, `month`, or `three_months`. When set, this filter affects which contacts are returned; `stats.comments` and `stats.reactions` remain totals for the full retention window. Omit to include the full 180-day retention window |
+| `post_time_period` | string | *(all)* | Restrict to contacts who engaged with posts published in the named recent period bucket: `day`, `week`, `month`, or `three_months`. Uses a small ingestion-lag buffer around the cutoff. When set, this filter affects which contacts are returned; `stats.comments` and `stats.reactions` remain totals for the full retention window. Omit to include the full 180-day retention window |
 
 ### Response
 
