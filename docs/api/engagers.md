@@ -11,7 +11,7 @@ All API requests require authentication. See [API Overview](./index.md#authentic
 :::
 
 :::note Data Retention
-Engagers and contacts cover the last **180 days** of activity. Older engagements are archived automatically and no longer returned; deduplicated contact stats (`stats.comments`, `stats.reactions`) reflect only the engagements still within this window.
+Engagers and contacts cover the last **180 days** of activity, based on the post's `posted_at` timestamp. Engagements on posts older than 180 days are archived automatically and no longer returned; deduplicated contact stats (`stats.comments`, `stats.reactions`) reflect only the engagements still within this window.
 :::
 
 ## Post Time Period Buffer

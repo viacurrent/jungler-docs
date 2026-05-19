@@ -285,7 +285,9 @@ response = httpx.get(url, headers=headers, params=params)
 ### Date Filtering
 
 - Posts are retained for 180 days based on the post's `posted_at` timestamp; posts with a `posted_at` older than 180 days are archived and not returned by this endpoint
-- Date range in a single request cannot exceed 180 days, whether you filter by `created_*` or `posted_*`
+- Date range in a single request cannot exceed 180 days, whether you filter by `created_*` or `posted_*`; the range is the exact timestamp difference between `*_after` and `*_before` (`YYYY-MM-DD` values are treated as midnight UTC)
+  - Allowed: `posted_after=2026-01-01` and `posted_before=2026-06-30` (exactly 180 days)
+  - Rejected: `posted_after=2026-01-01` and `posted_before=2026-07-01` (181 days)
 - Use ISO 8601 format: `YYYY-MM-DD` or `YYYY-MM-DDTHH:MM:SSZ`
 - `created_after` must be strictly earlier than `created_before`; equal timestamps are rejected
 - `posted_after` must be strictly earlier than `posted_before`; equal timestamps are rejected
