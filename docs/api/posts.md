@@ -288,6 +288,7 @@ response = httpx.get(url, headers=headers, params=params)
 - Date range per request cannot exceed 180 days
 - Use ISO 8601 format: `YYYY-MM-DD` or `YYYY-MM-DDTHH:MM:SS`
 - `created_after` must be before `created_before`
+- `posted_after` must be before `posted_before`
 
 ### Error Responses
 
