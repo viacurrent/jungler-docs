@@ -14,8 +14,9 @@ All API requests require authentication. See [API Overview](./index.md#authentic
 Engagers and contacts cover the last **180 days** of activity. Older engagements are archived automatically and no longer returned; deduplicated contact stats (`stats.comments`, `stats.reactions`) reflect only the engagements still within this window.
 :::
 
-<a id="post-time-period-buffer"></a>
-:::note Post Time Period Buffer
+### Post Time Period Buffer
+
+:::note
 `post_time_period` uses a fixed 1-day ingestion-lag buffer around each cutoff. Effective publish-time windows are `day` = 2 days, `week` = 8 days, `month` = 32 days, and `three_months` = 91 days from request time.
 :::
 
