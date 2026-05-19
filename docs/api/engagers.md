@@ -10,6 +10,10 @@ The Engagers API provides unified access to post interactions (comments, reactio
 All API requests require authentication. See [API Overview](./index.md#authentication) for details.
 :::
 
+:::note Data Retention
+Engagers and contacts cover the last **180 days** of activity. Older engagements are archived automatically and no longer returned; deduplicated contact stats (`stats.comments`, `stats.reactions`) reflect only the engagements still within this window.
+:::
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -36,6 +40,7 @@ GET /api/engagers/signal/{signal_id}
 | `page_size` | integer | `100` | Items per page (1-500) |
 | `snapshot_time` | string | current time | ISO 8601 snapshot timestamp for consistent pagination |
 | `engagement_type` | string | *(all)* | Filter by type: `COMMENT` or `REACTION` |
+| `post_time_period` | string | *(180d)* | Restrict to engagements on posts published in the last `day`, `week`, `month`, or `three_months` |
 
 ### Response
 
@@ -286,6 +291,7 @@ GET /api/engagers/signal/{signal_id}/contacts
 | `page_size` | integer | `500` | Items per page (1-500) |
 | `snapshot_time` | string | current time | ISO 8601 snapshot timestamp for consistent pagination |
 | `activity_filter` | string | *(all)* | Filter by activity: `commenters`, `reactors`, or comma-separated combinations |
+| `post_time_period` | string | *(180d)* | Restrict to contacts who engaged in the last `day`, `week`, `month`, or `three_months`. When set, `stats.comments` and `stats.reactions` are recomputed to reflect only that window |
 
 ### Response
 
@@ -428,6 +434,7 @@ GET /api/engagers/workbook/{workbook_id}
 | `page_size` | integer | `100` | Items per page (1-500) |
 | `snapshot_time` | string | current time | ISO 8601 snapshot timestamp for consistent pagination |
 | `engagement_type` | string | *(all)* | Filter by type: `COMMENT` or `REACTION` |
+| `post_time_period` | string | *(180d)* | Restrict to engagements on posts published in the last `day`, `week`, `month`, or `three_months` |
 
 ### Response
 
@@ -504,6 +511,7 @@ GET /api/engagers/workbook/{workbook_id}/contacts
 | `page_size` | integer | `500` | Items per page (1-500) |
 | `snapshot_time` | string | current time | ISO 8601 snapshot timestamp for consistent pagination |
 | `activity_filter` | string | *(all)* | Filter by activity: `commenters`, `reactors`, or comma-separated combinations |
+| `post_time_period` | string | *(180d)* | Restrict to contacts who engaged in the last `day`, `week`, `month`, or `three_months`. When set, `stats.comments` and `stats.reactions` are recomputed to reflect only that window |
 
 ### Response
 

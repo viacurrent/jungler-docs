@@ -63,9 +63,9 @@ Use one date family per request. The API rejects requests that combine `created_
 | `author` | string | Comma-separated author types |
 | `lang` | string | Comma-separated language codes (e.g., `en`, `es`, `fr`, `de`) |
 | `created_after` | string | ISO 8601 date for when Jungler first captured the post |
-| `created_before` | string | ISO 8601 date for when Jungler first captured the post (max 31 days range) |
+| `created_before` | string | ISO 8601 date for when Jungler first captured the post (max 180 days range) |
 | `posted_after` | string | ISO 8601 date for when the post was published online |
-| `posted_before` | string | ISO 8601 date for when the post was published online (max 31 days range) |
+| `posted_before` | string | ISO 8601 date for when the post was published online (max 180 days range) |
 | `country` | string | Comma-separated ISO country codes to include |
 | `country_exclude` | string | Comma-separated ISO country codes to exclude |
 | `function` | string | Functions: `ENG` (Engineering/IT), `PRD` (Product), `MKT` (Marketing), `SAL` (Sales), `FIN` (Finance), `OPS` (Operations), `HR` (Human Resources), `CS` (Customer Success), `LEG` (Legal), `DA` (Data/Analytics), `DSN` (Design/UX), `EDU` (Education/Academia), `AMB` (Ambiguous/Consultant), `GEN` (General Management), `UNMAPPED` |
@@ -284,7 +284,8 @@ response = httpx.get(url, headers=headers, params=params)
 
 ### Date Filtering
 
-- Date range cannot exceed 31 days
+- Posts are retained for 180 days; older posts are archived and not returned by this endpoint
+- Date range per request cannot exceed 180 days
 - Use ISO 8601 format: `YYYY-MM-DD` or `YYYY-MM-DDTHH:MM:SS`
 - `created_after` must be before `created_before`
 
