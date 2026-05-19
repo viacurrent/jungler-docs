@@ -145,7 +145,7 @@ Resource identifiers are MongoDB ObjectIds represented as 24-character hexadecim
 
 - Use specific filters to reduce response size and improve performance
 - Combine multiple filters to narrow down results
-- Date ranges are limited to 31 days maximum
+- Date ranges are bounded by the data retention window — see each endpoint's docs for the maximum range per request
 
 ### Rate Limiting
 

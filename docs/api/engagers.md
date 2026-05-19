@@ -269,7 +269,7 @@ print(f"Total engagers: {data['total']}")
 Retrieve paginated, deduplicated contacts from a signal. Each contact represents a unique person with aggregated engagement stats across all monitored posts. Only available for `user_profile` and `company_profile` signal types.
 
 :::note Signal contacts vs. workbook contacts
-Signal contacts are deduplicated across the full 180-day retention window of engagements available for the signal. Use `post_time_period` to narrow to a shorter window. Workbook contacts are deduplicated across all data collected for the workbook.
+Signal contacts are deduplicated across the full 180-day retention window of engagements available for the signal. Workbook contacts are deduplicated across all engagements collected for the workbook that still fall within the 180-day retention window. Use `post_time_period` to narrow either to a shorter window.
 :::
 
 ```http
@@ -291,7 +291,7 @@ GET /api/engagers/signal/{signal_id}/contacts
 | `page_size` | integer | `500` | Items per page (1-500) |
 | `snapshot_time` | string | current time | ISO 8601 snapshot timestamp for consistent pagination |
 | `activity_filter` | string | *(all)* | Filter by activity: `commenters`, `reactors`, or comma-separated combinations |
-| `post_time_period` | string | *(none)* | Restrict to contacts who engaged in the last `day`, `week`, `month`, or `three_months`. When set, `stats.comments` and `stats.reactions` are recomputed to reflect only that window. Omit to include the full 180-day retention window |
+| `post_time_period` | string | *(none)* | Restrict to contacts who engaged with posts published in the last `day`, `week`, `month`, or `three_months`. When set, `stats.comments` and `stats.reactions` are recomputed to reflect only that window. Omit to include the full 180-day retention window |
 
 ### Response
 
@@ -511,7 +511,7 @@ GET /api/engagers/workbook/{workbook_id}/contacts
 | `page_size` | integer | `500` | Items per page (1-500) |
 | `snapshot_time` | string | current time | ISO 8601 snapshot timestamp for consistent pagination |
 | `activity_filter` | string | *(all)* | Filter by activity: `commenters`, `reactors`, or comma-separated combinations |
-| `post_time_period` | string | *(none)* | Restrict to contacts who engaged in the last `day`, `week`, `month`, or `three_months`. When set, `stats.comments` and `stats.reactions` are recomputed to reflect only that window. Omit to include the full 180-day retention window |
+| `post_time_period` | string | *(none)* | Restrict to contacts who engaged with posts published in the last `day`, `week`, `month`, or `three_months`. When set, `stats.comments` and `stats.reactions` are recomputed to reflect only that window. Omit to include the full 180-day retention window |
 
 ### Response
 
