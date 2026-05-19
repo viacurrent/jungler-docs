@@ -63,9 +63,9 @@ Use one date family per request. The API rejects requests that combine `created_
 | `author` | string | Comma-separated author types |
 | `lang` | string | Comma-separated language codes (e.g., `en`, `es`, `fr`, `de`) |
 | `created_after` | string | ISO 8601 date for when Jungler first captured the post |
-| `created_before` | string | ISO 8601 date for when Jungler first captured the post (max 180 days range) |
+| `created_before` | string | ISO 8601 date for when Jungler first captured the post |
 | `posted_after` | string | ISO 8601 date for when the post was published online |
-| `posted_before` | string | ISO 8601 date for when the post was published online (max 180 days range) |
+| `posted_before` | string | ISO 8601 date for when the post was published online |
 | `country` | string | Comma-separated ISO country codes to include |
 | `country_exclude` | string | Comma-separated ISO country codes to exclude |
 | `function` | string | Functions: `ENG` (Engineering/IT), `PRD` (Product), `MKT` (Marketing), `SAL` (Sales), `FIN` (Finance), `OPS` (Operations), `HR` (Human Resources), `CS` (Customer Success), `LEG` (Legal), `DA` (Data/Analytics), `DSN` (Design/UX), `EDU` (Education/Academia), `AMB` (Ambiguous/Consultant), `GEN` (General Management), `UNMAPPED` |
