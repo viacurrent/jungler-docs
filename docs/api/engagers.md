@@ -297,7 +297,7 @@ GET /api/engagers/signal/{signal_id}/contacts
 | `page_size` | integer | `500` | Items per page (1-500) |
 | `snapshot_time` | string | current time | ISO 8601 snapshot timestamp for consistent pagination |
 | `activity_filter` | string | *(all)* | Filter by activity: `commenters`, `reactors`, or comma-separated combinations |
-| `post_time_period` | string | *(all)* | Restrict to contacts who engaged with posts published in the named recent period bucket: `day`, `week`, `month`, or `three_months`. Applies the [standard ingestion-lag buffer](#post-time-period-buffer). When set, this filter affects which contacts are returned; `stats.comments` and `stats.reactions` remain totals for the full retention window. Omit to include the full 180-day retention window |
+| `post_time_period` | string | *(all)* | Restrict to contacts who engaged with posts published in the named recent period bucket: `day`, `week`, `month`, or `three_months`. Applies the [standard ingestion-lag buffer](#post-time-period-buffer). When set, this filter affects which contacts are returned and scopes `stats.comments` / `stats.reactions` to that period. Omit to include the full 180-day retention window |
 
 ### Response
 
@@ -351,7 +351,7 @@ Contacts include the same [author fields](#author-fields) as engagers, plus:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `stats` | object | Engagement counts: `{ "comments": 3, "reactions": 1 }` |
+| `stats` | object | Engagement counts: `{ "comments": 3, "reactions": 1 }`. When `post_time_period` is set, these counts are scoped to that period; otherwise they reflect the full 180-day retention window. |
 | `last_engaged_at` | string \| null | Most recent engagement timestamp |
 
 ### Example Request
@@ -517,7 +517,7 @@ GET /api/engagers/workbook/{workbook_id}/contacts
 | `page_size` | integer | `500` | Items per page (1-500) |
 | `snapshot_time` | string | current time | ISO 8601 snapshot timestamp for consistent pagination |
 | `activity_filter` | string | *(all)* | Filter by activity: `commenters`, `reactors`, or comma-separated combinations |
-| `post_time_period` | string | *(all)* | Restrict to contacts who engaged with posts published in the named recent period bucket: `day`, `week`, `month`, or `three_months`. Applies the [standard ingestion-lag buffer](#post-time-period-buffer). When set, this filter affects which contacts are returned; `stats.comments` and `stats.reactions` remain totals for the full retention window. Omit to include the full 180-day retention window |
+| `post_time_period` | string | *(all)* | Restrict to contacts who engaged with posts published in the named recent period bucket: `day`, `week`, `month`, or `three_months`. Applies the [standard ingestion-lag buffer](#post-time-period-buffer). When set, this filter affects which contacts are returned and scopes `stats.comments` / `stats.reactions` to that period. Omit to include the full 180-day retention window |
 
 ### Response
 
@@ -571,7 +571,7 @@ Contacts include the same [author fields](#author-fields) as engagers, plus:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `stats` | object | Engagement counts: `{ "comments": 3, "reactions": 1 }` |
+| `stats` | object | Engagement counts: `{ "comments": 3, "reactions": 1 }`. When `post_time_period` is set, these counts are scoped to that period; otherwise they reflect the full 180-day retention window. |
 | `last_engaged_at` | string \| null | Most recent engagement timestamp |
 
 ### Example Request
