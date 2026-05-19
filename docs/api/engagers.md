@@ -10,6 +10,16 @@ The Engagers API provides unified access to post interactions (comments, reactio
 All API requests require authentication. See [API Overview](./index.md#authentication) for details.
 :::
 
+:::note Data Retention
+Engagers and contacts cover the last **180 days** of activity, based on the post's `posted_at` timestamp. Engagements on posts older than 180 days are archived automatically and no longer returned; deduplicated contact stats (`stats.comments`, `stats.reactions`) reflect only the engagements still within this window.
+:::
+
+## Post Time Period Buffer
+
+:::note
+`post_time_period` uses a fixed 1-day ingestion-lag buffer around each cutoff. Effective publish-time windows are `day` = 2 days, `week` = 8 days, `month` = 32 days, and `three_months` = 91 days from request time.
+:::
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -36,6 +46,7 @@ GET /api/engagers/signal/{signal_id}
 | `page_size` | integer | `100` | Items per page (1-500) |
 | `snapshot_time` | string | current time | ISO 8601 snapshot timestamp for consistent pagination |
 | `engagement_type` | string | *(all)* | Filter by type: `COMMENT` or `REACTION` |
+| `post_time_period` | string | *(all)* | Restrict to engagements on posts published in the named recent period bucket: `day`, `week`, `month`, or `three_months`. Applies the [standard ingestion-lag buffer](#post-time-period-buffer). Omit to include the full 180-day retention window |
 
 ### Response
 
@@ -263,8 +274,8 @@ print(f"Total engagers: {data['total']}")
 
 Retrieve paginated, deduplicated contacts from a signal. Each contact represents a unique person with aggregated engagement stats across all monitored posts. Only available for `user_profile` and `company_profile` signal types.
 
-:::note Rolling 30-day window
-Signal contacts are deduplicated over a **rolling 30-day window** — only engagements from the last ~30 days are included. Older engagements are archived automatically. This differs from workbook contacts, which are deduplicated across all collected data.
+:::note Signal contacts vs. workbook contacts
+Signal contacts are deduplicated across the full 180-day retention window of engagements available for the signal. Workbook contacts are deduplicated across all engagements collected for the workbook that still fall within the 180-day retention window. Use `post_time_period` to narrow either to a shorter window.
 :::
 
 ```http
@@ -286,6 +297,7 @@ GET /api/engagers/signal/{signal_id}/contacts
 | `page_size` | integer | `500` | Items per page (1-500) |
 | `snapshot_time` | string | current time | ISO 8601 snapshot timestamp for consistent pagination |
 | `activity_filter` | string | *(all)* | Filter by activity: `commenters`, `reactors`, or comma-separated combinations |
+| `post_time_period` | string | *(all)* | Restrict to contacts who engaged with posts published in the named recent period bucket: `day`, `week`, `month`, or `three_months`. Applies the [standard ingestion-lag buffer](#post-time-period-buffer). When set, this filter affects which contacts are returned; `stats.comments` and `stats.reactions` remain totals for the full retention window. Omit to include the full 180-day retention window |
 
 ### Response
 
@@ -428,6 +440,7 @@ GET /api/engagers/workbook/{workbook_id}
 | `page_size` | integer | `100` | Items per page (1-500) |
 | `snapshot_time` | string | current time | ISO 8601 snapshot timestamp for consistent pagination |
 | `engagement_type` | string | *(all)* | Filter by type: `COMMENT` or `REACTION` |
+| `post_time_period` | string | *(all)* | Restrict to engagements on posts published in the named recent period bucket: `day`, `week`, `month`, or `three_months`. Applies the [standard ingestion-lag buffer](#post-time-period-buffer). Omit to include the full 180-day retention window |
 
 ### Response
 
@@ -504,6 +517,7 @@ GET /api/engagers/workbook/{workbook_id}/contacts
 | `page_size` | integer | `500` | Items per page (1-500) |
 | `snapshot_time` | string | current time | ISO 8601 snapshot timestamp for consistent pagination |
 | `activity_filter` | string | *(all)* | Filter by activity: `commenters`, `reactors`, or comma-separated combinations |
+| `post_time_period` | string | *(all)* | Restrict to contacts who engaged with posts published in the named recent period bucket: `day`, `week`, `month`, or `three_months`. Applies the [standard ingestion-lag buffer](#post-time-period-buffer). When set, this filter affects which contacts are returned; `stats.comments` and `stats.reactions` remain totals for the full retention window. Omit to include the full 180-day retention window |
 
 ### Response
 
