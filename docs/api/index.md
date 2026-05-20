@@ -35,6 +35,7 @@ API requests are rate-limited per endpoint. The [Base URL](#base-url) already in
 | Endpoint | Rate Limit |
 |----------|------------|
 | `GET /workspaces` | 30/minute |
+| `GET /workspaces/{workspace_id}/subscription` | 30/minute |
 | `GET /signals` | 30/minute |
 | `GET /signals/{signal_id}` | 60/minute |
 | `POST /signals` | 6/minute |
