@@ -66,6 +66,7 @@ Use one date family per request. The API rejects requests that combine `created_
 | `created_before` | string | Inclusive upper-bound ISO 8601 date or timestamp (UTC) for when Jungler first captured the post |
 | `posted_after` | string | Inclusive lower-bound ISO 8601 date or timestamp (UTC) for when the post was published online |
 | `posted_before` | string | Inclusive upper-bound ISO 8601 date or timestamp (UTC) for when the post was published online |
+| `has_engagement_since` | string | Exclusive lower-bound ISO 8601 timestamp (UTC). Returns only posts that received a newly captured comment or reaction strictly after this time. Pair with `GET /api/engagers/post/{post_id}?captured_after=…` to incrementally sync new engagement. See [Incremental engagement sync](#incremental-engagement-sync). When set without an explicit `sort_by`, results are sorted by `last_engagement_at` descending. |
 | `country` | string | Comma-separated ISO country codes to include |
 | `country_exclude` | string | Comma-separated ISO country codes to exclude |
 | `function` | string | Functions: `ENG` (Engineering/IT), `PRD` (Product), `MKT` (Marketing), `SAL` (Sales), `FIN` (Finance), `OPS` (Operations), `HR` (Human Resources), `CS` (Customer Success), `LEG` (Legal), `DA` (Data/Analytics), `DSN` (Design/UX), `EDU` (Education/Academia), `AMB` (Ambiguous/Consultant), `GEN` (General Management), `UNMAPPED` |
@@ -122,7 +123,8 @@ Use one date family per request. The API rejects requests that combine `created_
         "weight": 0.85
       },
       "created_at": "2024-01-15T10:35:00Z",
-      "updated_at": "2024-01-15T10:35:00Z"
+      "updated_at": "2024-01-15T10:35:00Z",
+      "last_engagement_at": "2024-01-15T18:12:04Z"
     }
   ],
   "total": 1234,
@@ -314,6 +316,39 @@ response = httpx.get(url, headers=headers, params=params)
   "detail": "Rate limit exceeded"
 }
 ```
+
+---
+
+## Incremental engagement sync
+
+Posts expose `last_engagement_at` — the timestamp at which Jungler most recently **captured** a new engager (comment or reaction) for that post. Combine it with `has_engagement_since` on `GET /api/posts` and `captured_after` on `GET /api/engagers/post/{post_id}` to pull only new engagement on every sync.
+
+:::info Capture time, not LinkedIn event time
+`last_engagement_at` reflects when Jungler wrote the engager row, **not** the LinkedIn-reported `engaged_at`. LinkedIn data routinely arrives late or out of order; cursoring on capture time guarantees the incremental sync never misses an engager, even when a comment posted weeks ago is surfaced today.
+:::
+
+**Workflow**
+
+1. Persist the highest `last_engagement_at` you received in your previous sync (call it `cursor`). On the very first run, set `cursor` to whatever start point you want (or omit it to pull everything).
+2. List posts that have new engagement since then:
+
+    ```
+    GET /api/posts?workspace_id=…&signal_ids=…&has_engagement_since={cursor}
+    ```
+
+    The cursor is **exclusive** (`> cursor`), so the boundary post will not be re-delivered on subsequent runs.
+
+3. For each returned post, fetch only the newly captured engagement:
+
+    ```
+    GET /api/engagers/post/{post_id}?workspace_id=…&captured_after={cursor}
+    ```
+
+    `captured_after` is also exclusive.
+
+4. Update `cursor` to the maximum `last_engagement_at` seen in step 2 and persist it for the next run.
+
+Use the same `snapshot_time` across all pages of a single sync run for consistent pagination. `last_engagement_at` is `null` for posts that have not yet received any captured engagement.
 
 ---
 
