@@ -323,8 +323,8 @@ response = httpx.get(url, headers=headers, params=params)
 
 Posts expose `last_engagement_at` — the timestamp at which Jungler most recently **captured** a new engager (comment or reaction) for that post. Combine it with `has_engagement_since` on `GET /api/posts` and `captured_after` on `GET /api/engagers/post/{post_id}` to pull only new engagement on every sync.
 
-:::info Capture time, not LinkedIn event time
-`last_engagement_at` reflects when Jungler wrote the engager row, **not** the LinkedIn-reported `engaged_at`. LinkedIn data routinely arrives late or out of order; cursoring on capture time guarantees the incremental sync never misses an engager, even when a comment posted weeks ago is surfaced today.
+:::info Capture time, not event time
+`last_engagement_at` reflects when Jungler wrote the engager row, **not** the social-media-reported `engaged_at`. Social media data routinely arrives late or out of order; cursoring on capture time guarantees the incremental sync never misses an engager, even when a comment posted weeks ago is surfaced today.
 :::
 
 **Workflow**
