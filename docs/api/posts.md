@@ -319,7 +319,7 @@ response = httpx.get(url, headers=headers, params=params)
 
 ## Get Post
 
-Retrieve a single post by its Jungler ID (`_id`). This is useful when you have previously stored post IDs and need to fetch their latest data.
+Retrieve a single post by its Jungler ID (`_id`).
 
 ```http
 GET /api/posts/{post_id}
