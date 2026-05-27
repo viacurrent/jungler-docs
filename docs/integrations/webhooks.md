@@ -154,7 +154,8 @@ import TabItem from '@theme/TabItem';
         "post_sentiment": "positive",
         "post_type": "announcement",
         "posted_at": "2026-01-10T15:30:00.000000+00:00",
-        "jungler_signal_id": "69654ea72a0d2c9f612d1cb4"
+        "jungler_signal_id": "69654ea72a0d2c9f612d1cb4",
+        "jungler_post_id": "69654ea72a0d2c9f612d1cb5"
       }
       // ... up to 500 posts per batch
     ]
@@ -175,6 +176,7 @@ import TabItem from '@theme/TabItem';
     "body": [
       {
         "jungler_signal_id": "6963b2beb79d3a2768c537ba",
+        "jungler_post_id": "6963b2beb79d3a2768c537bb",
         "name": "Jane Smith",
         "first_name": "Jane",
         "last_name": "Smith",
