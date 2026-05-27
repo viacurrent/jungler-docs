@@ -149,7 +149,9 @@ GET /api/engagers/signal/{signal_id}
 |-------|------|-------------|
 | `engagement_type` | string | `COMMENT` or `REACTION` |
 | `urn` | string | Engagement URN (dedup key) |
-| `post_url` | string | URL of the post that was engaged with || `jungler_post_id` | string \\| null | Jungler ID of the post that was engaged with || `author` | object | Engager author details (see below) |
+| `post_url` | string | URL of the post that was engaged with |
+| `jungler_post_id` | string \| null | Jungler ID of the post that was engaged with |
+| `author` | object | Engager author details (see below) |
 | `content` | string \| null | Comment text (null for reactions) |
 | `comment_meta` | object \| null | Comment metadata (null for reactions) |
 | `reaction_type` | string \| null | Reaction type (null for comments) |
