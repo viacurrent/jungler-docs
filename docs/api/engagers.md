@@ -57,6 +57,7 @@ GET /api/engagers/signal/{signal_id}
       "engagement_type": "COMMENT",
       "urn": "urn:li:comment:(activity:123,456)",
       "post_url": "https://www.social.com/feed/update/urn:li:activity:123",
+      "jungler_post_id": "507f1f77bcf86cd799439011",
       "author": {
         "name": "Jane Smith",
         "first_name": "Jane",
@@ -98,6 +99,7 @@ GET /api/engagers/signal/{signal_id}
       "engagement_type": "REACTION",
       "urn": "urn:li:like:(member:101,activity:123)",
       "post_url": "https://www.social.com/feed/update/urn:li:activity:123",
+      "jungler_post_id": "507f1f77bcf86cd799439011",
       "author": {
         "name": "Bob Johnson",
         "first_name": "Bob",
@@ -148,6 +150,7 @@ GET /api/engagers/signal/{signal_id}
 | `engagement_type` | string | `COMMENT` or `REACTION` |
 | `urn` | string | Engagement URN (dedup key) |
 | `post_url` | string | URL of the post that was engaged with |
+| `jungler_post_id` | string \| null | Jungler ID of the post that was engaged with |
 | `author` | object | Engager author details (see below) |
 | `content` | string \| null | Comment text (null for reactions) |
 | `comment_meta` | object \| null | Comment metadata (null for reactions) |
