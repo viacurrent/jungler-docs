@@ -44,6 +44,7 @@ Returns an array of signal objects. Fields that are `null` are omitted.
     "is_activated": true,
     "prompt": "Only mark relevant the posts that explicitly mention lemlist or HeyReach, the outreach tools",
     "query_type": "search_keyword",
+    "track_engagement": false,
     "created_at": "2024-01-10T08:00:00Z",
     "updated_at": "2024-01-15T10:30:00Z"
   },
@@ -55,6 +56,7 @@ Returns an array of signal objects. Fields that are `null` are omitted.
     "is_activated": true,
     "query_type": "user_profile",
     "query_identifier": "vearnold",
+    "track_engagement": true,
     "created_at": "2024-01-12T09:00:00Z",
     "updated_at": "2024-01-12T09:00:00Z"
   },
@@ -66,6 +68,7 @@ Returns an array of signal objects. Fields that are `null` are omitted.
     "is_activated": true,
     "query_type": "company_profile",
     "query_identifier": "12345678",
+    "track_engagement": true,
     "created_at": "2024-01-13T10:00:00Z",
     "updated_at": "2024-01-13T10:00:00Z"
   }
@@ -84,6 +87,7 @@ Returns an array of signal objects. Fields that are `null` are omitted.
 | `prompt` | string | Keyword only, when configured | Custom AI filtering prompt |
 | `query_type` | string | Always | Type of query: `search_keyword`, `user_profile`, `company_profile` |
 | `query_identifier` | string | Profile/company only | Username or company ID extracted from the URL |
+| `track_engagement` | boolean | Always | Whether engagers are captured for this signal (`false` means posts only) |
 | `webhook_url` | string | When configured | HTTPS URL for run completion callbacks |
 | `created_at` | string | Always | ISO 8601 timestamp |
 | `updated_at` | string | Always | ISO 8601 timestamp |
@@ -183,6 +187,7 @@ GET /api/signals/{signal_id}
   "is_activated": true,
   "prompt": "Only mark relevant the posts that explicitly mention lemlist or HeyReach, the outreach tools",
   "query_type": "search_keyword",
+  "track_engagement": false,
   "created_at": "2024-01-10T08:00:00Z",
   "updated_at": "2024-01-15T10:30:00Z"
 }
@@ -199,6 +204,7 @@ GET /api/signals/{signal_id}
   "is_activated": true,
   "query_type": "user_profile",
   "query_identifier": "vearnold",
+  "track_engagement": true,
   "webhook_url": "https://customer.com/callback",
   "created_at": "2024-01-12T09:00:00Z",
   "updated_at": "2024-01-12T09:00:00Z"
@@ -272,6 +278,7 @@ POST /api/signals
 | `prompt_name` | string | No | Optional display name for the prompt (defaults to "AI filter"). Write-only — not returned in responses. Ignored for profile/company signals |
 | `webhook_url` | string | No | HTTPS URL to receive run completion callbacks (max 1000 characters) |
 | `initial_window` | string | No | First-run history window for profile/company signals: `past_month` (default), `past_week`, or `none`. Write-only — not returned in responses. Non-default values are rejected for keyword signals |
+| `track_engagement` | boolean | No | Whether to capture engagers for a profile/company signal. Defaults to `true`; pass `false` to monitor posts only (no engagement). Rejected for keyword signals |
 
 The signal type (`query_type`) is automatically detected from the `query` string:
 - **Keywords** → `search_keyword` — e.g. `"lemlist OR \"heyreach\""`
@@ -318,6 +325,7 @@ Returns `201 Created` with the signal object and initial run info:
   "is_activated": true,
   "prompt": "Only mark relevant the posts that explicitly mention lemlist or HeyReach, the outreach tools",
   "query_type": "search_keyword",
+  "track_engagement": false,
   "webhook_url": "https://customer.com/callback",
   "created_at": "2025-01-15T10:30:00Z",
   "updated_at": "2025-01-15T10:30:00Z",
@@ -453,7 +461,8 @@ curl -X POST https://production.viacurrent.com/api/signals \
        "name": "Acme Corp Posts",
        "query": "https://social.com/company/acme-corp",
        "webhook_url": "https://customer.com/callback",
-       "initial_window": "none"
+       "initial_window": "none",
+       "track_engagement": false
      }'
 ```
 
@@ -471,7 +480,8 @@ response = httpx.post(
         "name": "Acme Corp Posts",
         "query": "https://social.com/company/acme-corp",
         "webhook_url": "https://customer.com/callback",
-        "initial_window": "none"
+        "initial_window": "none",
+        "track_engagement": False
     },
 )
 ```
@@ -635,6 +645,7 @@ Returns the updated signal object with `is_activated: false`.
   "is_activated": false,
   "prompt": "Only mark relevant the posts that explicitly mention lemlist or HeyReach, the outreach tools",
   "query_type": "search_keyword",
+  "track_engagement": false,
   "created_at": "2025-01-15T10:30:00Z",
   "updated_at": "2025-01-20T14:00:00Z"
 }
@@ -701,6 +712,7 @@ Returns the updated signal object with `is_activated: true`.
   "is_activated": true,
   "prompt": "Only mark relevant the posts that explicitly mention lemlist or HeyReach, the outreach tools",
   "query_type": "search_keyword",
+  "track_engagement": false,
   "created_at": "2025-01-15T10:30:00Z",
   "updated_at": "2025-01-20T15:00:00Z"
 }
