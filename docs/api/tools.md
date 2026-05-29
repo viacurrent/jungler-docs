@@ -14,7 +14,7 @@ All API requests require authentication. See [API Overview](./index.md#authentic
 
 ## Social URL Timestamp
 
-Decode the UTC creation time embedded in a LinkedIn post URL, activity URL, or raw numeric snowflake ID.
+Get the UTC creation time of a social media post.
 
 ```http
 GET /api/tools/social-url-timestamp
@@ -58,7 +58,7 @@ import TabItem from '@theme/TabItem';
 
 ```bash
 curl -H "X-API-Key: your_api_key_here" \
-     "https://production.viacurrent.com/api/tools/social-url-timestamp?url=https://www.linkedin.com/posts/johndoe_activity-7349008612637241345"
+     "https://production.viacurrent.com/api/tools/social-url-timestamp?url=https://www.social.com/posts/johndoe_activity-7349008612637241345"
 ```
 
 </TabItem>
@@ -66,7 +66,7 @@ curl -H "X-API-Key: your_api_key_here" \
 
 ```javascript
 const url = new URL('https://production.viacurrent.com/api/tools/social-url-timestamp');
-url.searchParams.append('url', 'https://www.linkedin.com/posts/johndoe_activity-7349008612637241345');
+url.searchParams.append('url', 'https://www.social.com/posts/johndoe_activity-7349008612637241345');
 
 const response = await fetch(url, {
   headers: {
@@ -181,7 +181,7 @@ data = response.json()
 When providing an invalid URL or ID that doesn't contain a valid 15-19 digit pattern.
 ```json
 {
-  "detail": "No valid LinkedIn ID found in: https://www.linkedin.com/in/johndoe"
+  "detail": "Input not valid: https://www.social.com/in/johndoe"
 }
 ```
 
