@@ -24,7 +24,7 @@ GET /api/tools/social-url-timestamp
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `url` | string | Yes | A social post/activity URL or raw 15-19 digit numeric ID |
+| `url` | string | Yes | A social post/activity URL. |
 
 ### Response
 
@@ -178,7 +178,7 @@ data = response.json()
 ## Error Responses
 
 #### 400 Bad Request
-When providing an invalid URL or ID that doesn't contain a valid 15-19 digit pattern.
+When providing an invalid URL or ID that we can't parse.
 ```json
 {
   "detail": "Input not valid: https://www.social.com/in/johndoe"
