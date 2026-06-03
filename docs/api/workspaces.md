@@ -20,21 +20,15 @@ GET /api/workspaces
 
 ### Response
 
-Returns an array of workspace objects.
+Returns an array of workspace objects with the authenticated user's membership information.
 
 ```json
 [
   {
-    "_id": "507f1f77bcf86cd799439013",
-    "name": "Marketing Team",
-    "role": "admin",
-    "created_at": "2024-01-10T08:00:00Z"
-  },
-  {
-    "_id": "507f1f77bcf86cd799439014",
-    "name": "Sales Team",
-    "role": "member",
-    "created_at": "2024-01-12T10:30:00Z"
+    "membership_id": "string",
+    "workspace_id": "string",
+    "workspace_name": "string",
+    "user_role": "owner"
   }
 ]
 ```
@@ -43,10 +37,10 @@ Returns an array of workspace objects.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `_id` | string | Unique workspace identifier |
-| `name` | string | Workspace name |
-| `role` | string | Your role in the workspace: `admin`, `member`, `viewer` |
-| `created_at` | string | ISO 8601 timestamp of when the workspace was created |
+| `membership_id` | string | Unique identifier for the user's membership in this workspace |
+| `workspace_id` | string | Unique workspace identifier |
+| `workspace_name` | string | Workspace name |
+| `user_role` | string | Your role in the workspace |
 
 ### Rate Limiting
 
@@ -75,10 +69,10 @@ const response = await fetch('https://production.viacurrent.com/api/workspaces',
   }
 });
 
-const workspaces = await response.json();
+const memberships = await response.json();
 
-for (const workspace of workspaces) {
-  console.log(`${workspace.name} (${workspace.role})`);
+for (const membership of memberships) {
+  console.log(`${membership.workspace_name} (${membership.user_role})`);
 }
 ```
 
@@ -92,10 +86,10 @@ url = "https://production.viacurrent.com/api/workspaces"
 headers = {"X-API-Key": "your_api_key_here"}
 
 response = httpx.get(url, headers=headers)
-workspaces = response.json()
+memberships = response.json()
 
-for workspace in workspaces:
-    print(f"{workspace['name']} ({workspace['role']})")
+for membership in memberships:
+    print(f"{membership['workspace_name']} ({membership['user_role']})")
 ```
 
 </TabItem>
