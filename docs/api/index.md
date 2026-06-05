@@ -35,6 +35,7 @@ API requests are rate-limited per endpoint. The [Base URL](#base-url) already in
 | Endpoint | Rate Limit |
 |----------|------------|
 | `GET /workspaces` | 30/minute |
+| `GET /workspaces/{workspace_id}/subscription` | 30/minute |
 | `GET /signals` | 30/minute |
 | `GET /signals/{signal_id}` | 60/minute |
 | `POST /signals` | 6/minute |
@@ -50,6 +51,8 @@ API requests are rate-limited per endpoint. The [Base URL](#base-url) already in
 | `GET /workbooks/schedules` | 60/minute |
 | `GET /workbooks/schedules/{schedule_id}` | 60/minute |
 | `DELETE /workbooks/schedules/{schedule_id}` | 30/minute |
+| `GET /tools/social-url-timestamp` | 500/minute |
+| `GET /tools/parse-name` | 500/minute |
 
 When you exceed the rate limit, you'll receive a `429 Too Many Requests` response.
 
@@ -62,6 +65,7 @@ When you exceed the rate limit, you'll receive a `429 Too Many Requests` respons
 - **[Posts](./posts.md)** - Retrieve and filter posts
 - **[Engagers](./engagers.md)** - Retrieve interactions (comments, reactions) and contacts
 - **[Workbooks](./workbooks.md)** - Create immediate or scheduled extraction runs for specific posts
+- **[Tools](./tools.md)** - Utility endpoints for parsing URLs and names
 - **[Webhooks](../integrations/webhooks.md)** - Send data to external platforms automatically
 
 ## Quick Start

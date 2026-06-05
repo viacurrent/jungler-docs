@@ -319,6 +319,132 @@ response = httpx.get(url, headers=headers, params=params)
 
 ---
 
+## Get Post
+
+Retrieve a single post by its Jungler ID (`_id`).
+
+```http
+GET /api/posts/{post_id}
+```
+
+### Path Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `post_id` | string | The ID of the post to retrieve |
+
+### Query Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `workspace_id` | string | **Required**. The workspace ID to verify access |
+
+### Response
+
+```json
+{
+  "_id": "507f1f77bcf86cd799439011",
+  "url": "https://social.com/feed/update/...",
+  "urn": "urn:li:activity:...",
+  "content": "Post content text...",
+  "author": {
+    "name": "John Doe",
+    "profile_url": "https://social.com/in/johndoe",
+    "profile_image_url": "https://...",
+    "description": "Software Engineer at Company",
+    "username": "johndoe",
+    "profile_type": "user",
+    "country_code": "US",
+    "country": "United States",
+    "authority": "M",
+    "function": "ENG",
+    "company_size": "L",
+    "company_industry": "Technology",
+    "company_website": "https://example.com"
+  },
+  "posted_at": "2024-01-15T10:30:00Z",
+  "reaction_count": 42,
+  "comment_count": 8,
+  "embedded_content": {
+    "type": "article",
+    "url": "https://example.com/article",
+    "title": "Article Title",
+    "content": "Preview text...",
+    "image_url": "https://...",
+    "thumbnail_url": "https://..."
+  },
+  "search_id": "507f1f77bcf86cd799439012",
+  "workspace_id": "507f1f77bcf86cd799439013",
+  "classification": {
+    "type": "post",
+    "lang": "en",
+    "sentiment": "positive",
+    "weight": 0.85
+  },
+  "created_at": "2024-01-15T10:35:00Z",
+  "updated_at": "2024-01-15T10:35:00Z"
+}
+```
+
+### Rate Limiting
+
+- **1200 requests per minute** per API key
+
+### Example Request
+
+<Tabs>
+<TabItem value="curl" label="cURL" default>
+
+```bash
+curl -H "X-API-Key: your_api_key_here" \
+     "https://production.viacurrent.com/api/posts/507f1f77bcf86cd799439011?workspace_id=507f1f77bcf86cd799439013"
+```
+
+</TabItem>
+<TabItem value="javascript" label="JavaScript">
+
+```javascript
+const url = 'https://production.viacurrent.com/api/posts/507f1f77bcf86cd799439011?workspace_id=507f1f77bcf86cd799439013';
+
+const response = await fetch(url, {
+  headers: {
+    'X-API-Key': 'your_api_key_here'
+  }
+});
+
+const post = await response.json();
+```
+
+</TabItem>
+<TabItem value="python" label="Python">
+
+```python
+import httpx
+
+url = "https://production.viacurrent.com/api/posts/507f1f77bcf86cd799439011"
+headers = {"X-API-Key": "your_api_key_here"}
+params = {
+    "workspace_id": "507f1f77bcf86cd799439013"
+}
+
+response = httpx.get(url, headers=headers, params=params)
+post = response.json()
+```
+
+</TabItem>
+</Tabs>
+
+### Error Responses
+
+#### 404 Not Found
+```json
+{
+  "detail": "post_not_found"
+}
+```
+
+---
+
 ## Incremental engagement sync
 
 Posts expose `last_engagement_at` — the timestamp at which Jungler most recently **captured** a new engager (comment or reaction) for that post. Combine it with `has_engagement_since` on `GET /api/posts` and `captured_after` on `GET /api/engagers/post/{post_id}` to pull only new engagement on every sync.

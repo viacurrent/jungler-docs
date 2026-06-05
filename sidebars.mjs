@@ -48,6 +48,7 @@ const sidebars = {
                 'api/posts',
                 'api/engagers',
                 'api/workbooks',
+                'api/tools',
             ],
         },
     ],
