@@ -273,6 +273,96 @@ print(f"Total engagers: {data['total']}")
 
 ---
 
+## Post Engagers
+
+Retrieve paginated engagers (commenters and reactors) for a single post. Useful for incrementally syncing new engagement on a known post — pair with the `last_engagement_at` field returned by [`GET /api/posts`](posts#incremental-engagement-sync).
+
+```http
+GET /api/engagers/post/{post_id}
+```
+
+### Path Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `post_id` | string | The post ID to retrieve engagers for |
+
+### Query Parameters
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `workspace_id` | string | *(required)* | Workspace ID that owns this post |
+| `page` | integer | `1` | Page number (1-indexed) |
+| `page_size` | integer | `100` | Items per page (1-500) |
+| `snapshot_time` | string | current time | ISO 8601 snapshot timestamp for consistent pagination |
+| `engagement_type` | string | *(all)* | Filter by type: `COMMENT` or `REACTION` |
+| `captured_after` | string | *(none)* | **Exclusive** lower-bound ISO 8601 timestamp (UTC) for engager **capture time** (`created_at`). Pass the `last_engagement_at` from your previous sync for incremental pulls — safe against late-arriving LinkedIn data. |
+| `captured_before` | string | *(none)* | Inclusive upper-bound ISO 8601 timestamp (UTC) for engager capture time. |
+
+### Response
+
+Same shape as [Signal Engagers](#signal-engagers). Engagers are sorted by `created_at` (capture time) descending.
+
+### Example Request
+
+<Tabs>
+<TabItem value="curl" label="cURL" default>
+
+```bash
+# All engagers for a post
+curl -H "X-API-Key: your_api_key_here" \
+     "https://production.viacurrent.com/api/engagers/post/507f1f77bcf86cd799439099?workspace_id=507f1f77bcf86cd799439013"
+
+# Only newly captured engagement since the last sync
+curl -H "X-API-Key: your_api_key_here" \
+     "https://production.viacurrent.com/api/engagers/post/507f1f77bcf86cd799439099?workspace_id=507f1f77bcf86cd799439013&captured_after=2024-01-15T12:00:00Z"
+```
+
+</TabItem>
+<TabItem value="javascript" label="JavaScript">
+
+```javascript
+const headers = { 'X-API-Key': 'your_api_key_here' };
+const postId = '507f1f77bcf86cd799439099';
+const workspaceId = '507f1f77bcf86cd799439013';
+
+const url = new URL(`https://production.viacurrent.com/api/engagers/post/${postId}`);
+url.searchParams.append('workspace_id', workspaceId);
+url.searchParams.append('captured_after', '2024-01-15T12:00:00Z');
+
+const response = await fetch(url, { headers });
+const data = await response.json();
+```
+
+</TabItem>
+<TabItem value="python" label="Python">
+
+```python
+import httpx
+
+headers = {"X-API-Key": "your_api_key_here"}
+post_id = "507f1f77bcf86cd799439099"
+
+response = httpx.get(
+    f"https://production.viacurrent.com/api/engagers/post/{post_id}",
+    headers=headers,
+    params={
+        "workspace_id": "507f1f77bcf86cd799439013",
+        "captured_after": "2024-01-15T12:00:00Z",
+    },
+)
+data = response.json()
+```
+
+</TabItem>
+</Tabs>
+
+### Rate Limiting
+
+- **60 requests per minute** per API key
+
+---
+
 ## Signal Contacts
 
 Retrieve paginated, deduplicated contacts from a signal. Each contact represents a unique person with aggregated engagement stats across all monitored posts. Only available for `user_profile` and `company_profile` signal types.
