@@ -6,6 +6,10 @@ description: Engagers API reference — fetch unified, deduplicated LinkedIn pos
 
 The Engagers API provides unified access to post interactions (comments, reactions) and deduplicated contact information from both signals and workbooks.
 
+:::note New (2026-07)
+Engager, contact, and post responses now include `email` and `email_status` fields, and these endpoints support a new `email_status` filter. See [Email status](#email-status) for what each status means.
+:::
+
 :::info Authentication Required
 All API requests require authentication. See [API Overview](./index.md#authentication) for details.
 :::
@@ -47,6 +51,7 @@ GET /api/engagers/signal/{signal_id}
 | `snapshot_time` | string | current time | ISO 8601 snapshot timestamp for consistent pagination |
 | `engagement_type` | string | *(all)* | Filter by type: `COMMENT` or `REACTION` |
 | `post_time_period` | string | *(all)* | Restrict to engagements on posts published in the named recent period bucket: `day`, `week`, `month`, or `three_months`. Applies the [standard ingestion-lag buffer](#post-time-period-buffer). Omit to include the full 180-day retention window |
+| `email_status` | string | *(all)* | Filter by email status: comma-separated `found`, `not_found`, `pending`. Invalid values return 400. |
 
 ### Response
 
@@ -71,6 +76,8 @@ GET /api/engagers/signal/{signal_id}
         "summary": "Building great teams...",
         "company_name": "TechCo",
         "company_website": "techco.com",
+        "email": "jane.smith@techco.com",
+        "email_status": "found",
         "title": "VP Engineering",
         "company_icon_url": "https://...",
         "loc_country": "United States",
@@ -113,6 +120,8 @@ GET /api/engagers/signal/{signal_id}
         "summary": null,
         "company_name": "Acme Corp",
         "company_website": "acme.com",
+        "email": null,
+        "email_status": "not_found",
         "title": "Sales Director",
         "company_icon_url": null,
         "loc_country": "United Kingdom",
@@ -173,6 +182,8 @@ GET /api/engagers/signal/{signal_id}
 | `summary` | string \| null | About/summary section |
 | `company_name` | string \| null | Current company name |
 | `company_website` | string \| null | Company website domain |
+| `email` | string \| null | Work email if found (see [Email status](#email-status) below) |
+| `email_status` | string | `found`, `not_found`, or `pending` — see [Email status](#email-status) |
 | `title` | string \| null | Current job title |
 | `company_icon_url` | string \| null | Company logo URL |
 | `loc_country` | string \| null | Country name |
@@ -204,6 +215,16 @@ GET /api/engagers/signal/{signal_id}
 - `INTEREST`
 - `PRAISE`
 - `ENTERTAINMENT`
+
+#### Email status
+
+Every author and contact carries an `email_status` describing the state of work-email discovery. `email` is never returned without `email_status`.
+
+- `found` — an email was discovered; `email` is populated.
+- `not_found` — discovery finished with no email; `email` is empty. Company authors and profiles we cannot resolve always settle on `not_found` once processed.
+- `pending` — discovery is still running while enrichment is in progress; `email` is empty for now.
+
+Treat an empty `email` with a `pending` status as transient — it may resolve later. Treat an empty `email` with a `not_found` status as terminal.
 
 ### Example Request
 
@@ -301,6 +322,7 @@ GET /api/engagers/signal/{signal_id}/contacts
 | `snapshot_time` | string | current time | ISO 8601 snapshot timestamp for consistent pagination |
 | `activity_filter` | string | *(all)* | Filter by activity: `commenters`, `reactors`, or comma-separated combinations |
 | `post_time_period` | string | *(all)* | Restrict to contacts who engaged with posts published in the named recent period bucket: `day`, `week`, `month`, or `three_months`. Applies the [standard ingestion-lag buffer](#post-time-period-buffer). When set, this filter affects which contacts are returned and scopes `stats.comments` / `stats.reactions` to that period. Omit to include the full 180-day retention window |
+| `email_status` | string | *(all)* | Filter by email status: comma-separated `found`, `not_found`, `pending`. Invalid values return 400. |
 
 ### Response
 
@@ -320,6 +342,8 @@ GET /api/engagers/signal/{signal_id}/contacts
       "summary": "Building great teams...",
       "company_name": "TechCo",
       "company_website": "techco.com",
+      "email": "jane.smith@techco.com",
+      "email_status": "found",
       "title": "VP Engineering",
       "company_icon_url": "https://...",
       "loc_country": "United States",
@@ -444,6 +468,7 @@ GET /api/engagers/workbook/{workbook_id}
 | `snapshot_time` | string | current time | ISO 8601 snapshot timestamp for consistent pagination |
 | `engagement_type` | string | *(all)* | Filter by type: `COMMENT` or `REACTION` |
 | `post_time_period` | string | *(all)* | Restrict to engagements on posts published in the named recent period bucket: `day`, `week`, `month`, or `three_months`. Applies the [standard ingestion-lag buffer](#post-time-period-buffer). Omit to include the full 180-day retention window |
+| `email_status` | string | *(all)* | Filter by email status: comma-separated `found`, `not_found`, `pending`. Invalid values return 400. |
 
 ### Response
 
@@ -521,6 +546,7 @@ GET /api/engagers/workbook/{workbook_id}/contacts
 | `snapshot_time` | string | current time | ISO 8601 snapshot timestamp for consistent pagination |
 | `activity_filter` | string | *(all)* | Filter by activity: `commenters`, `reactors`, or comma-separated combinations |
 | `post_time_period` | string | *(all)* | Restrict to contacts who engaged with posts published in the named recent period bucket: `day`, `week`, `month`, or `three_months`. Applies the [standard ingestion-lag buffer](#post-time-period-buffer). When set, this filter affects which contacts are returned and scopes `stats.comments` / `stats.reactions` to that period. Omit to include the full 180-day retention window |
+| `email_status` | string | *(all)* | Filter by email status: comma-separated `found`, `not_found`, `pending`. Invalid values return 400. |
 
 ### Response
 
@@ -540,6 +566,8 @@ GET /api/engagers/workbook/{workbook_id}/contacts
       "summary": "Building great teams...",
       "company_name": "TechCo",
       "company_website": "techco.com",
+      "email": "jane.smith@techco.com",
+      "email_status": "found",
       "title": "VP Engineering",
       "company_icon_url": "https://...",
       "loc_country": "United States",
@@ -651,6 +679,10 @@ All engager endpoints use the same pagination pattern as the [Posts API](./posts
 ### Consistent Pagination
 
 For consistent results across pages, reuse the `snapshot_time` from the first page.
+
+:::caution Email status and pagination
+`snapshot_time` stabilizes which records exist across pages, but a record's `email` and `email_status` can change after it is first created. As a result, a result set filtered by `email_status` may shift between pages — even when filtering on a terminal status (`found` or `not_found`). If you need a complete traversal, either restart pagination once enrichment has settled, or tolerate duplicate and skipped records and de-duplicate by record ID.
+:::
 
 :::tip URL-encoding
 The `snapshot_time` value contains a `+` character (e.g. `+00:00`). When passing it as a query parameter, make sure your HTTP client URL-encodes it — an unencoded `+` is interpreted as a space. Most HTTP libraries (Python `httpx`, JavaScript `fetch` with `URL`/`URLSearchParams`) handle this automatically, but watch out when constructing URLs manually in cURL or string concatenation.
