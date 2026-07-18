@@ -296,9 +296,7 @@ print(f"Total engagers: {data['total']}")
 
 ## Post Engagers
 
-Retrieve paginated engagers (commenters and reactors) for a single signal post. Engagers are sorted by capture time (`created_at`) descending.
-
-Pair this with the [Posts API](./posts.md)'s `has_engagement_since` parameter to incrementally pull only newly-captured engagement without re-scanning posts that haven't changed — fetch the changed posts there, then call this endpoint with `captured_after` to pull just their new engagers.
+Retrieve paginated engagers (commenters and reactors) for a single post. Useful for incrementally syncing new engagement on a known post — pair with the `last_engagement_at` field returned by [`GET /api/posts`](posts#incremental-engagement-sync).
 
 ```http
 GET /api/engagers/post/{post_id}
@@ -308,7 +306,7 @@ GET /api/engagers/post/{post_id}
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `post_id` | string | The post ID — the `jungler_post_id` returned on engager items, or the post `_id` from the [Posts API](./posts.md) |
+| `post_id` | string | The post ID to retrieve engagers for — the `jungler_post_id` on engager items, or the post `_id` from the [Posts API](./posts.md) |
 
 ### Query Parameters
 
@@ -319,60 +317,13 @@ GET /api/engagers/post/{post_id}
 | `page_size` | integer | `100` | Items per page (1-500) |
 | `snapshot_time` | string | current time | ISO 8601 snapshot timestamp; stabilizes record existence across pages |
 | `engagement_type` | string | *(all)* | Filter by type: `COMMENT` or `REACTION` |
-| `captured_after` | string | *(optional)* | Exclusive lower-bound ISO 8601 UTC timestamp for engager capture time (`created_at`). Pass the `last_engagement_at` from [`GET /api/posts`](./posts.md) to incrementally sync only newly-captured engagers — safe against late-arriving data |
-| `captured_before` | string | *(optional)* | Inclusive upper-bound ISO 8601 UTC timestamp for engager capture time |
+| `captured_after` | string | *(none)* | **Exclusive** lower-bound ISO 8601 timestamp (UTC) for engager **capture time** (`created_at`). Pass the `last_engagement_at` from your previous sync for incremental pulls — safe against late-arriving LinkedIn data. |
+| `captured_before` | string | *(none)* | Inclusive upper-bound ISO 8601 timestamp (UTC) for engager capture time. |
 | `email_status` | string | *(all)* | Filter by email status: comma-separated `found`, `not_found`, `pending`. Invalid values return 400. See [Email status](#email-status). |
 
 ### Response
 
-Identical in shape to the [Signal Engagers response](#response) — a page of engager items, each with a nested `author` object. The `author` is abbreviated below for brevity.
-
-```json
-{
-  "items": [
-    {
-      "engagement_type": "COMMENT",
-      "urn": "urn:li:comment:(activity:123,456)",
-      "post_url": "https://www.social.com/feed/update/urn:li:activity:123",
-      "jungler_post_id": "507f1f77bcf86cd799439011",
-      "author": {
-        "name": "Jane Smith",
-        "first_name": "Jane",
-        "last_name": "Smith",
-        "urn": "urn:li:member:789",
-        "username": "janesmith",
-        "profile_url": "https://social.com/in/janesmith",
-        "profile_type": "user",
-        "company_name": "TechCo",
-        "company_website": "techco.com",
-        "email": "jane.smith@techco.com",
-        "email_status": "found",
-        "title": "VP Engineering",
-        "authority": "L",
-        "function": "ENG"
-      },
-      "content": "Great insight! Thanks for sharing.",
-      "comment_meta": {
-        "is_reply": false,
-        "replies": 2,
-        "is_pinned": false,
-        "is_edited": false
-      },
-      "reaction_type": null,
-      "engaged_at": "2024-01-15T10:45:00Z"
-    }
-  ],
-  "total": 42,
-  "page": 1,
-  "page_size": 100,
-  "pages": 1,
-  "snapshot_time": "2024-01-15T12:00:00.000000+00:00"
-}
-```
-
-### Response Fields
-
-The response reuses the [Signal Engagers](#response) definitions: each item is an [Engager Item](#engager-item) with a nested [`author`](#author-fields) object (including `email` and `email_status`). The example above abbreviates the `author` object — it carries the full [Author Fields](#author-fields) set.
+Same shape as [Signal Engagers](#signal-engagers) — a page of engager items, each with a nested `author` object (which includes `email` and `email_status`; see [Email status](#email-status)). Engagers are sorted by `created_at` (capture time) descending.
 
 ### Example Request
 
@@ -382,11 +333,11 @@ The response reuses the [Signal Engagers](#response) definitions: each item is a
 ```bash
 # All engagers for a post
 curl -H "X-API-Key: your_api_key_here" \
-     "https://production.viacurrent.com/api/engagers/post/507f1f77bcf86cd799439011?workspace_id=507f1f77bcf86cd799439013&page=1&page_size=100"
+     "https://production.viacurrent.com/api/engagers/post/507f1f77bcf86cd799439099?workspace_id=507f1f77bcf86cd799439013"
 
-# Only engagers captured after a given time (incremental sync)
+# Only newly captured engagement since the last sync
 curl -H "X-API-Key: your_api_key_here" \
-     "https://production.viacurrent.com/api/engagers/post/507f1f77bcf86cd799439011?workspace_id=507f1f77bcf86cd799439013&captured_after=2024-01-15T10:00:00Z"
+     "https://production.viacurrent.com/api/engagers/post/507f1f77bcf86cd799439099?workspace_id=507f1f77bcf86cd799439013&captured_after=2024-01-15T12:00:00Z"
 ```
 
 </TabItem>
@@ -394,17 +345,15 @@ curl -H "X-API-Key: your_api_key_here" \
 
 ```javascript
 const headers = { 'X-API-Key': 'your_api_key_here' };
-const postId = '507f1f77bcf86cd799439011';
+const postId = '507f1f77bcf86cd799439099';
 const workspaceId = '507f1f77bcf86cd799439013';
 
 const url = new URL(`https://production.viacurrent.com/api/engagers/post/${postId}`);
 url.searchParams.append('workspace_id', workspaceId);
-url.searchParams.append('page', '1');
-url.searchParams.append('page_size', '100');
+url.searchParams.append('captured_after', '2024-01-15T12:00:00Z');
 
 const response = await fetch(url, { headers });
 const data = await response.json();
-console.log(`Total engagers: ${data.total}`);
 ```
 
 </TabItem>
@@ -414,19 +363,17 @@ console.log(`Total engagers: ${data.total}`);
 import httpx
 
 headers = {"X-API-Key": "your_api_key_here"}
-post_id = "507f1f77bcf86cd799439011"
+post_id = "507f1f77bcf86cd799439099"
 
 response = httpx.get(
     f"https://production.viacurrent.com/api/engagers/post/{post_id}",
     headers=headers,
     params={
         "workspace_id": "507f1f77bcf86cd799439013",
-        "page": 1,
-        "page_size": 100,
+        "captured_after": "2024-01-15T12:00:00Z",
     },
 )
 data = response.json()
-print(f"Total engagers: {data['total']}")
 ```
 
 </TabItem>
