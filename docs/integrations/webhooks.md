@@ -93,6 +93,10 @@ When creating a webhook, choose how much historical data to sync:
 Historic sync only happens once when the webhook is created. After that, only new data is sent in daily batches.
 :::
 
+#### Email Column
+
+**Email** — and its paired **Email status** — is a column you can include in a webhook configuration. When it's selected, an engager or author is delivered once email finding completes (shortly after they're first seen); those whose email can't be found are still delivered, with a blank email. **Email status** distinguishes `found`, `not_found`, and `pending`.
+
 ## Webhook Behavior
 
 ### Pausing and Resuming
@@ -118,6 +122,10 @@ All sensitive data (like custom header values) is stored in encrypted form.
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
+:::note Email fields
+`author_email` / `author_email_status` (posts) and `email` / `email_status` (engagements) are included only when the **Email** column is selected in the webhook configuration. `email_status` is one of `found`, `not_found`, or `pending` — an empty email with `pending` is still resolving, while `not_found` means none could be found.
+:::
+
 <Tabs>
 <TabItem value="posts" label="Posts Payload" default>
 
@@ -133,6 +141,8 @@ import TabItem from '@theme/TabItem';
         "author_name": "John Doe",
         "author_first_name": "John",
         "author_last_name": "Doe",
+        "author_email": "john.doe@techcorp.com",
+        "author_email_status": "found",
         "author_country": "United States",
         "author_country_code": "US",
         "author_headline": "CEO @ TechCorp",
@@ -180,6 +190,8 @@ import TabItem from '@theme/TabItem';
         "name": "Jane Smith",
         "first_name": "Jane",
         "last_name": "Smith",
+        "email": "jane.smith@startupco.com",
+        "email_status": "found",
         "headline": "VP of Engineering @ StartupCo",
         "profile_url": "https://example.com/profile/...",
         "profile_type": "user",

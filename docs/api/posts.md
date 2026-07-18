@@ -33,7 +33,7 @@ GET /api/posts
 |-----------|------|---------|-------------|
 | `page` | integer | 1 | Page number (≥ 1) |
 | `page_size` | integer | 100 | Items per page (1-500) |
-| `snapshot_time` | string | current time | ISO 8601 timestamp for consistent pagination |
+| `snapshot_time` | string | current time | ISO 8601 timestamp; stabilizes record existence across pages |
 
 #### Sorting Parameters
 
@@ -77,6 +77,7 @@ Use one date family per request. The API rejects requests that combine `created_
 | `company_size_exclude` | string | Company sizes to exclude (same values as above) |
 | `company_industry` | string | Industries: `TECH_INFO_MEDIA`, `FINANCIAL_SERVICES`, `HEALTH_CARE`, `PROFESSIONAL_SERVICES`, `MANUFACTURING`, `RETAIL`, `EDUCATION`, `CONSTRUCTION`, `CONSUMER_SERVICES`, `ENTERTAINMENT`, `TRANSPORTATION_LOGISTICS`, `ACCOMMODATION_SERVICES`, `ADMINISTRATIVE_SERVICES`, `FARMING_RANCHING_FORESTRY`, `GOV_ADMIN`, `HOLDING_COMPANIES`, `OIL_GAS_MINING`, `REAL_ESTATE_EQUIPMENT`, `UTILITIES`, `WHOLESALE`, `UNMAPPED` |
 | `company_industry_exclude` | string | Industries to exclude (same values as above) |
+| `email_status` | string | Filter by the post author's email status: comma-separated `found`, `not_found`, `pending`. Invalid values return 400. See [Email status](#email-status) |
 
 ### Response
 
@@ -101,7 +102,9 @@ Use one date family per request. The API rejects requests that combine `created_
         "function": "ENG",
         "company_size": "L",
         "company_industry": "Technology",
-        "company_website": "https://example.com"
+        "company_website": "https://example.com",
+        "email": "john.doe@example.com",
+        "email_status": "found"
       },
       "posted_at": "2024-01-15T10:30:00Z",
       "reaction_count": 42,
@@ -134,6 +137,16 @@ Use one date family per request. The API rejects requests that combine `created_
   "snapshot_time": "2024-01-15T12:00:00Z"
 }
 ```
+
+### Email status
+
+Each post author carries an `email_status` describing the state of work-email discovery. `email` is never returned without `email_status`. The `email_status` filter matches on the post author's status.
+
+- `found` — an email was discovered; `email` is populated.
+- `not_found` — discovery finished with no email; `email` is empty. Company authors and profiles we cannot resolve always settle on `not_found` once processed.
+- `pending` — discovery is still running while enrichment is in progress; `email` is empty for now. A post still awaiting analysis may briefly report `pending`.
+
+Treat an empty `email` with a `pending` status as transient — it may resolve later. Treat an empty `email` with a `not_found` status as terminal.
 
 ### Rate Limiting
 
@@ -284,6 +297,10 @@ response = httpx.get(url, headers=headers, params=params)
 </TabItem>
 </Tabs>
 
+:::caution Email status and pagination
+`snapshot_time` stabilizes which posts exist across pages, but a post author's `email` and `email_status` can change after the post is first captured. As a result, a result set filtered by `email_status` may shift between pages — even when filtering on a terminal status (`found` or `not_found`). If you need a complete traversal, either restart pagination once enrichment has settled, or tolerate duplicate and skipped posts and de-duplicate by post `_id`.
+:::
+
 ### Date Filtering
 
 - Posts are retained for 180 days based on the post's `posted_at` timestamp; posts with a `posted_at` older than 180 days are archived and not returned by this endpoint
@@ -360,7 +377,9 @@ GET /api/posts/{post_id}
     "function": "ENG",
     "company_size": "L",
     "company_industry": "Technology",
-    "company_website": "https://example.com"
+    "company_website": "https://example.com",
+    "email": "john.doe@example.com",
+    "email_status": "found"
   },
   "posted_at": "2024-01-15T10:30:00Z",
   "reaction_count": 42,
