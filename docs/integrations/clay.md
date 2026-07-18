@@ -48,3 +48,7 @@ Each configuration routes a set of signals to one Clay webhook.
 ![Historic sync options](/img/integrations/clay/clay-historic-sync.png)
 
 Repeat to route different signals to different Clay tables.
+
+:::note Email column
+**Email** — and its paired **Email status** — is a column you can send to Clay. When it's selected, a contact syncs once email finding completes (shortly after the contact is first seen); contacts whose email can't be found still sync, with a blank email. **Email status** distinguishes `found`, `not_found`, and `pending`.
+:::

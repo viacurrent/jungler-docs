@@ -47,3 +47,7 @@ Each configuration routes a set of signals to one Google Sheet tab.
 ![Historic sync options](/img/integrations/google-sheets/google-historic-sync.png)
 
 Repeat to route different signals to different sheets or tabs.
+
+:::note Email column
+**Email** — and its paired **Email status** — is a column you can write to your sheet. When it's selected, a contact syncs once email finding completes (shortly after the contact is first seen); contacts whose email can't be found still sync, with a blank email. **Email status** distinguishes `found`, `not_found`, and `pending`.
+:::

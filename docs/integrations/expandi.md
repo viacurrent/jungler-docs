@@ -42,3 +42,7 @@ NB! You need at least one campaign in Expandi before creating a configuration in
 ![Historic sync options](/img/integrations/expandi/expandi-historic-sync.png)
 
 Repeat to route different signals to different campaigns.
+
+:::note Email field
+**Email** — and its paired **Email status** — is one of the **Fields to send**. When it's selected, a lead syncs once email finding completes (shortly after the lead is first seen); leads whose email can't be found still sync, with a blank email. **Email status** distinguishes `found`, `not_found`, and `pending`.
+:::

@@ -294,6 +294,150 @@ print(f"Total engagers: {data['total']}")
 
 ---
 
+## Post Engagers
+
+Retrieve paginated engagers (commenters and reactors) for a single signal post. Engagers are sorted by capture time (`created_at`) descending.
+
+Pair this with the [Posts API](./posts.md)'s `has_engagement_since` parameter to incrementally pull only newly-captured engagement without re-scanning posts that haven't changed — fetch the changed posts there, then call this endpoint with `captured_after` to pull just their new engagers.
+
+```http
+GET /api/engagers/post/{post_id}
+```
+
+### Path Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `post_id` | string | The post ID — the `jungler_post_id` returned on engager items, or the post `_id` from the [Posts API](./posts.md) |
+
+### Query Parameters
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `workspace_id` | string | *(required)* | Workspace ID that owns this post |
+| `page` | integer | `1` | Page number (1-indexed) |
+| `page_size` | integer | `100` | Items per page (1-500) |
+| `snapshot_time` | string | current time | ISO 8601 snapshot timestamp; stabilizes record existence across pages |
+| `engagement_type` | string | *(all)* | Filter by type: `COMMENT` or `REACTION` |
+| `captured_after` | string | *(optional)* | Exclusive lower-bound ISO 8601 UTC timestamp for engager capture time (`created_at`). Pass the `last_engagement_at` from [`GET /api/posts`](./posts.md) to incrementally sync only newly-captured engagers — safe against late-arriving data |
+| `captured_before` | string | *(optional)* | Inclusive upper-bound ISO 8601 UTC timestamp for engager capture time |
+| `email_status` | string | *(all)* | Filter by email status: comma-separated `found`, `not_found`, `pending`. Invalid values return 400. See [Email status](#email-status). |
+
+### Response
+
+Identical in shape to the [Signal Engagers response](#response) — a page of engager items, each with a nested `author` object. The `author` is abbreviated below for brevity.
+
+```json
+{
+  "items": [
+    {
+      "engagement_type": "COMMENT",
+      "urn": "urn:li:comment:(activity:123,456)",
+      "post_url": "https://www.social.com/feed/update/urn:li:activity:123",
+      "jungler_post_id": "507f1f77bcf86cd799439011",
+      "author": {
+        "name": "Jane Smith",
+        "first_name": "Jane",
+        "last_name": "Smith",
+        "urn": "urn:li:member:789",
+        "username": "janesmith",
+        "profile_url": "https://social.com/in/janesmith",
+        "profile_type": "user",
+        "company_name": "TechCo",
+        "company_website": "techco.com",
+        "email": "jane.smith@techco.com",
+        "email_status": "found",
+        "title": "VP Engineering",
+        "authority": "L",
+        "function": "ENG"
+      },
+      "content": "Great insight! Thanks for sharing.",
+      "comment_meta": {
+        "is_reply": false,
+        "replies": 2,
+        "is_pinned": false,
+        "is_edited": false
+      },
+      "reaction_type": null,
+      "engaged_at": "2024-01-15T10:45:00Z"
+    }
+  ],
+  "total": 42,
+  "page": 1,
+  "page_size": 100,
+  "pages": 1,
+  "snapshot_time": "2024-01-15T12:00:00.000000+00:00"
+}
+```
+
+### Response Fields
+
+The response reuses the [Signal Engagers](#response) definitions: each item is an [Engager Item](#engager-item) with a nested [`author`](#author-fields) object (including `email` and `email_status`). The example above abbreviates the `author` object — it carries the full [Author Fields](#author-fields) set.
+
+### Example Request
+
+<Tabs>
+<TabItem value="curl" label="cURL" default>
+
+```bash
+# All engagers for a post
+curl -H "X-API-Key: your_api_key_here" \
+     "https://production.viacurrent.com/api/engagers/post/507f1f77bcf86cd799439011?workspace_id=507f1f77bcf86cd799439013&page=1&page_size=100"
+
+# Only engagers captured after a given time (incremental sync)
+curl -H "X-API-Key: your_api_key_here" \
+     "https://production.viacurrent.com/api/engagers/post/507f1f77bcf86cd799439011?workspace_id=507f1f77bcf86cd799439013&captured_after=2024-01-15T10:00:00Z"
+```
+
+</TabItem>
+<TabItem value="javascript" label="JavaScript">
+
+```javascript
+const headers = { 'X-API-Key': 'your_api_key_here' };
+const postId = '507f1f77bcf86cd799439011';
+const workspaceId = '507f1f77bcf86cd799439013';
+
+const url = new URL(`https://production.viacurrent.com/api/engagers/post/${postId}`);
+url.searchParams.append('workspace_id', workspaceId);
+url.searchParams.append('page', '1');
+url.searchParams.append('page_size', '100');
+
+const response = await fetch(url, { headers });
+const data = await response.json();
+console.log(`Total engagers: ${data.total}`);
+```
+
+</TabItem>
+<TabItem value="python" label="Python">
+
+```python
+import httpx
+
+headers = {"X-API-Key": "your_api_key_here"}
+post_id = "507f1f77bcf86cd799439011"
+
+response = httpx.get(
+    f"https://production.viacurrent.com/api/engagers/post/{post_id}",
+    headers=headers,
+    params={
+        "workspace_id": "507f1f77bcf86cd799439013",
+        "page": 1,
+        "page_size": 100,
+    },
+)
+data = response.json()
+print(f"Total engagers: {data['total']}")
+```
+
+</TabItem>
+</Tabs>
+
+### Rate Limiting
+
+- **60 requests per minute** per API key
+
+---
+
 ## Signal Contacts
 
 Retrieve paginated, deduplicated contacts from a signal. Each contact represents a unique person with aggregated engagement stats across all monitored posts. Only available for `user_profile` and `company_profile` signal types.
