@@ -678,10 +678,10 @@ All engager endpoints use the same pagination pattern as the [Posts API](./posts
 
 ### Consistent Pagination
 
-For consistent results across pages, reuse the `snapshot_time` from the first page.
+Reuse the `snapshot_time` from the first page across subsequent pages to keep the set of returned records stable — it fixes *which* records appear (by creation time). Results filtered by `email_status` are the exception; see the caution below.
 
 :::caution Email status and pagination
-`snapshot_time` stabilizes which records exist across pages, but a record's `email` and `email_status` can change after it is first created. As a result, a result set filtered by `email_status` may shift between pages — even when filtering on a terminal status (`found` or `not_found`). If you need a complete traversal, either restart pagination once enrichment has settled, or tolerate duplicate and skipped records and de-duplicate by record ID.
+`snapshot_time` stabilizes which records exist across pages, but a record's `email` and `email_status` can change after it is first created. As a result, a result set filtered by `email_status` may shift between pages — even when filtering on a terminal status (`found` or `not_found`). If you need a complete traversal, either restart pagination once enrichment has settled, or tolerate duplicate and skipped records and de-duplicate by `urn` (the engagement dedup key).
 :::
 
 :::tip URL-encoding

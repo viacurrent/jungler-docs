@@ -296,7 +296,7 @@ response = httpx.get(url, headers=headers, params=params)
 </Tabs>
 
 :::caution Email status and pagination
-`snapshot_time` stabilizes which posts exist across pages, but a post author's `email` and `email_status` can change after the post is first captured. As a result, a result set filtered by `email_status` may shift between pages — even when filtering on a terminal status (`found` or `not_found`). If you need a complete traversal, either restart pagination once enrichment has settled, or tolerate duplicate and skipped posts and de-duplicate by post ID.
+`snapshot_time` stabilizes which posts exist across pages, but a post author's `email` and `email_status` can change after the post is first captured. As a result, a result set filtered by `email_status` may shift between pages — even when filtering on a terminal status (`found` or `not_found`). If you need a complete traversal, either restart pagination once enrichment has settled, or tolerate duplicate and skipped posts and de-duplicate by post `_id`.
 :::
 
 ### Date Filtering
