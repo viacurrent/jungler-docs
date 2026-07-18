@@ -48,7 +48,7 @@ GET /api/engagers/signal/{signal_id}
 | `workspace_id` | string | *(required)* | Workspace ID that owns this signal |
 | `page` | integer | `1` | Page number (1-indexed) |
 | `page_size` | integer | `100` | Items per page (1-500) |
-| `snapshot_time` | string | current time | ISO 8601 snapshot timestamp for consistent pagination |
+| `snapshot_time` | string | current time | ISO 8601 snapshot timestamp; stabilizes record existence across pages |
 | `engagement_type` | string | *(all)* | Filter by type: `COMMENT` or `REACTION` |
 | `post_time_period` | string | *(all)* | Restrict to engagements on posts published in the named recent period bucket: `day`, `week`, `month`, or `three_months`. Applies the [standard ingestion-lag buffer](#post-time-period-buffer). Omit to include the full 180-day retention window |
 | `email_status` | string | *(all)* | Filter by email status: comma-separated `found`, `not_found`, `pending`. Invalid values return 400. |
@@ -319,7 +319,7 @@ GET /api/engagers/signal/{signal_id}/contacts
 | `workspace_id` | string | *(required)* | Workspace ID that owns this signal |
 | `page` | integer | `1` | Page number (1-indexed) |
 | `page_size` | integer | `500` | Items per page (1-500) |
-| `snapshot_time` | string | current time | ISO 8601 snapshot timestamp for consistent pagination |
+| `snapshot_time` | string | current time | ISO 8601 snapshot timestamp; stabilizes record existence across pages |
 | `activity_filter` | string | *(all)* | Filter by activity: `commenters`, `reactors`, or comma-separated combinations |
 | `post_time_period` | string | *(all)* | Restrict to contacts who engaged with posts published in the named recent period bucket: `day`, `week`, `month`, or `three_months`. Applies the [standard ingestion-lag buffer](#post-time-period-buffer). When set, this filter affects which contacts are returned and scopes `stats.comments` / `stats.reactions` to that period. Omit to include the full 180-day retention window |
 | `email_status` | string | *(all)* | Filter by email status: comma-separated `found`, `not_found`, `pending`. Invalid values return 400. |
@@ -465,7 +465,7 @@ GET /api/engagers/workbook/{workbook_id}
 |-----------|------|---------|-------------|
 | `page` | integer | `1` | Page number (1-indexed) |
 | `page_size` | integer | `100` | Items per page (1-500) |
-| `snapshot_time` | string | current time | ISO 8601 snapshot timestamp for consistent pagination |
+| `snapshot_time` | string | current time | ISO 8601 snapshot timestamp; stabilizes record existence across pages |
 | `engagement_type` | string | *(all)* | Filter by type: `COMMENT` or `REACTION` |
 | `post_time_period` | string | *(all)* | Restrict to engagements on posts published in the named recent period bucket: `day`, `week`, `month`, or `three_months`. Applies the [standard ingestion-lag buffer](#post-time-period-buffer). Omit to include the full 180-day retention window |
 | `email_status` | string | *(all)* | Filter by email status: comma-separated `found`, `not_found`, `pending`. Invalid values return 400. |
@@ -543,7 +543,7 @@ GET /api/engagers/workbook/{workbook_id}/contacts
 |-----------|------|---------|-------------|
 | `page` | integer | `1` | Page number (1-indexed) |
 | `page_size` | integer | `500` | Items per page (1-500) |
-| `snapshot_time` | string | current time | ISO 8601 snapshot timestamp for consistent pagination |
+| `snapshot_time` | string | current time | ISO 8601 snapshot timestamp; stabilizes record existence across pages |
 | `activity_filter` | string | *(all)* | Filter by activity: `commenters`, `reactors`, or comma-separated combinations |
 | `post_time_period` | string | *(all)* | Restrict to contacts who engaged with posts published in the named recent period bucket: `day`, `week`, `month`, or `three_months`. Applies the [standard ingestion-lag buffer](#post-time-period-buffer). When set, this filter affects which contacts are returned and scopes `stats.comments` / `stats.reactions` to that period. Omit to include the full 180-day retention window |
 | `email_status` | string | *(all)* | Filter by email status: comma-separated `found`, `not_found`, `pending`. Invalid values return 400. |
@@ -674,14 +674,14 @@ All engager endpoints use the same pagination pattern as the [Posts API](./posts
 | `page` | integer | Current page number |
 | `page_size` | integer | Items per page |
 | `pages` | integer | Total number of pages |
-| `snapshot_time` | string | Snapshot timestamp for consistent pagination |
+| `snapshot_time` | string | Snapshot timestamp; stabilizes record existence across pages |
 
 ### Consistent Pagination
 
 Reuse the `snapshot_time` from the first page across subsequent pages to keep the set of returned records stable — it fixes *which* records appear (by creation time). Results filtered by `email_status` are the exception; see the caution below.
 
 :::caution Email status and pagination
-`snapshot_time` stabilizes which records exist across pages, but a record's `email` and `email_status` can change after it is first created. As a result, a result set filtered by `email_status` may shift between pages — even when filtering on a terminal status (`found` or `not_found`). If you need a complete traversal, either restart pagination once enrichment has settled, or tolerate duplicate and skipped records and de-duplicate by `urn` (the engagement dedup key).
+`snapshot_time` stabilizes which records exist across pages, but a record's `email` and `email_status` can change after it is first created. As a result, a result set filtered by `email_status` may shift between pages — even when filtering on a terminal status (`found` or `not_found`). If you need a complete traversal, either restart pagination once enrichment has settled, or tolerate duplicate and skipped records and de-duplicate by `urn` where present — the engagement identifier for engagers, the member identifier for contacts.
 :::
 
 :::tip URL-encoding

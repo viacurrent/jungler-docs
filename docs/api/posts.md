@@ -33,7 +33,7 @@ GET /api/posts
 |-----------|------|---------|-------------|
 | `page` | integer | 1 | Page number (≥ 1) |
 | `page_size` | integer | 100 | Items per page (1-500) |
-| `snapshot_time` | string | current time | ISO 8601 timestamp for consistent pagination |
+| `snapshot_time` | string | current time | ISO 8601 timestamp; stabilizes record existence across pages |
 
 #### Sorting Parameters
 
