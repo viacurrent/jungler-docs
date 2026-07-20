@@ -1,5 +1,5 @@
 ---
-description: Signals API reference — create, list, and manage Jungler signals (saved searches) for keyword, profile, and company-based LinkedIn monitoring.
+description: Signals API reference — create, list, and manage Jungler signals (saved searches) for keyword, profile, and company-based social monitoring.
 ---
 
 # Signals API
@@ -51,7 +51,7 @@ Returns an array of signal objects. Fields that are `null` are omitted.
   {
     "_id": "507f1f77bcf86cd799439013",
     "name": "Follow Specific Person",
-    "query": "https://social.com/in/vearnold",
+    "query": "https://linkedin.com/in/vearnold",
     "frequency": 24,
     "is_activated": true,
     "query_type": "user_profile",
@@ -63,7 +63,7 @@ Returns an array of signal objects. Fields that are `null` are omitted.
   {
     "_id": "507f1f77bcf86cd799439014",
     "name": "Company Posts",
-    "query": "https://social.com/company/example-corp",
+    "query": "https://linkedin.com/company/example-corp",
     "frequency": 24,
     "is_activated": true,
     "query_type": "company_profile",
@@ -199,7 +199,7 @@ GET /api/signals/{signal_id}
 {
   "_id": "507f1f77bcf86cd799439013",
   "name": "Follow Specific Person",
-  "query": "https://social.com/in/vearnold",
+  "query": "https://linkedin.com/in/vearnold",
   "frequency": 24,
   "is_activated": true,
   "query_type": "user_profile",
@@ -282,8 +282,8 @@ POST /api/signals
 
 The signal type (`query_type`) is automatically detected from the `query` string:
 - **Keywords** → `search_keyword` — e.g. `"lemlist OR \"heyreach\""`
-- **Profile URL** → `user_profile` — e.g. `"https://social.com/in/vearnold"`
-- **Company URL** → `company_profile` — e.g. `"https://social.com/company/example"`
+- **Profile URL** → `user_profile` — e.g. `"https://linkedin.com/in/vearnold"`
+- **Company URL** → `company_profile` — e.g. `"https://linkedin.com/company/example"`
 
 :::info AI Filtering (Keyword Signals Only)
 Keyword signals can be created with only `workspace_id`, `name`, and `query`. Add `prompt` only when you want custom AI criteria for filtering posts.
@@ -419,7 +419,7 @@ curl -X POST https://production.viacurrent.com/api/signals \
      -d '{
        "workspace_id": "507f1f77bcf86cd799439013",
        "name": "Follow Arnold",
-       "query": "https://social.com/in/vearnold",
+       "query": "https://linkedin.com/in/vearnold",
        "webhook_url": "https://customer.com/callback",
        "initial_window": "past_week"
      }'
@@ -437,7 +437,7 @@ response = httpx.post(
     json={
         "workspace_id": "507f1f77bcf86cd799439013",
         "name": "Follow Arnold",
-        "query": "https://social.com/in/vearnold",
+        "query": "https://linkedin.com/in/vearnold",
         "webhook_url": "https://customer.com/callback",
         "initial_window": "past_week"
     },
@@ -459,7 +459,7 @@ curl -X POST https://production.viacurrent.com/api/signals \
      -d '{
        "workspace_id": "507f1f77bcf86cd799439013",
        "name": "Acme Corp Posts",
-       "query": "https://social.com/company/acme-corp",
+       "query": "https://linkedin.com/company/acme-corp",
        "webhook_url": "https://customer.com/callback",
        "initial_window": "none",
        "track_engagement": false
@@ -478,7 +478,7 @@ response = httpx.post(
     json={
         "workspace_id": "507f1f77bcf86cd799439013",
         "name": "Acme Corp Posts",
-        "query": "https://social.com/company/acme-corp",
+        "query": "https://linkedin.com/company/acme-corp",
         "webhook_url": "https://customer.com/callback",
         "initial_window": "none",
         "track_engagement": False

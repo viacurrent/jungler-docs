@@ -1,13 +1,13 @@
 ---
 sidebar_position: 2
 sidebar_label: Profile engagement
-description: Capture ICPs engaging with your content and competitors on LinkedIn. Profile monitoring turns every engagement into an enriched, outreach-ready lead.
+description: Capture ICPs engaging with your content and competitors on social. Profile monitoring turns every engagement into an enriched, outreach-ready lead.
 keywords:
-    - linkedin profile monitoring
+    - profile monitoring
     - icp tracking
     - engagement tracking
     - lead generation
-    - linkedin engagers
+    - post engagers
 ---
 
 import Link from '@docusaurus/Link';
@@ -20,7 +20,7 @@ Capture your ICPs (ideal customer profiles) engaging with your content, competit
 
 ## Setup
 
-Go to Jungler, click "New", choose "Profile monitoring" and paste a LinkedIn profile URL — that's the whole setup.
+Go to Jungler, click "New", choose "Profile monitoring" and paste a profile URL — that's the whole setup.
 
 On the first run, Jungler pulls in all posts from the time range you set under "Historic posts" and extracts everyone who engaged with them. After that, the signal updates every 24 hours automatically.
 
@@ -87,14 +87,14 @@ Route qualified engagers to the tools you already use.
     <img src="/img/integrations/heyreach-icon.svg" alt="" />
     <div className="integration-card-body">
       <div className="integration-card-title">HeyReach</div>
-      <div className="integration-card-subtitle">LinkedIn outreach</div>
+      <div className="integration-card-subtitle">Outreach automation</div>
     </div>
   </Link>
   <Link to="/integrations/expandi" className="integration-card">
     <img src="/img/integrations/expandi-icon.svg" alt="" />
     <div className="integration-card-body">
       <div className="integration-card-title">Expandi</div>
-      <div className="integration-card-subtitle">LinkedIn outreach</div>
+      <div className="integration-card-subtitle">Outreach automation</div>
     </div>
   </Link>
   <Link to="/integrations/webhooks" className="integration-card">

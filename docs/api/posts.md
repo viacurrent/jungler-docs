@@ -1,5 +1,5 @@
 ---
-description: Posts API reference — retrieve and filter LinkedIn posts collected by your Jungler signals, by workspace, signal, company size, industry, and more.
+description: Posts API reference — retrieve and filter social posts collected by your Jungler signals, by workspace, signal, company size, industry, and more.
 ---
 
 # Posts API
@@ -86,12 +86,12 @@ Use one date family per request. The API rejects requests that combine `created_
   "items": [
     {
       "_id": "507f1f77bcf86cd799439011",
-      "url": "https://social.com/feed/update/...",
+      "url": "https://linkedin.com/feed/update/...",
       "urn": "urn:li:activity:...",
       "content": "Post content text...",
       "author": {
         "name": "John Doe",
-        "profile_url": "https://social.com/in/johndoe",
+        "profile_url": "https://linkedin.com/in/johndoe",
         "profile_image_url": "https://...",
         "description": "Software Engineer at Company",
         "username": "johndoe",
@@ -361,12 +361,12 @@ GET /api/posts/{post_id}
 ```json
 {
   "_id": "507f1f77bcf86cd799439011",
-  "url": "https://social.com/feed/update/...",
+  "url": "https://linkedin.com/feed/update/...",
   "urn": "urn:li:activity:...",
   "content": "Post content text...",
   "author": {
     "name": "John Doe",
-    "profile_url": "https://social.com/in/johndoe",
+    "profile_url": "https://linkedin.com/in/johndoe",
     "profile_image_url": "https://...",
     "description": "Software Engineer at Company",
     "username": "johndoe",

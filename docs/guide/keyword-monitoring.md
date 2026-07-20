@@ -1,12 +1,12 @@
 ---
 sidebar_position: 3
 sidebar_label: Keyword monitoring
-description: Set up keyword monitoring in Jungler to track brand, competitor, and industry mentions on LinkedIn — every matching post captured and author enriched.
+description: Set up keyword monitoring in Jungler to track brand, competitor, and industry mentions across social — every matching post captured and author enriched.
 keywords:
-    - linkedin keyword monitoring
+    - keyword monitoring
     - brand monitoring
     - competitor tracking
-    - linkedin mentions
+    - brand mentions
     - boolean search
 ---
 
@@ -14,7 +14,7 @@ import Link from '@docusaurus/Link';
 
 # Keyword monitoring
 
-Track mentions of your brand, competitors, and industry terms across LinkedIn. Every matching post gets captured, and its author enriched.
+Track mentions of your brand, competitors, and industry terms across social. Every matching post gets captured, and its author enriched.
 
 ## Setup
 
@@ -48,16 +48,16 @@ Broader searches for category terms and pain-point language. These cast a wider 
 ("looking for" OR "recommendations") AND CRM
 ```
 
-Start with your brand and competitor names. Add industry keywords once you're comfortable with how LinkedIn search works.
+Start with your brand and competitor names. Add industry keywords once you're comfortable with how boolean search works.
 
 
 ## Keyword query
 
-Jungler uses LinkedIn's [boolean search operators](https://www.linkedin.com/help/linkedin/answer/a524335).
+Keyword queries support boolean search operators.
 
 | Rule | Example |
 |---|---|
-| Quote multi-word phrases for exact match | `"linkedin data"` |
+| Quote multi-word phrases for exact match | `"sales data"` |
 | Use `AND`, `OR`, `NOT` in uppercase | `CRM AND sales NOT job` |
 | Group with parentheses | `("looking for" OR "recommendations") AND CRM` |
 
@@ -121,14 +121,14 @@ Route qualified post authors to the tools you already use.
     <img src="/img/integrations/heyreach-icon.svg" alt="" />
     <div className="integration-card-body">
       <div className="integration-card-title">HeyReach</div>
-      <div className="integration-card-subtitle">LinkedIn outreach</div>
+      <div className="integration-card-subtitle">Outreach automation</div>
     </div>
   </Link>
   <Link to="/integrations/expandi" className="integration-card">
     <img src="/img/integrations/expandi-icon.svg" alt="" />
     <div className="integration-card-body">
       <div className="integration-card-title">Expandi</div>
-      <div className="integration-card-subtitle">LinkedIn outreach</div>
+      <div className="integration-card-subtitle">Outreach automation</div>
     </div>
   </Link>
   <Link to="/integrations/webhooks" className="integration-card">

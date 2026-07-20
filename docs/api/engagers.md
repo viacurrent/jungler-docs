@@ -1,5 +1,5 @@
 ---
-description: Engagers API reference — fetch unified, deduplicated LinkedIn post engagers with enriched contact data from both signals and workbooks.
+description: Engagers API reference — fetch unified, deduplicated post engagers with enriched contact data from both signals and workbooks.
 ---
 
 # Engagers API
@@ -61,7 +61,7 @@ GET /api/engagers/signal/{signal_id}
     {
       "engagement_type": "COMMENT",
       "urn": "urn:li:comment:(activity:123,456)",
-      "post_url": "https://www.social.com/feed/update/urn:li:activity:123",
+      "post_url": "https://www.linkedin.com/feed/update/urn:li:activity:123",
       "jungler_post_id": "507f1f77bcf86cd799439011",
       "author": {
         "name": "Jane Smith",
@@ -69,7 +69,7 @@ GET /api/engagers/signal/{signal_id}
         "last_name": "Smith",
         "urn": "urn:li:member:789",
         "username": "janesmith",
-        "profile_url": "https://social.com/in/janesmith",
+        "profile_url": "https://linkedin.com/in/janesmith",
         "profile_image_url": "https://...",
         "description": "VP Engineering at TechCo",
         "profile_type": "user",
@@ -105,7 +105,7 @@ GET /api/engagers/signal/{signal_id}
     {
       "engagement_type": "REACTION",
       "urn": "urn:li:like:(member:101,activity:123)",
-      "post_url": "https://www.social.com/feed/update/urn:li:activity:123",
+      "post_url": "https://www.linkedin.com/feed/update/urn:li:activity:123",
       "jungler_post_id": "507f1f77bcf86cd799439011",
       "author": {
         "name": "Bob Johnson",
@@ -113,7 +113,7 @@ GET /api/engagers/signal/{signal_id}
         "last_name": "Johnson",
         "urn": "urn:li:member:101",
         "username": "bobjohnson",
-        "profile_url": "https://social.com/in/bobjohnson",
+        "profile_url": "https://linkedin.com/in/bobjohnson",
         "profile_image_url": "https://...",
         "description": "Sales Director",
         "profile_type": "user",
@@ -317,7 +317,7 @@ GET /api/engagers/post/{post_id}
 | `page_size` | integer | `100` | Items per page (1-500) |
 | `snapshot_time` | string | current time | ISO 8601 snapshot timestamp; stabilizes record existence across pages |
 | `engagement_type` | string | *(all)* | Filter by type: `COMMENT` or `REACTION` |
-| `captured_after` | string | *(none)* | **Exclusive** lower-bound ISO 8601 timestamp (UTC) for engager **capture time** (`created_at`). Pass the `last_engagement_at` from your previous sync for incremental pulls — safe against late-arriving LinkedIn data. |
+| `captured_after` | string | *(none)* | **Exclusive** lower-bound ISO 8601 timestamp (UTC) for engager **capture time** (`created_at`). Pass the `last_engagement_at` from your previous sync for incremental pulls — safe against late-arriving data. |
 | `captured_before` | string | *(none)* | Inclusive upper-bound ISO 8601 timestamp (UTC) for engager capture time. |
 | `email_status` | string | *(all)* | Filter by email status: comma-separated `found`, `not_found`, `pending`. Invalid values return 400. See [Email status](#email-status). |
 
@@ -426,7 +426,7 @@ GET /api/engagers/signal/{signal_id}/contacts
       "last_name": "Smith",
       "urn": "urn:li:member:789",
       "profile_type": "user",
-      "profile_url": "https://social.com/in/janesmith",
+      "profile_url": "https://linkedin.com/in/janesmith",
       "profile_image_url": "https://...",
       "description": "VP Engineering at TechCo",
       "username": "janesmith",
@@ -650,7 +650,7 @@ GET /api/engagers/workbook/{workbook_id}/contacts
       "last_name": "Smith",
       "urn": "urn:li:member:789",
       "profile_type": "user",
-      "profile_url": "https://social.com/in/janesmith",
+      "profile_url": "https://linkedin.com/in/janesmith",
       "profile_image_url": "https://...",
       "description": "VP Engineering at TechCo",
       "username": "janesmith",

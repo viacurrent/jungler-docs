@@ -1,5 +1,5 @@
 ---
-description: Workbooks API reference — create or schedule temporary workbook runs to extract comments, reactions, and contact data from any LinkedIn post.
+description: Workbooks API reference — create or schedule temporary workbook runs to extract comments, reactions, and contact data from any social post.
 ---
 
 # Workbooks API
@@ -31,7 +31,7 @@ curl -X POST \
      -H "X-API-Key: your_api_key_here" \
      -H "Content-Type: application/json" \
      -d '{
-       "post_url": "https://www.social.com/posts/username_activity-1234567890",
+       "post_url": "https://www.linkedin.com/posts/username_activity-1234567890",
        "data_types": ["comment", "reaction"],
        "workspace_id": "507f1f77bcf86cd799439011",
        "webhook_url": "https://customer.com/callback"
@@ -52,7 +52,7 @@ const response = await fetch(
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      post_url: "https://www.social.com/posts/username_activity-1234567890",
+      post_url: "https://www.linkedin.com/posts/username_activity-1234567890",
       data_types: ["comment", "reaction"],
       workspace_id: "507f1f77bcf86cd799439011",
       webhook_url: "https://customer.com/callback",
@@ -74,7 +74,7 @@ response = httpx.post(
     'https://production.viacurrent.com/api/workbooks',
     headers={'X-API-Key': 'your_api_key_here'},
     json={
-        'post_url': 'https://www.social.com/posts/username_activity-1234567890',
+        'post_url': 'https://www.linkedin.com/posts/username_activity-1234567890',
         'data_types': ['comment', 'reaction'],
         'workspace_id': '507f1f77bcf86cd799439011',
         'webhook_url': 'https://customer.com/callback'
@@ -181,7 +181,7 @@ POST /api/workbooks
 ```json
 {
   "workspace_id": "507f1f77bcf86cd799439013",
-  "post_url": "https://www.social.com/feed/update/urn:li:activity:...",
+  "post_url": "https://www.linkedin.com/feed/update/urn:li:activity:...",
   "data_types": ["comment", "reaction"],
   "webhook_url": "https://customer.com/callback"
 }
@@ -248,7 +248,7 @@ This callback is the per-run completion notification for Workbooks API requests.
   "started_at": "2025-01-15T10:30:00Z",
   "completed_at": "2025-01-15T10:33:00Z",
   "duration_ms": 180000,
-  "post_url": "https://www.social.com/posts/example_activity-1234",
+  "post_url": "https://www.linkedin.com/posts/example_activity-1234",
   "post_urn": "urn:li:activity:1234",
   "items_collected": 42,
   "items_available": 60,
@@ -291,7 +291,7 @@ Scheduled workbook runs require `webhook_url`. The dispatched workbook is tempor
 ```json
 {
   "workspace_id": "507f1f77bcf86cd799439013",
-  "post_url": "https://www.social.com/feed/update/urn:li:activity:1234567890",
+  "post_url": "https://www.linkedin.com/feed/update/urn:li:activity:1234567890",
   "data_types": ["comment", "reaction"],
   "scheduled_at": "2026-05-13T10:00:00Z",
   "webhook_url": "https://customer.com/callback",
@@ -302,7 +302,7 @@ Scheduled workbook runs require `webhook_url`. The dispatched workbook is tempor
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
 | `workspace_id` | string | Yes | The workspace ID |
-| `post_url` | string | Yes | LinkedIn post URL |
+| `post_url` | string | Yes | Post URL |
 | `data_types` | array | Yes | Types of data to extract: `comment`, `reaction` (case-insensitive; post data is always included) |
 | `scheduled_at` | string | Yes | UTC ISO 8601 timestamp. Must be at least 60 seconds in the future and no more than 30 days ahead |
 | `webhook_url` | string | Yes | HTTPS URL called when the dispatched run completes; delivery may be retried, so handlers should be idempotent (max 1000 chars) |
@@ -352,7 +352,7 @@ If the timestamp includes a timezone offset such as `+00:00`, URL-encode the `+`
     {
       "schedule_id": "65aaa1112223334445556666",
       "workspace_id": "507f1f77bcf86cd799439013",
-      "post_url": "https://www.social.com/feed/update/urn:li:activity:1234567890",
+      "post_url": "https://www.linkedin.com/feed/update/urn:li:activity:1234567890",
       "post_urn": "urn:li:activity:1234567890",
       "data_types": ["comment", "reaction"],
       "webhook_url": "https://customer.com/callback",
@@ -478,7 +478,7 @@ Polling responses may omit fields whose value is `null`. The in-progress example
   "started_at": "2024-01-15T10:30:00Z",
   "completed_at": "2024-01-15T10:33:00Z",
   "duration_ms": 180000,
-  "post_url": "https://www.social.com/posts/example_activity-1234",
+  "post_url": "https://www.linkedin.com/posts/example_activity-1234",
   "post_urn": "urn:li:activity:1234",
   "items_collected": 42,
   "items_available": 60,
@@ -632,8 +632,8 @@ while True:
 
 **Solution:** Check that your post URL format is correct. Valid formats:
 
-- `https://www.social.com/posts/username_activity-1234567890`
-- `https://www.social.com/feed/update/urn:li:activity:...`
+- `https://www.linkedin.com/posts/username_activity-1234567890`
+- `https://www.linkedin.com/feed/update/urn:li:activity:...`
 
 #### 429 Too Many Requests
 

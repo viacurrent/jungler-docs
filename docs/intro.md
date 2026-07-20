@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 slug: /
-description: Jungler docs — set up LinkedIn monitoring, track engagement, and push enriched leads into your sales stack via API and integrations.
+description: Jungler docs — set up social monitoring, track engagement, and push enriched leads into your sales stack via API and integrations.
 ---
 
 import Link from '@docusaurus/Link';
@@ -75,14 +75,14 @@ Route qualified leads to the tools you already use.
     <img src="/img/integrations/heyreach-icon.svg" alt="" />
     <div className="integration-card-body">
       <div className="integration-card-title">HeyReach</div>
-      <div className="integration-card-subtitle">LinkedIn outreach</div>
+      <div className="integration-card-subtitle">Outreach automation</div>
     </div>
   </Link>
   <Link to="/integrations/expandi" className="integration-card">
     <img src="/img/integrations/expandi-icon.svg" alt="" />
     <div className="integration-card-body">
       <div className="integration-card-title">Expandi</div>
-      <div className="integration-card-subtitle">LinkedIn outreach</div>
+      <div className="integration-card-subtitle">Outreach automation</div>
     </div>
   </Link>
   <Link to="/integrations/webhooks" className="integration-card">

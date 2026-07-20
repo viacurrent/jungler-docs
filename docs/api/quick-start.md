@@ -1,9 +1,9 @@
 ---
 sidebar_position: 2
-description: Make your first Jungler API call in minutes — authenticate, list workspaces, and pull enriched LinkedIn engagers with curl and Python examples.
+description: Make your first Jungler API call in minutes — authenticate, list workspaces, and pull enriched engagers with curl and Python examples.
 keywords:
     - jungler api
-    - linkedin api
+    - social api
     - api quick start
     - api authentication
     - api key
@@ -156,7 +156,7 @@ print(response.json())
       "content": "Excited to announce...",
       "author": {
         "name": "Jane Smith",
-        "profile_url": "https://social.com/in/janesmith",
+        "profile_url": "https://linkedin.com/in/janesmith",
         "function": "ENG",
         "authority": "L"
       },

@@ -2,7 +2,7 @@
 sidebar_position: 6
 title: Expandi
 sidebar_label: Expandi
-description: Connect Jungler to Expandi and auto-send engagers or post authors into your LinkedIn outreach campaigns — no manual CSV exports required.
+description: Connect Jungler to Expandi and auto-send engagers or post authors into your outreach campaigns — no manual CSV exports required.
 ---
 
 # <span className="heading-with-icon"><img src="/img/integrations/expandi-icon.svg" alt="" /> Expandi</span>

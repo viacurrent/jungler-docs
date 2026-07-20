@@ -1,16 +1,16 @@
 ---
 sidebar_position: 4
 sidebar_label: Post engagement
-description: Extract every engager from any LinkedIn post with Jungler workbooks — reactions, comments, and enriched contact details, exported in one click.
+description: Extract every engager from any social post with Jungler workbooks — reactions, comments, and enriched contact details, exported in one click.
 ---
 
 # Post engagement
 
-Extract every engager from any LinkedIn post. All engagers come enriched by default. Posts are grouped into workbooks — a collection of posts.
+Extract every engager from any social post. All engagers come enriched by default. Posts are grouped into workbooks — a collection of posts.
 
 ## Setup
 
-Go to [Workbooks](https://app.jungler.ai/workbooks) and create a new one. Paste a LinkedIn post URL, pick reactions, comments, or both, then click **Get engagers**.
+Go to [Workbooks](https://app.jungler.ai/workbooks) and create a new one. Paste a post URL, pick reactions, comments, or both, then click **Get engagers**.
 
 ![Create new workbook](/img/post-engagement/workbooks-create-new.png)
 

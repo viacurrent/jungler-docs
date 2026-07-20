@@ -2,7 +2,7 @@
 sidebar_position: 2
 title: Clay
 sidebar_label: Clay
-description: Push enriched LinkedIn engagers and posts from Jungler into Clay tables automatically — connect in minutes with a webhook and start syncing signals.
+description: Push enriched engagers and posts from Jungler into Clay tables automatically — connect in minutes with a webhook and start syncing signals.
 ---
 
 # <span className="heading-with-icon"><img src="/img/integrations/clay-icon.png" alt="" /> Clay</span>
