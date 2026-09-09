@@ -71,7 +71,7 @@ Use one date family per request. The API rejects requests that combine `created_
 | `country_exclude` | string | Comma-separated ISO country codes to exclude |
 | `function` | string | Functions: `ENG` (Engineering/IT), `PRD` (Product), `MKT` (Marketing), `SAL` (Sales), `FIN` (Finance), `OPS` (Operations), `HR` (Human Resources), `CS` (Customer Success), `LEG` (Legal), `DA` (Data/Analytics), `DSN` (Design/UX), `EDU` (Education/Academia), `AMB` (Ambiguous/Consultant), `GEN` (General Management), `UNMAPPED` |
 | `function_exclude` | string | Functions to exclude (same values as above) |
-| `role_level` | string | Authority — the rank the author's job title claims: `CXO` (C-Level), `VP`, `DIR` (Director / Head of), `MGR` (Manager), `SENIOR_IC` (Senior IC / Principal), `IC` (Individual Contributor), `JUNIOR` (Junior / Intern), `UNK`, `UNMAPPED`. See [Authority](#authority) |
+| `role_level` | string | Authority — the rank the author's job title claims: `CXO` (Executive / Founder), `VP`, `DIR` (Director / Head of), `MGR` (Manager), `SENIOR_IC` (Senior / Lead / Principal), `IC` (Individual Contributor), `JUNIOR` (Junior / Intern), `UNK` (no rank stated), `UNMAPPED`. See [Authority](#authority) |
 | `role_level_exclude` | string | Authority levels to exclude (same values as above) |
 | `employment_context` | string | How the author holds the role: `IN_HOUSE`, `FOUNDER`, `FRACTIONAL`, `INTERIM`, `ADVISORY`, `INDEPENDENT`, `UNMAPPED`. See [Employment context](#employment-context) |
 | `employment_context_exclude` | string | Employment contexts to exclude (same values as above) |
@@ -549,14 +549,14 @@ Use the same `snapshot_time` across all pages of a single sync run for consisten
 
 | Code | Level | Example titles |
 |------|-------|----------------|
-| `CXO` | C-Level | CEO, Founder, President, Chief Revenue Officer, Managing Director |
-| `VP` | VP | VP of Sales, Vice President |
-| `DIR` | Director / Head of | Sales Director, Director, Head of Sales |
-| `MGR` | Manager | Regional Sales Manager, Project Manager |
-| `SENIOR_IC` | Senior IC / Principal | Senior SWE, Sales Lead, Principal Engineer |
+| `CXO` | Executive / Founder | CEO, Founder, Owner, President, Managing Director |
+| `VP` | VP | VP of Sales, SVP, Vice President |
+| `DIR` | Director / Head of | Sales Director, Head of Sales |
+| `MGR` | Manager | Sales Manager, Account Manager, Team Lead |
+| `SENIOR_IC` | Senior / Lead / Principal | Senior SWE, Sales Lead, Founding Engineer |
 | `IC` | Individual Contributor | Account Executive, Software Engineer |
 | `JUNIOR` | Junior / Intern | HR Intern, Junior SWE |
-| `UNK` | Unknown | Business Development, GTM — the title names the work, not a rank |
+| `UNK` | No rank stated | Sales, Business Development, GTM — the title names the work, not a rank |
 | `UNMAPPED` | Not analysed | No job title, or not yet analysed |
 
 ### Employment context
