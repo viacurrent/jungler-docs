@@ -71,8 +71,10 @@ Use one date family per request. The API rejects requests that combine `created_
 | `country_exclude` | string | Comma-separated ISO country codes to exclude |
 | `function` | string | Functions: `ENG` (Engineering/IT), `PRD` (Product), `MKT` (Marketing), `SAL` (Sales), `FIN` (Finance), `OPS` (Operations), `HR` (Human Resources), `CS` (Customer Success), `LEG` (Legal), `DA` (Data/Analytics), `DSN` (Design/UX), `EDU` (Education/Academia), `AMB` (Ambiguous/Consultant), `GEN` (General Management), `UNMAPPED` |
 | `function_exclude` | string | Functions to exclude (same values as above) |
-| `authority` | string | Authority levels: `L` (Executive/C-Level), `M` (Middle Management), `S` (Individual Contributors), `XS` (Junior/Entry-Level), `NA` (Solopreneur/Freelancer), `UNMAPPED` |
-| `authority_exclude` | string | Authority levels to exclude (same values as above) |
+| `role_level` | string | Authority — the rank the author's job title claims: `CXO`, `VP`, `DIR` (Director), `MGR` (Manager), `SENIOR_IC`, `IC` (Individual Contributor), `JUNIOR`, `UNK` (title gives no rank), `UNMAPPED`. See [Authority](#authority) |
+| `role_level_exclude` | string | Authority levels to exclude (same values as above) |
+| `employment_context` | string | How the author holds the role: `IN_HOUSE`, `FOUNDER`, `FRACTIONAL`, `INTERIM`, `ADVISORY`, `INDEPENDENT`, `UNMAPPED`. See [Employment context](#employment-context) |
+| `employment_context_exclude` | string | Employment contexts to exclude (same values as above) |
 | `company_size` | string | Company sizes: `XXS` (1-10), `XS` (11-50), `S` (51-200), `M` (201-500), `L` (501-1000), `XL` (1001-5000), `XXL` (5001+), `UNMAPPED` |
 | `company_size_exclude` | string | Company sizes to exclude (same values as above) |
 | `company_industry` | string | Industries: `TECH_INFO_MEDIA`, `FINANCIAL_SERVICES`, `HEALTH_CARE`, `PROFESSIONAL_SERVICES`, `MANUFACTURING`, `RETAIL`, `EDUCATION`, `CONSTRUCTION`, `CONSUMER_SERVICES`, `ENTERTAINMENT`, `TRANSPORTATION_LOGISTICS`, `ACCOMMODATION_SERVICES`, `ADMINISTRATIVE_SERVICES`, `FARMING_RANCHING_FORESTRY`, `GOV_ADMIN`, `HOLDING_COMPANIES`, `OIL_GAS_MINING`, `REAL_ESTATE_EQUIPMENT`, `UTILITIES`, `WHOLESALE`, `UNMAPPED` |
@@ -98,7 +100,8 @@ Use one date family per request. The API rejects requests that combine `created_
         "profile_type": "user",
         "country_code": "US",
         "country": "United States",
-        "authority": "M",
+        "role_level": "MGR",
+        "employment_context": "IN_HOUSE",
         "function": "ENG",
         "company_size": "L",
         "company_industry": "Technology",
@@ -373,7 +376,8 @@ GET /api/posts/{post_id}
     "profile_type": "user",
     "country_code": "US",
     "country": "United States",
-    "authority": "M",
+    "role_level": "MGR",
+    "employment_context": "IN_HOUSE",
     "function": "ENG",
     "company_size": "L",
     "company_industry": "Technology",
@@ -539,16 +543,35 @@ Use the same `snapshot_time` across all pages of a single sync run for consisten
 | `GEN` | General Management | CEO, Founder, President, GM |
 | `UNMAPPED` | Unknown | Function could not be determined |
 
-### Authority Levels
+### Authority
+
+`role_level` — the rank the author's job title claims. Shown as **Authority** in the app and in exports.
 
 | Code | Level | Description |
 |------|-------|-------------|
-| `L` | Executive | C-level, Founder, Owner, VP, Head of function |
-| `M` | Middle Management | Manager, Team Lead, Department Manager |
-| `S` | Individual Contributor | Standard roles, unclear authority |
-| `XS` | Junior | Junior, Intern, Student, Entry-level |
-| `NA` | Independent | Solopreneur, Consultant, Advisor, Freelancer |
-| `UNMAPPED` | Unknown | Authority level could not be determined |
+| `CXO` | C-level | Chief, C-suite |
+| `VP` | VP | Vice president, AVP |
+| `DIR` | Director | Director, Head of |
+| `MGR` | Manager | Manager, team lead |
+| `SENIOR_IC` | Senior IC | Senior, principal, staff, lead |
+| `IC` | Individual contributor | Standard individual roles |
+| `JUNIOR` | Junior | Junior, intern, student, entry-level |
+| `UNK` | Unspecified | Title names the work, not a rank |
+| `UNMAPPED` | Unknown | Not determined for this profile |
+
+### Employment context
+
+`employment_context` — how the author holds the role, independent of its rank.
+
+| Code | Context | Description |
+|------|---------|-------------|
+| `IN_HOUSE` | In-house | Employed by the company |
+| `FOUNDER` | Founder | Founder, co-founder, owner |
+| `FRACTIONAL` | Fractional | Explicitly fractional |
+| `INTERIM` | Interim | Interim or acting |
+| `ADVISORY` | Advisory | Consultant, advisor, board member, coach |
+| `INDEPENDENT` | Independent | Freelance, self-employed, contractor |
+| `UNMAPPED` | Unknown | Not determined for this profile |
 
 ### Company Sizes
 

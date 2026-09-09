@@ -89,7 +89,8 @@ GET /api/engagers/signal/{signal_id}
         "company_industry": "TECH_INFO_MEDIA",
         "company_hq_loc_country": "United States",
         "company_hq_loc_code": "US",
-        "authority": "L",
+        "role_level": "VP",
+        "employment_context": "IN_HOUSE",
         "function": "ENG"
       },
       "content": "Great insight! Thanks for sharing.",
@@ -133,7 +134,8 @@ GET /api/engagers/signal/{signal_id}
         "company_industry": "PROFESSIONAL_SERVICES",
         "company_hq_loc_country": null,
         "company_hq_loc_code": null,
-        "authority": "M",
+        "role_level": "MGR",
+        "employment_context": "IN_HOUSE",
         "function": "SAL"
       },
       "content": null,
@@ -195,7 +197,8 @@ GET /api/engagers/signal/{signal_id}
 | `company_industry` | string \| null | Company industry |
 | `company_hq_loc_country` | string \| null | Company HQ country |
 | `company_hq_loc_code` | string \| null | Company HQ ISO country code |
-| `authority` | string \| null | Authority level (L, M, S, XS, NA) |
+| `role_level` | string \| null | Authority — the rank the title claims: `CXO`, `VP`, `DIR`, `MGR`, `SENIOR_IC`, `IC`, `JUNIOR`, `UNK`. See [Authority](./posts#authority) |
+| `employment_context` | string \| null | How the person holds the role: `IN_HOUSE`, `FOUNDER`, `FRACTIONAL`, `INTERIM`, `ADVISORY`, `INDEPENDENT`. See [Employment context](./posts#employment-context) |
 | `function` | string \| null | Job function (ENG, MKT, SAL, etc.) |
 
 #### Comment Metadata
@@ -446,7 +449,8 @@ GET /api/engagers/signal/{signal_id}/contacts
       "company_industry": "TECH_INFO_MEDIA",
       "company_hq_loc_country": "United States",
       "company_hq_loc_code": "US",
-      "authority": "L",
+      "role_level": "VP",
+      "employment_context": "IN_HOUSE",
       "function": "ENG",
       "stats": {
         "comments": 3,
@@ -670,7 +674,8 @@ GET /api/engagers/workbook/{workbook_id}/contacts
       "company_industry": "TECH_INFO_MEDIA",
       "company_hq_loc_country": "United States",
       "company_hq_loc_code": "US",
-      "authority": "L",
+      "role_level": "VP",
+      "employment_context": "IN_HOUSE",
       "function": "ENG",
       "stats": {
         "comments": 3,

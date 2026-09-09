@@ -158,7 +158,8 @@ print(response.json())
         "name": "Jane Smith",
         "profile_url": "https://linkedin.com/in/janesmith",
         "function": "ENG",
-        "authority": "L"
+        "role_level": "VP",
+        "employment_context": "IN_HOUSE"
       },
       "posted_at": "2024-01-15T10:30:00Z",
       "reaction_count": 42,
@@ -188,7 +189,7 @@ Explore powerful filtering options:
 ```bash
 # Filter by sentiment and function
 curl -H "X-API-Key: your_api_key_here" \
-     "https://production.viacurrent.com/api/posts?workspace_id=507f1f77bcf86cd799439011&signal_ids=507f1f77bcf86cd799439012&sentiment=positive&function=ENG,PRD&authority=L"
+     "https://production.viacurrent.com/api/posts?workspace_id=507f1f77bcf86cd799439011&signal_ids=507f1f77bcf86cd799439012&sentiment=positive&function=ENG,PRD&role_level=CXO,VP"
 
 # Filter by date range
 curl -H "X-API-Key: your_api_key_here" \
@@ -214,7 +215,7 @@ response = httpx.get(
         'signal_ids': '507f1f77bcf86cd799439012',
         'sentiment': 'positive',
         'function': 'ENG,PRD',
-        'authority': 'L'
+        'role_level': 'CXO,VP'
     }
 )
 
