@@ -549,7 +549,7 @@ Use the same `snapshot_time` across all pages of a single sync run for consisten
 
 | Code | Level | Example titles |
 |------|-------|----------------|
-| `CXO` | C-Level | CEO, President, Chief Revenue Officer, Managing Director |
+| `CXO` | C-Level | CEO, Founder, President, Chief Revenue Officer, Managing Director |
 | `VP` | VP | VP of Sales, Vice President |
 | `DIR` | Director / Head of | Sales Director, Director, Head of Sales |
 | `MGR` | Manager | Regional Sales Manager, Project Manager |
