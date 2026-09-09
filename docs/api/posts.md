@@ -71,7 +71,7 @@ Use one date family per request. The API rejects requests that combine `created_
 | `country_exclude` | string | Comma-separated ISO country codes to exclude |
 | `function` | string | Functions: `ENG` (Engineering/IT), `PRD` (Product), `MKT` (Marketing), `SAL` (Sales), `FIN` (Finance), `OPS` (Operations), `HR` (Human Resources), `CS` (Customer Success), `LEG` (Legal), `DA` (Data/Analytics), `DSN` (Design/UX), `EDU` (Education/Academia), `AMB` (Ambiguous/Consultant), `GEN` (General Management), `UNMAPPED` |
 | `function_exclude` | string | Functions to exclude (same values as above) |
-| `role_level` | string | Authority — the rank the author's job title claims: `CXO`, `VP`, `DIR` (Director), `MGR` (Manager), `SENIOR_IC`, `IC` (Individual Contributor), `JUNIOR`, `UNK` (title gives no rank), `UNMAPPED`. See [Authority](#authority) |
+| `role_level` | string | Authority — the rank the author's job title claims: `CXO` (C-Level), `VP`, `DIR` (Director / Head of), `MGR` (Manager), `SENIOR_IC` (Senior IC / Principal), `IC` (Individual Contributor), `JUNIOR` (Junior / Intern), `UNK`, `UNMAPPED`. See [Authority](#authority) |
 | `role_level_exclude` | string | Authority levels to exclude (same values as above) |
 | `employment_context` | string | How the author holds the role: `IN_HOUSE`, `FOUNDER`, `FRACTIONAL`, `INTERIM`, `ADVISORY`, `INDEPENDENT`, `UNMAPPED`. See [Employment context](#employment-context) |
 | `employment_context_exclude` | string | Employment contexts to exclude (same values as above) |
@@ -547,31 +547,31 @@ Use the same `snapshot_time` across all pages of a single sync run for consisten
 
 `role_level` — the rank the author's job title claims. Shown as **Authority** in the app and in exports.
 
-| Code | Level | Description |
-|------|-------|-------------|
-| `CXO` | C-level | Chief, C-suite |
-| `VP` | VP | Vice president, AVP |
-| `DIR` | Director | Director, Head of |
-| `MGR` | Manager | Manager, team lead |
-| `SENIOR_IC` | Senior IC | Senior, principal, staff, lead |
-| `IC` | Individual contributor | Standard individual roles |
-| `JUNIOR` | Junior | Junior, intern, student, entry-level |
-| `UNK` | Unspecified | Title names the work, not a rank |
-| `UNMAPPED` | Unknown | Not determined for this profile |
+| Code | Level | Example titles |
+|------|-------|----------------|
+| `CXO` | C-Level | CEO, President, Chief Revenue Officer, Managing Director |
+| `VP` | VP | VP of Sales, Vice President |
+| `DIR` | Director / Head of | Sales Director, Director, Head of Sales |
+| `MGR` | Manager | Regional Sales Manager, Project Manager |
+| `SENIOR_IC` | Senior IC / Principal | Senior SWE, Sales Lead, Principal Engineer |
+| `IC` | Individual Contributor | Account Executive, Software Engineer |
+| `JUNIOR` | Junior / Intern | HR Intern, Junior SWE |
+| `UNK` | Unknown | Business Development, GTM — the title names the work, not a rank |
+| `UNMAPPED` | Not analysed | No job title, or not yet analysed |
 
 ### Employment context
 
 `employment_context` — how the author holds the role, independent of its rank.
 
-| Code | Context | Description |
-|------|---------|-------------|
-| `IN_HOUSE` | In-house | Employed by the company |
-| `FOUNDER` | Founder | Founder, co-founder, owner |
-| `FRACTIONAL` | Fractional | Explicitly fractional |
-| `INTERIM` | Interim | Interim or acting |
-| `ADVISORY` | Advisory | Consultant, advisor, board member, coach |
-| `INDEPENDENT` | Independent | Freelance, self-employed, contractor |
-| `UNMAPPED` | Unknown | Not determined for this profile |
+| Code | Context | Example titles |
+|------|---------|----------------|
+| `IN_HOUSE` | In-House | Default, any plain title |
+| `FOUNDER` | Founder / Owner | Founder and CEO, Entrepreneur, Owner |
+| `FRACTIONAL` | Fractional | Fractional CTO, Founder & Fractional CMO |
+| `INTERIM` | Interim / Acting | Acting CEO, Interim CTO |
+| `ADVISORY` | Advisor / Consultant | Consultant, Board Member, Strategic Advisor |
+| `INDEPENDENT` | Freelance / Self-employed | Freelance Graphic Designer, Self Employed, Independent Consultant |
+| `UNMAPPED` | Not analysed | No job title, or not yet analysed |
 
 ### Company Sizes
 
