@@ -553,7 +553,8 @@ Use the same `snapshot_time` across all pages of a single sync run for consisten
 | `VP` | VP | VP of Sales, SVP, Vice President |
 | `DIR` | Director / Head of | Sales Director, Head of Sales |
 | `MGR` | Manager | Sales Manager, Account Manager, Team Lead |
-| `SENIOR_IC` | Senior / Lead / Principal | Senior SWE, Sales Lead, Founding Engineer |
+| `PRINCIPAL` | Principal | Principal Engineer, Staff Engineer, Tech Lead, Founding Engineer |
+| `SENIOR_IC` | Senior IC | Senior SWE, Senior Account Executive |
 | `IC` | Individual Contributor | Account Executive, Software Engineer |
 | `JUNIOR` | Junior / Intern | HR Intern, Junior SWE |
 | `UNK` | No rank stated | Sales, Business Development, GTM — the title names the work, not a rank |
