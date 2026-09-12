@@ -71,7 +71,7 @@ Use one date family per request. The API rejects requests that combine `created_
 | `country_exclude` | string | Comma-separated ISO country codes to exclude |
 | `function` | string | Functions: `ENG` (Engineering/IT), `PRD` (Product), `MKT` (Marketing), `SAL` (Sales), `FIN` (Finance), `OPS` (Operations), `HR` (Human Resources), `CS` (Customer Success), `LEG` (Legal), `DA` (Data/Analytics), `DSN` (Design/UX), `EDU` (Education/Academia), `AMB` (Ambiguous/Consultant), `GEN` (General Management), `UNMAPPED` |
 | `function_exclude` | string | Functions to exclude (same values as above) |
-| `role_level` | string | Authority — the rank the author's job title claims: `CXO` (Executive / Founder), `VP`, `DIR` (Director / Head of), `MGR` (Manager), `SENIOR_IC` (Senior / Lead / Principal), `IC` (Individual Contributor), `JUNIOR` (Junior / Intern), `UNK` (no rank stated), `UNMAPPED`. See [Authority](#authority) |
+| `role_level` | string | Authority — the rank the author's job title claims: `CXO` (Executive / Founder), `VP`, `DIR` (Director / Head of), `MGR` (Manager), `PRINCIPAL` (Principal — leadership without a team: principal, staff, lead, founding <role>), `SENIOR_IC` (Senior IC), `IC` (Individual Contributor), `JUNIOR` (Junior / Intern), `UNK` (no rank stated), `UNMAPPED`. See [Authority](#authority) |
 | `role_level_exclude` | string | Authority levels to exclude (same values as above) |
 | `employment_context` | string | How the author holds the role: `IN_HOUSE`, `FOUNDER`, `FRACTIONAL`, `INTERIM`, `ADVISORY`, `INDEPENDENT`, `UNMAPPED`. See [Employment context](#employment-context) |
 | `employment_context_exclude` | string | Employment contexts to exclude (same values as above) |
