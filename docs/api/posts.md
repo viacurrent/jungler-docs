@@ -71,9 +71,9 @@ Use one date family per request. The API rejects requests that combine `created_
 | `country_exclude` | string | Comma-separated ISO country codes to exclude |
 | `function` | string | Functions: `ENG` (Engineering/IT), `PRD` (Product), `MKT` (Marketing), `SAL` (Sales), `FIN` (Finance), `OPS` (Operations), `HR` (Human Resources), `CS` (Customer Success), `LEG` (Legal), `DA` (Data/Analytics), `DSN` (Design/UX), `EDU` (Education/Academia), `AMB` (Ambiguous/Consultant), `GEN` (General Management), `UNMAPPED` |
 | `function_exclude` | string | Functions to exclude (same values as above) |
-| `role_level` | string | Authority — the rank the author's job title claims: `CXO` (Executive / Founder), `VP`, `DIR` (Director / Head of), `MGR` (Manager), `PRINCIPAL` (Principal — leadership without a team: principal, staff, lead, founding <role>), `SENIOR_IC` (Senior IC), `IC` (Individual Contributor), `JUNIOR` (Junior / Intern), `UNK` (no rank stated), `UNMAPPED`. See [Authority](#authority) |
+| `role_level` | string | Authority — the rank the author's job title claims: `executive` (Executive / Founder), `vp`, `director` (Director / Head of), `manager` (Manager), `principal` (Principal — leadership without a team: principal, staff, lead, founding <role>), `senior_ic` (Senior IC), `ic` (Individual Contributor), `junior` (Junior / Intern), `unranked` (no rank stated), `UNMAPPED`. See [Authority](#authority) |
 | `role_level_exclude` | string | Authority levels to exclude (same values as above) |
-| `employment_context` | string | How the author holds the role: `IN_HOUSE`, `FOUNDER`, `FRACTIONAL`, `INTERIM`, `ADVISORY`, `INDEPENDENT`, `UNMAPPED`. See [Employment context](#employment-context) |
+| `employment_context` | string | How the author holds the role: `in_house`, `founder_owner`, `fractional`, `interim`, `advisory`, `freelance`, `UNMAPPED`. See [Employment context](#employment-context) |
 | `employment_context_exclude` | string | Employment contexts to exclude (same values as above) |
 | `company_size` | string | Company sizes: `XXS` (1-10), `XS` (11-50), `S` (51-200), `M` (201-500), `L` (501-1000), `XL` (1001-5000), `XXL` (5001+), `UNMAPPED` |
 | `company_size_exclude` | string | Company sizes to exclude (same values as above) |
@@ -100,8 +100,8 @@ Use one date family per request. The API rejects requests that combine `created_
         "profile_type": "user",
         "country_code": "US",
         "country": "United States",
-        "role_level": "MGR",
-        "employment_context": "IN_HOUSE",
+        "role_level": "manager",
+        "employment_context": "in_house",
         "function": "ENG",
         "company_size": "L",
         "company_industry": "Technology",
@@ -376,8 +376,8 @@ GET /api/posts/{post_id}
     "profile_type": "user",
     "country_code": "US",
     "country": "United States",
-    "role_level": "MGR",
-    "employment_context": "IN_HOUSE",
+    "role_level": "manager",
+    "employment_context": "in_house",
     "function": "ENG",
     "company_size": "L",
     "company_industry": "Technology",
@@ -549,15 +549,15 @@ Use the same `snapshot_time` across all pages of a single sync run for consisten
 
 | Code | Level | Example titles |
 |------|-------|----------------|
-| `CXO` | Executive / Founder | CEO, Founder, Owner, President, Managing Director |
-| `VP` | VP | VP of Sales, SVP, Vice President |
-| `DIR` | Director / Head of | Sales Director, Head of Sales |
-| `MGR` | Manager | Sales Manager, Account Manager, Team Lead |
-| `PRINCIPAL` | Principal | Principal Engineer, Staff Engineer, Tech Lead, Founding Engineer |
-| `SENIOR_IC` | Senior IC | Senior SWE, Senior Account Executive |
-| `IC` | Individual Contributor | Account Executive, Software Engineer |
-| `JUNIOR` | Junior / Intern | HR Intern, Junior SWE |
-| `UNK` | No rank stated | Sales, Business Development, GTM — the title names the work, not a rank |
+| `executive` | Executive / Founder | CEO, Founder, Owner, President, Managing Director |
+| `vp` | VP | VP of Sales, SVP, Vice President |
+| `director` | Director / Head of | Sales Director, Head of Sales |
+| `manager` | Manager | Sales Manager, Account Manager, Team Lead |
+| `principal` | Principal | Principal Engineer, Staff Engineer, Tech Lead, Founding Engineer |
+| `senior_ic` | Senior IC | Senior SWE, Senior Account Executive |
+| `ic` | Individual Contributor | Account Executive, Software Engineer |
+| `junior` | Junior / Intern | HR Intern, Junior SWE |
+| `unranked` | No rank stated | Sales, Business Development, GTM — the title names the work, not a rank |
 | `UNMAPPED` | Not analysed | No job title, or not yet analysed |
 
 ### Employment context
@@ -566,12 +566,12 @@ Use the same `snapshot_time` across all pages of a single sync run for consisten
 
 | Code | Context | Example titles |
 |------|---------|----------------|
-| `IN_HOUSE` | In-House | Default, any plain title |
-| `FOUNDER` | Founder / Owner | Founder and CEO, Entrepreneur, Owner |
-| `FRACTIONAL` | Fractional | Fractional CTO, Founder & Fractional CMO |
-| `INTERIM` | Interim / Acting | Acting CEO, Interim CTO |
-| `ADVISORY` | Advisor / Consultant | Consultant, Board Member, Strategic Advisor |
-| `INDEPENDENT` | Freelance / Self-employed | Freelance Graphic Designer, Self Employed, Independent Consultant |
+| `in_house` | In-House | Default, any plain title |
+| `founder_owner` | Founder / Owner | Founder and CEO, Entrepreneur, Owner |
+| `fractional` | Fractional | Fractional CTO, Founder & Fractional CMO |
+| `interim` | Interim / Acting | Acting CEO, Interim CTO |
+| `advisory` | Advisor / Consultant | Consultant, Board Member, Strategic Advisor |
+| `freelance` | Freelance / Self-employed | Freelance Graphic Designer, Self Employed, Independent Consultant |
 | `UNMAPPED` | Not analysed | No job title, or not yet analysed |
 
 ### Company Sizes

@@ -127,7 +127,7 @@ import TabItem from '@theme/TabItem';
 :::
 
 :::note Authority and Employment context
-`role_level` (engagements) and `author_role_level` (posts) are shown as **Authority** in the app, in exports and as the column header in Google Sheets and Clay. It is one of `C-level`, `VP`, `Director`, `Manager`, `Senior IC`, `Individual contributor`, `Junior`, or `Unspecified`.
+`role_level` (engagements) and `author_role_level` (posts) are shown as **Authority** in the app, in exports and as the column header in Google Sheets and Clay. It is one of `C-level`, `vp`, `Director`, `Manager`, `Senior IC`, `Individual contributor`, `Junior`, or `Unspecified`.
 
 `employment_context` / `author_employment_context` describes how the person holds the role: `In-house`, `Founder`, `Independent`, `Advisory`, `Fractional`, or `Interim`.
 
@@ -211,7 +211,7 @@ Either field is empty when it could not be determined from the person's job titl
         "country_code": "GB",
         "region": "EU",
         "function": "Engineering",
-        "role_level": "VP",
+        "role_level": "vp",
         "employment_context": "In-house",
         "company_staff_range": "51-200",
         "company_staff_registered": "156",

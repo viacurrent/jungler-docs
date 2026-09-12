@@ -89,8 +89,8 @@ GET /api/engagers/signal/{signal_id}
         "company_industry": "TECH_INFO_MEDIA",
         "company_hq_loc_country": "United States",
         "company_hq_loc_code": "US",
-        "role_level": "VP",
-        "employment_context": "IN_HOUSE",
+        "role_level": "vp",
+        "employment_context": "in_house",
         "function": "ENG"
       },
       "content": "Great insight! Thanks for sharing.",
@@ -134,8 +134,8 @@ GET /api/engagers/signal/{signal_id}
         "company_industry": "PROFESSIONAL_SERVICES",
         "company_hq_loc_country": null,
         "company_hq_loc_code": null,
-        "role_level": "MGR",
-        "employment_context": "IN_HOUSE",
+        "role_level": "manager",
+        "employment_context": "in_house",
         "function": "SAL"
       },
       "content": null,
@@ -197,8 +197,8 @@ GET /api/engagers/signal/{signal_id}
 | `company_industry` | string \| null | Company industry |
 | `company_hq_loc_country` | string \| null | Company HQ country |
 | `company_hq_loc_code` | string \| null | Company HQ ISO country code |
-| `role_level` | string \| null | Authority — the rank the title claims: `CXO` (Executive / Founder), `VP`, `DIR` (Director / Head of), `MGR`, `PRINCIPAL` (Principal), `SENIOR_IC` (Senior IC), `IC`, `JUNIOR`, `UNK`. See [Authority](./posts#authority) |
-| `employment_context` | string \| null | How the person holds the role: `IN_HOUSE`, `FOUNDER`, `FRACTIONAL`, `INTERIM`, `ADVISORY`, `INDEPENDENT`. See [Employment context](./posts#employment-context) |
+| `role_level` | string \| null | Authority — the rank the title claims: `executive` (Executive / Founder), `vp`, `director` (Director / Head of), `manager`, `principal` (Principal), `senior_ic` (Senior IC), `ic`, `junior`, `unranked`. See [Authority](./posts#authority) |
+| `employment_context` | string \| null | How the person holds the role: `in_house`, `founder_owner`, `fractional`, `interim`, `advisory`, `freelance`. See [Employment context](./posts#employment-context) |
 | `function` | string \| null | Job function (ENG, MKT, SAL, etc.) |
 
 #### Comment Metadata
@@ -449,8 +449,8 @@ GET /api/engagers/signal/{signal_id}/contacts
       "company_industry": "TECH_INFO_MEDIA",
       "company_hq_loc_country": "United States",
       "company_hq_loc_code": "US",
-      "role_level": "VP",
-      "employment_context": "IN_HOUSE",
+      "role_level": "vp",
+      "employment_context": "in_house",
       "function": "ENG",
       "stats": {
         "comments": 3,
@@ -674,8 +674,8 @@ GET /api/engagers/workbook/{workbook_id}/contacts
       "company_industry": "TECH_INFO_MEDIA",
       "company_hq_loc_country": "United States",
       "company_hq_loc_code": "US",
-      "role_level": "VP",
-      "employment_context": "IN_HOUSE",
+      "role_level": "vp",
+      "employment_context": "in_house",
       "function": "ENG",
       "stats": {
         "comments": 3,
