@@ -127,9 +127,9 @@ import TabItem from '@theme/TabItem';
 :::
 
 :::note Authority and Employment context
-`role_level` (engagements) and `author_role_level` (posts) are shown as **Authority** in the app, in exports and as the column header in Google Sheets and Clay. It is one of `C-level`, `vp`, `Director`, `Manager`, `Senior IC`, `Individual contributor`, `Junior`, or `Unspecified`.
+`role_level` (engagements) and `author_role_level` (posts) are shown as **Authority** in the app, in exports and as the column header in Google Sheets and Clay. It is one of `Executive`, `VP`, `Director`, `Manager`, `Principal`, `Senior IC`, `Individual contributor (IC)`, `Junior`, or `Unranked`.
 
-`employment_context` / `author_employment_context` describes how the person holds the role: `In-house`, `Founder`, `Independent`, `Advisory`, `Fractional`, or `Interim`.
+`employment_context` / `author_employment_context` describes how the person holds the role: `In-house`, `Founder-owner`, `Fractional`, `Interim`, `Advisory`, or `Freelance`.
 
 Either field is empty when it could not be determined from the person's job title.
 :::
@@ -165,7 +165,7 @@ Either field is empty when it could not be determined from the person's job titl
         "author_company_staff_registered": "45",
         "author_company_industry": "TECH_INFO_MEDIA",
         "author_function": "GEN",
-        "author_role_level": "C-level",
+        "author_role_level": "Executive",
         "author_employment_context": "In-house",
         "post_url": "https://example.com/posts/...",
         "post_content": "Just shipped our new feature...",

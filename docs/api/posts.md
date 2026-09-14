@@ -71,7 +71,7 @@ Use one date family per request. The API rejects requests that combine `created_
 | `country_exclude` | string | Comma-separated ISO country codes to exclude |
 | `function` | string | Functions: `ENG` (Engineering/IT), `PRD` (Product), `MKT` (Marketing), `SAL` (Sales), `FIN` (Finance), `OPS` (Operations), `HR` (Human Resources), `CS` (Customer Success), `LEG` (Legal), `DA` (Data/Analytics), `DSN` (Design/UX), `EDU` (Education/Academia), `AMB` (Ambiguous/Consultant), `GEN` (General Management), `UNMAPPED` |
 | `function_exclude` | string | Functions to exclude (same values as above) |
-| `role_level` | string | Authority — the rank the author's job title claims: `executive` (Executive / Founder), `vp`, `director` (Director / Head of), `manager` (Manager), `principal` (Principal — leadership without a team: principal, staff, lead, founding <role>), `senior_ic` (Senior IC), `ic` (Individual Contributor), `junior` (Junior / Intern), `unranked` (no rank stated), `UNMAPPED`. See [Authority](#authority) |
+| `role_level` | string | Authority — the rank the author's job title claims: `executive` (Executive), `vp`, `director` (Director), `manager` (Manager), `principal` (Principal), `senior_ic` (Senior IC), `ic` (Individual contributor (IC)), `junior` (Junior), `unranked` (Unranked), `UNMAPPED`. See [Authority](#authority) |
 | `role_level_exclude` | string | Authority levels to exclude (same values as above) |
 | `employment_context` | string | How the author holds the role: `in_house`, `founder_owner`, `fractional`, `interim`, `advisory`, `freelance`, `UNMAPPED`. See [Employment context](#employment-context) |
 | `employment_context_exclude` | string | Employment contexts to exclude (same values as above) |
@@ -547,32 +547,32 @@ Use the same `snapshot_time` across all pages of a single sync run for consisten
 
 `role_level` — the rank the author's job title claims. Shown as **Authority** in the app and in exports.
 
-| Code | Level | Example titles |
-|------|-------|----------------|
-| `executive` | Executive / Founder | CEO, Founder, Owner, President, Managing Director |
-| `vp` | VP | VP of Sales, SVP, Vice President |
-| `director` | Director / Head of | Sales Director, Head of Sales |
-| `manager` | Manager | Sales Manager, Account Manager, Team Lead |
-| `principal` | Principal | Principal Engineer, Staff Engineer, Tech Lead, Founding Engineer |
-| `senior_ic` | Senior IC | Senior SWE, Senior Account Executive |
-| `ic` | Individual Contributor | Account Executive, Software Engineer |
-| `junior` | Junior / Intern | HR Intern, Junior SWE |
-| `unranked` | No rank stated | Sales, Business Development, GTM — the title names the work, not a rank |
-| `UNMAPPED` | Not analysed | No job title, or not yet analysed |
+| Key | Label | Example titles | What it means |
+|-----|-------|----------------|---------------|
+| `executive` | Executive | c-level, founder, owner, president, managing director | Sets budget |
+| `vp` | VP | vice president, senior vice president | Owns budget |
+| `director` | Director | director, head of... | Owns a function |
+| `manager` | Manager | manager, account manager, team lead | Manages a team |
+| `principal` | Principal | principal, founding engineer, sales lead | Shapes decisions without a team |
+| `senior_ic` | Senior IC | senior software engineer | Trusted with the work |
+| `ic` | Individual contributor (IC) | account executive, software engineer | Does the work |
+| `junior` | Junior | intern, junior | Learning the work |
+| `unranked` | Unranked | sales, business development, GTM | Can't deduce based on title |
+| `null` | — | — | No job title, or a real job outside the business org chart (nurse, chef, actor…); filter with `UNMAPPED` |
 
 ### Employment context
 
 `employment_context` — how the author holds the role, independent of its rank.
 
-| Code | Context | Example titles |
-|------|---------|----------------|
-| `in_house` | In-House | Default, any plain title |
-| `founder_owner` | Founder / Owner | Founder and CEO, Entrepreneur, Owner |
-| `fractional` | Fractional | Fractional CTO, Founder & Fractional CMO |
-| `interim` | Interim / Acting | Acting CEO, Interim CTO |
-| `advisory` | Advisor / Consultant | Consultant, Board Member, Strategic Advisor |
-| `freelance` | Freelance / Self-employed | Freelance Graphic Designer, Self Employed, Independent Consultant |
-| `UNMAPPED` | Not analysed | No job title, or not yet analysed |
+| Key | Label | Example titles | What it means | Group |
+|-----|-------|----------------|---------------|-------|
+| `in_house` | In-house | engineer, specialist | On the payroll | Internal |
+| `founder_owner` | Founder-owner | founder, co-founder, owner, entrepreneur | Started or owns it | Internal |
+| `fractional` | Fractional | fractional CTO, fractional CMO | Holds a seat part-time | External |
+| `interim` | Interim | interim CTO, acting CEO | Holds a seat temporarily | External |
+| `advisory` | Advisory | consultant, board member, strategic advisor | Advises, holds no seat | External |
+| `freelance` | Freelance | freelancer, self-employed, independent contractor | Does the work, no seat | External |
+| `null` | — | — | No job title, or a real job outside the business org chart; filter with `UNMAPPED` | — |
 
 ### Company Sizes
 

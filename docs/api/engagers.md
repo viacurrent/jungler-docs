@@ -197,7 +197,7 @@ GET /api/engagers/signal/{signal_id}
 | `company_industry` | string \| null | Company industry |
 | `company_hq_loc_country` | string \| null | Company HQ country |
 | `company_hq_loc_code` | string \| null | Company HQ ISO country code |
-| `role_level` | string \| null | Authority — the rank the title claims: `executive` (Executive / Founder), `vp`, `director` (Director / Head of), `manager`, `principal` (Principal), `senior_ic` (Senior IC), `ic`, `junior`, `unranked`. See [Authority](./posts#authority) |
+| `role_level` | string \| null | Authority — the rank the title claims: `executive` (Executive), `vp`, `director` (Director), `manager`, `principal` (Principal), `senior_ic` (Senior IC), `ic`, `junior`, `unranked`. See [Authority](./posts#authority) |
 | `employment_context` | string \| null | How the person holds the role: `in_house`, `founder_owner`, `fractional`, `interim`, `advisory`, `freelance`. See [Employment context](./posts#employment-context) |
 | `function` | string \| null | Job function (ENG, MKT, SAL, etc.) |
 
