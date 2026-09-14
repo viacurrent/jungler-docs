@@ -89,7 +89,8 @@ GET /api/engagers/signal/{signal_id}
         "company_industry": "TECH_INFO_MEDIA",
         "company_hq_loc_country": "United States",
         "company_hq_loc_code": "US",
-        "authority": "L",
+        "role_level": "vp",
+        "employment_context": "in_house",
         "function": "ENG"
       },
       "content": "Great insight! Thanks for sharing.",
@@ -133,7 +134,8 @@ GET /api/engagers/signal/{signal_id}
         "company_industry": "PROFESSIONAL_SERVICES",
         "company_hq_loc_country": null,
         "company_hq_loc_code": null,
-        "authority": "M",
+        "role_level": "manager",
+        "employment_context": "in_house",
         "function": "SAL"
       },
       "content": null,
@@ -195,7 +197,8 @@ GET /api/engagers/signal/{signal_id}
 | `company_industry` | string \| null | Company industry |
 | `company_hq_loc_country` | string \| null | Company HQ country |
 | `company_hq_loc_code` | string \| null | Company HQ ISO country code |
-| `authority` | string \| null | Authority level (L, M, S, XS, NA) |
+| `role_level` | string \| null | Authority — the rank the title claims: `executive` (Executive), `vp`, `director` (Director), `manager`, `principal` (Principal), `senior_ic` (Senior IC), `ic`, `junior`, `unranked`. See [Authority](./posts#authority) |
+| `employment_context` | string \| null | How the person holds the role: `in_house`, `founder_owner`, `fractional`, `interim`, `advisory`, `freelance`. See [Employment context](./posts#employment-context) |
 | `function` | string \| null | Job function (ENG, MKT, SAL, etc.) |
 
 #### Comment Metadata
@@ -446,7 +449,8 @@ GET /api/engagers/signal/{signal_id}/contacts
       "company_industry": "TECH_INFO_MEDIA",
       "company_hq_loc_country": "United States",
       "company_hq_loc_code": "US",
-      "authority": "L",
+      "role_level": "vp",
+      "employment_context": "in_house",
       "function": "ENG",
       "stats": {
         "comments": 3,
@@ -670,7 +674,8 @@ GET /api/engagers/workbook/{workbook_id}/contacts
       "company_industry": "TECH_INFO_MEDIA",
       "company_hq_loc_country": "United States",
       "company_hq_loc_code": "US",
-      "authority": "L",
+      "role_level": "vp",
+      "employment_context": "in_house",
       "function": "ENG",
       "stats": {
         "comments": 3,

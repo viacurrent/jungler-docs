@@ -126,6 +126,14 @@ import TabItem from '@theme/TabItem';
 `author_email` / `author_email_status` (posts) and `email` / `email_status` (engagements) are included only when the **Email** column is selected in the webhook configuration. `email_status` is one of `found`, `not_found`, or `pending` — an empty email with `pending` is still resolving, while `not_found` means none could be found.
 :::
 
+:::note Authority and Employment context
+`role_level` (engagements) and `author_role_level` (posts) are shown as **Authority** in the app, in exports and as the column header in Google Sheets and Clay. It is one of `Executive`, `VP`, `Director`, `Manager`, `Principal`, `Senior IC`, `Individual contributor (IC)`, `Junior`, `Unranked`, or `Out of scope` (a real job outside the business org chart).
+
+`employment_context` / `author_employment_context` describes how the person holds the role: `In-house`, `Founder-owner`, `Fractional`, `Interim`, `Advisory`, or `Freelance`.
+
+Either field is empty when it could not be determined from the person's job title.
+:::
+
 <Tabs>
 <TabItem value="posts" label="Posts Payload" default>
 
@@ -157,7 +165,8 @@ import TabItem from '@theme/TabItem';
         "author_company_staff_registered": "45",
         "author_company_industry": "TECH_INFO_MEDIA",
         "author_function": "GEN",
-        "author_seniority": "L",
+        "author_role_level": "Executive",
+        "author_employment_context": "In-house",
         "post_url": "https://example.com/posts/...",
         "post_content": "Just shipped our new feature...",
         "post_language": "en",
@@ -202,7 +211,8 @@ import TabItem from '@theme/TabItem';
         "country_code": "GB",
         "region": "EU",
         "function": "Engineering",
-        "seniority": "Executive",
+        "role_level": "vp",
+        "employment_context": "In-house",
         "company_staff_range": "51-200",
         "company_staff_registered": "156",
         "company_website": "https://startupco.com",
