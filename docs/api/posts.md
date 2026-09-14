@@ -71,7 +71,7 @@ Use one date family per request. The API rejects requests that combine `created_
 | `country_exclude` | string | Comma-separated ISO country codes to exclude |
 | `function` | string | Functions: `ENG` (Engineering/IT), `PRD` (Product), `MKT` (Marketing), `SAL` (Sales), `FIN` (Finance), `OPS` (Operations), `HR` (Human Resources), `CS` (Customer Success), `LEG` (Legal), `DA` (Data/Analytics), `DSN` (Design/UX), `EDU` (Education/Academia), `AMB` (Ambiguous/Consultant), `GEN` (General Management), `UNMAPPED` |
 | `function_exclude` | string | Functions to exclude (same values as above) |
-| `role_level` | string | Authority — the rank the author's job title claims: `executive` (Executive), `vp`, `director` (Director), `manager` (Manager), `principal` (Principal), `senior_ic` (Senior IC), `ic` (Individual contributor (IC)), `junior` (Junior), `unranked` (Unranked), `UNMAPPED`. See [Authority](#authority) |
+| `role_level` | string | Authority — the rank the author's job title claims: `executive` (Executive), `vp`, `director` (Director), `manager` (Manager), `principal` (Principal), `senior_ic` (Senior IC), `ic` (Individual contributor (IC)), `junior` (Junior), `unranked` (Unranked), `UNMAPPED`; responses may also carry `out_of_scope` (Out of scope), which is not a filter value. See [Authority](#authority) |
 | `role_level_exclude` | string | Authority levels to exclude (same values as above) |
 | `employment_context` | string | How the author holds the role: `in_house`, `founder_owner`, `fractional`, `interim`, `advisory`, `freelance`, `UNMAPPED`. See [Employment context](#employment-context) |
 | `employment_context_exclude` | string | Employment contexts to exclude (same values as above) |
@@ -558,7 +558,8 @@ Use the same `snapshot_time` across all pages of a single sync run for consisten
 | `ic` | Individual contributor (IC) | account executive, software engineer | Does the work |
 | `junior` | Junior | intern, junior | Learning the work |
 | `unranked` | Unranked | sales, business development, GTM | Can't deduce based on title |
-| `null` | — | — | No job title, or a real job outside the business org chart (nurse, chef, actor…); filter with `UNMAPPED` |
+| `out_of_scope` | Out of scope | nurse, chef, actor, athlete | A real job, just not a business one — returned, not filterable |
+| `null` | — | — | No job title; filter with `UNMAPPED` |
 
 ### Employment context
 
@@ -572,7 +573,7 @@ Use the same `snapshot_time` across all pages of a single sync run for consisten
 | `interim` | Interim | interim CTO, acting CEO | Holds a seat temporarily | External |
 | `advisory` | Advisory | consultant, board member, strategic advisor | Advises, holds no seat | External |
 | `freelance` | Freelance | freelancer, self-employed, independent contractor | Does the work, no seat | External |
-| `null` | — | — | No job title, or a real job outside the business org chart; filter with `UNMAPPED` | — |
+| `null` | — | — | No job title, or an out-of-scope title (the level says `out_of_scope`); filter with `UNMAPPED` | — |
 
 ### Company Sizes
 

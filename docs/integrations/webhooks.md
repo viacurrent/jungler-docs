@@ -127,7 +127,7 @@ import TabItem from '@theme/TabItem';
 :::
 
 :::note Authority and Employment context
-`role_level` (engagements) and `author_role_level` (posts) are shown as **Authority** in the app, in exports and as the column header in Google Sheets and Clay. It is one of `Executive`, `VP`, `Director`, `Manager`, `Principal`, `Senior IC`, `Individual contributor (IC)`, `Junior`, or `Unranked`.
+`role_level` (engagements) and `author_role_level` (posts) are shown as **Authority** in the app, in exports and as the column header in Google Sheets and Clay. It is one of `Executive`, `VP`, `Director`, `Manager`, `Principal`, `Senior IC`, `Individual contributor (IC)`, `Junior`, `Unranked`, or `Out of scope` (a real job outside the business org chart).
 
 `employment_context` / `author_employment_context` describes how the person holds the role: `In-house`, `Founder-owner`, `Fractional`, `Interim`, `Advisory`, or `Freelance`.
 
