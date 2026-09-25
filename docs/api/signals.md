@@ -57,6 +57,7 @@ Returns an array of signal objects. Fields that are `null` are omitted.
     "query_type": "user_profile",
     "query_identifier": "vearnold",
     "track_engagement": true,
+    "engagement_type": "COMMENT",
     "created_at": "2024-01-12T09:00:00Z",
     "updated_at": "2024-01-12T09:00:00Z"
   },
@@ -88,6 +89,7 @@ Returns an array of signal objects. Fields that are `null` are omitted.
 | `query_type` | string | Always | Type of query: `search_keyword`, `user_profile`, `company_profile` |
 | `query_identifier` | string | Profile/company only | Username or company ID extracted from the URL |
 | `track_engagement` | boolean | Always | Whether engagers are captured for this signal (`false` means posts only) |
+| `engagement_type` | string | Profile/company only, when one type is selected | Captured engagement type: `COMMENT` or `REACTION`. Omitted when both are selected |
 | `webhook_url` | string | When configured | HTTPS URL for run completion callbacks |
 | `created_at` | string | Always | ISO 8601 timestamp |
 | `updated_at` | string | Always | ISO 8601 timestamp |
@@ -279,6 +281,7 @@ POST /api/signals
 | `webhook_url` | string | No | HTTPS URL to receive run completion callbacks (max 1000 characters) |
 | `initial_window` | string | No | First-run history window for profile/company signals: `past_month` (default), `past_week`, or `none`. Write-only — not returned in responses. Non-default values are rejected for keyword signals |
 | `track_engagement` | boolean | No | Whether to capture engagers for a profile/company signal. Defaults to `true`; pass `false` to monitor posts only (no engagement). Rejected for keyword signals |
+| `engagement_type` | string | No | Capture only `COMMENT` or `REACTION` engagement for a profile/company signal. Omit to capture both. Rejected for keyword signals |
 
 The signal type (`query_type`) is automatically detected from the `query` string:
 - **Keywords** → `search_keyword` — e.g. `"lemlist OR \"heyreach\""`
@@ -421,7 +424,8 @@ curl -X POST https://production.viacurrent.com/api/signals \
        "name": "Follow Arnold",
        "query": "https://linkedin.com/in/vearnold",
        "webhook_url": "https://customer.com/callback",
-       "initial_window": "past_week"
+       "initial_window": "past_week",
+       "engagement_type": "COMMENT"
      }'
 ```
 
@@ -439,7 +443,8 @@ response = httpx.post(
         "name": "Follow Arnold",
         "query": "https://linkedin.com/in/vearnold",
         "webhook_url": "https://customer.com/callback",
-        "initial_window": "past_week"
+        "initial_window": "past_week",
+        "engagement_type": "COMMENT"
     },
 )
 ```
