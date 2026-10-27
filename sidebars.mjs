@@ -36,6 +36,7 @@ const sidebars = {
                 { type: 'doc', id: 'integrations/webhooks', className: 'sidebar-icon sidebar-icon-webhook' },
             ],
         },
+        'mcp',
         {
             type: 'category',
             label: 'API',
