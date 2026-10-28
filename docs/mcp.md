@@ -1,6 +1,6 @@
 ---
 title: Jungler in Claude, ChatGPT and other AI assistants (MCP)
-sidebar_label: AI assistants (MCP)
+sidebar_label: AI Agents (MCP)
 description: Connect Jungler to Claude, ChatGPT, Claude Code, Cursor and any MCP client. Search B2B creators, see who engages with LinkedIn posts, and collect engagers from the chat.
 ---
 

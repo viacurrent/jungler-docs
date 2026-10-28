@@ -28,6 +28,7 @@ const sidebars = {
             label: 'Integrations',
             collapsed: false,
             items: [
+                { type: 'doc', id: 'mcp', label: 'AI Agents (MCP)', className: 'sidebar-icon sidebar-icon-mcp' },
                 { type: 'doc', id: 'integrations/clay', className: 'sidebar-icon sidebar-icon-clay' },
                 { type: 'doc', id: 'integrations/slack', className: 'sidebar-icon sidebar-icon-slack' },
                 { type: 'doc', id: 'integrations/google-sheets', className: 'sidebar-icon sidebar-icon-sheets' },
@@ -36,7 +37,6 @@ const sidebars = {
                 { type: 'doc', id: 'integrations/webhooks', className: 'sidebar-icon sidebar-icon-webhook' },
             ],
         },
-        'mcp',
         {
             type: 'category',
             label: 'API',

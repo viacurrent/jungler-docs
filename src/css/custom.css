@@ -350,7 +350,8 @@ aside[class*='docSidebarContainer'] {
 /* Lucide sidebar icons — inherit text color via mask-image */
 .sidebar-icon-profile > .menu__link::before,
 .sidebar-icon-post > .menu__link::before,
-.sidebar-icon-keyword > .menu__link::before {
+.sidebar-icon-keyword > .menu__link::before,
+.sidebar-icon-mcp > .menu__link::before {
     background-color: currentColor;
     background-image: none;
     mask-size: contain;
@@ -372,6 +373,10 @@ aside[class*='docSidebarContainer'] {
 .sidebar-icon-keyword > .menu__link::before {
     mask-image: url('/img/icons/text-search.svg');
     -webkit-mask-image: url('/img/icons/text-search.svg');
+}
+.sidebar-icon-mcp > .menu__link::before {
+    mask-image: url('/img/icons/bot.svg');
+    -webkit-mask-image: url('/img/icons/bot.svg');
 }
 
 /* Single-line truncation for sidebar labels */
