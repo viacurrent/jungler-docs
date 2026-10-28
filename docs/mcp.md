@@ -38,7 +38,7 @@ https://mcp.jungler.ai/
   </TabItem>
 </Tabs>
 
-Signals tools work on any paid plan. Creator search needs Explorer or higher.
+Signals tools work on any paid plan. Creator search needs the Discovery plan or higher.
 
 ## Playbooks
 
