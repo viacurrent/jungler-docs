@@ -8,35 +8,13 @@ keywords:
     - ai agents
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 # MCP
 
 Use Jungler from your AI assistant: Claude, ChatGPT, Claude Code, Codex, Cursor or any MCP client.
 
 ## Setup
 
-Add Jungler as a connector with this URL, then sign in and pick your workspace:
-
-```
-https://mcp.jungler.ai/
-```
-
-<Tabs>
-  <TabItem value="claude" label="Claude" default>
-    In Claude, open [**Customize > Connectors**](https://claude.ai/customize/connectors), click **Add custom connector**, paste the URL and click **Connect**.
-  </TabItem>
-  <TabItem value="chatgpt" label="ChatGPT">
-    In ChatGPT, open **Plugins > Add custom MCP server**, set authentication to **OAuth**, paste the URL and click **Create**.
-  </TabItem>
-  <TabItem value="claude-code" label="Claude Code">
-    Run `claude mcp add --transport http jungler https://mcp.jungler.ai/`, then `/mcp` and choose **Authenticate**.
-  </TabItem>
-  <TabItem value="other" label="Other">
-    Go to [**Settings > MCP & API**](https://app.jungler.ai/settings/mcp-api) for Codex, Cursor, VS Code and one-click installs.
-  </TabItem>
-</Tabs>
+Go to [**Settings > MCP & API**](https://app.jungler.ai/settings/mcp-api), pick your AI assistant and follow the steps.
 
 Signals tools work on any paid plan. Creator search needs the Discovery plan or higher.
 
