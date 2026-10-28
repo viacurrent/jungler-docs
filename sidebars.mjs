@@ -28,6 +28,7 @@ const sidebars = {
             label: 'Integrations',
             collapsed: false,
             items: [
+                { type: 'doc', id: 'mcp', label: 'MCP', className: 'sidebar-icon sidebar-icon-mcp' },
                 { type: 'doc', id: 'integrations/clay', className: 'sidebar-icon sidebar-icon-clay' },
                 { type: 'doc', id: 'integrations/slack', className: 'sidebar-icon sidebar-icon-slack' },
                 { type: 'doc', id: 'integrations/google-sheets', className: 'sidebar-icon sidebar-icon-sheets' },
