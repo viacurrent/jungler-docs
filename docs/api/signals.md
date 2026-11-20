@@ -85,6 +85,7 @@ Returns an array of signal objects. Fields that are `null` are omitted.
 | `query` | string | Always | Search query (keywords, profile URL, or company URL) |
 | `frequency` | integer | Always | Run frequency in hours (default: `24`) |
 | `is_activated` | boolean | Always | Whether the signal is active |
+| `monitor` | boolean | Always | Whether the signal keeps collecting on its schedule. `false` for a paused signal, and for a [one-shot signal](#one-shot-signals) still running its first collection |
 | `prompt` | string | Keyword only, when configured | Custom AI filtering prompt |
 | `query_type` | string | Always | Type of query: `search_keyword`, `user_profile`, `company_profile` |
 | `query_identifier` | string | Profile/company only | Username or company ID extracted from the URL |
@@ -282,6 +283,7 @@ POST /api/signals
 | `initial_window` | string | No | First-run history window for profile/company signals: `past_month` (default), `past_week`, or `none`. Write-only — not returned in responses. Non-default values are rejected for keyword signals |
 | `track_engagement` | boolean | No | Whether to capture engagers for a profile/company signal. Defaults to `true`; pass `false` to monitor posts only (no engagement). Rejected for keyword signals |
 | `engagement_type` | string | No | Capture only `COMMENT` or `REACTION` engagement for a profile/company signal. Omit to capture both. Rejected for keyword signals |
+| `monitor` | boolean | No | Keep collecting on the signal's schedule. Defaults to `true`. Pass `false` for a [one-shot signal](#one-shot-signals): the first collection only, then the signal pauses itself. Rejected with `initial_window: none` |
 
 The signal type (`query_type`) is automatically detected from the `query` string:
 - **Keywords** → `search_keyword` — e.g. `"lemlist OR \"heyreach\""`
@@ -303,6 +305,14 @@ When creating `user_profile` or `company_profile` signals, the API validates and
 
 This setting only changes the initial backfill window. Subsequent scheduled runs continue from the signal checkpoint. Keyword signals do not use this setting; sending `past_week` or `none` with a keyword query returns a validation error.
 :::
+
+### One-shot Signals
+
+To get a profile's or company's recent posts once, without monitoring it afterwards, create the signal with `"monitor": false`. The signal runs its first collection as any signal does: the posts in `initial_window`, their engagers when `track_engagement` is on, and the AI filter for keyword signals. Once that collection is complete, the signal pauses itself (`is_activated: false`), so it costs nothing afterwards. While the first collection runs, the signal shows `is_activated: true` and `monitor: false`.
+
+Use [Run Status](#run-status) or a `webhook_url` to know when the first run completes, then read the posts and engagers as usual. Normally nothing runs after the first collection; if that collection is still finishing when the signal's next daily read comes (for example during a data provider outage), that read runs too. A one-shot signal pauses itself at the latest 7 days after creation.
+
+To start monitoring later, [activate](#activate-signal) the signal. A one-shot signal holds a signal slot like any other signal until you [delete](#delete-signal) it.
 
 ### Run Lifecycle
 
@@ -692,7 +702,7 @@ print(f"Deactivated: {signal['is_activated']}")  # False
 
 ## Activate Signal
 
-Reactivate a paused signal. It will resume running on its schedule.
+Reactivate a paused signal. It will resume running on its schedule. Activating a [one-shot signal](#one-shot-signals) whose first collection is still running turns it into a monitored signal: it no longer pauses itself afterwards. Returns `409 Conflict` (`collection_busy`) if the signal is pausing itself at that very moment; retry.
 
 ```http
 PUT /api/signals/{signal_id}/activate

@@ -183,7 +183,8 @@ POST /api/workbooks
   "workspace_id": "507f1f77bcf86cd799439013",
   "post_url": "https://www.linkedin.com/feed/update/urn:li:activity:...",
   "data_types": ["comment", "reaction"],
-  "webhook_url": "https://customer.com/callback"
+  "webhook_url": "https://customer.com/callback",
+  "max_credits": 200
 }
 ```
 
@@ -193,6 +194,13 @@ POST /api/workbooks
 | `post_url`     | string | Yes      | Post URL                                                                             |
 | `data_types`   | array  | Yes      | Types of data to extract: `comment`, `reaction` (case-insensitive; post data is always included) |
 | `webhook_url`  | string | No       | HTTPS URL called when this run completes, may be retried on failure (max 1000 chars) |
+| `max_credits`  | integer | No      | Hard cap on the credits this run may spend (at least 1). Omit for no cap. See [Credit cap](#credit-cap) |
+
+### Credit cap
+
+A popular post can have thousands of engagers. Set `max_credits` to limit what one run can spend: the post costs 1 credit, each engager 1 credit, and a re-fetch fee (1 credit per engager the workbook already held) counts too. Collection stops before the next item would go over the cap; the run then completes as `success_limit_reached` (`limit_reached: true`) and everything collected so far stays available through the [Engagers API](./engagers.md) until the workbook expires. A run stopped by its cap never resumes, even after a credit top-up.
+
+The cap applies on top of your workspace's credit balance: if the workspace runs out first, the run completes as `success_credits_exhausted` as before. A run that collects everything without reaching the cap completes as `success`, even when it spends exactly `max_credits`.
 
 ### Response
 
@@ -218,6 +226,7 @@ Returns a run ID for tracking the extraction progress, and a workbook ID for ret
 - `running` - Run is currently executing
 - `success` - Extraction complete
 - `success_credits_exhausted` - Extraction completed, but the workspace ran out of credits
+- `success_limit_reached` - Extraction stopped at the run's `max_credits`; what was collected so far is available
 - `failed` - Extraction failed
 
 ### Webhook Callbacks
@@ -254,6 +263,8 @@ This callback is the per-run completion notification for Workbooks API requests.
   "items_available": 60,
   "credits_consumed": 43.0,
   "credits_exhausted": false,
+  "max_credits": null,
+  "limit_reached": false,
   "counts": {
     "posts": 1,
     "comments": 12,
@@ -266,7 +277,7 @@ This callback is the per-run completion notification for Workbooks API requests.
 }
 ```
 
-Webhook payloads and run status responses share the same core run fields. The example above shows a completed immediate-run webhook payload: `schedule_id` is `null` for immediate workbook webhooks and set to the originating schedule ID for scheduled workbook runs. Polling responses may omit fields whose value is `null`. Counts, `post_url`, and `results_expire_at` are populated after the run reaches a terminal status, so in-progress polling responses may omit them. Use `credits_exhausted: true` or `status: "success_credits_exhausted"` to detect partial results caused by credit limits.
+Webhook payloads and run status responses share the same core run fields. The example above shows a completed immediate-run webhook payload: `schedule_id` is `null` for immediate workbook webhooks and set to the originating schedule ID for scheduled workbook runs. Polling responses may omit fields whose value is `null`. Counts, `post_url`, and `results_expire_at` are populated after the run reaches a terminal status, so in-progress polling responses may omit them. Use `credits_exhausted: true` or `status: "success_credits_exhausted"` to detect partial results caused by the workspace's credit balance, and `limit_reached: true` or `status: "success_limit_reached"` to detect results stopped by the run's own `max_credits` (echoed in `max_credits`, `null` when the run has no cap).
 
 ### Rate Limiting
 
@@ -295,7 +306,8 @@ Scheduled workbook runs require `webhook_url`. The dispatched workbook is tempor
   "data_types": ["comment", "reaction"],
   "scheduled_at": "2026-05-13T10:00:00Z",
   "webhook_url": "https://customer.com/callback",
-  "idempotency_key": "optional-customer-key"
+  "idempotency_key": "optional-customer-key",
+  "max_credits": 200
 }
 ```
 
@@ -307,6 +319,7 @@ Scheduled workbook runs require `webhook_url`. The dispatched workbook is tempor
 | `scheduled_at` | string | Yes | UTC ISO 8601 timestamp. Must be at least 60 seconds in the future and no more than 30 days ahead |
 | `webhook_url` | string | Yes | HTTPS URL called when the dispatched run completes; delivery may be retried, so handlers should be idempotent (max 1000 chars) |
 | `idempotency_key` | string | No | Customer-supplied key scoped to the workspace. Replays return the original schedule instead of creating a duplicate |
+| `max_credits` | integer | No | Hard cap on the credits the dispatched run may spend, as for [immediate runs](#credit-cap). Omit for no cap |
 
 ### Response
 
@@ -364,6 +377,7 @@ If the timestamp includes a timezone offset such as `+00:00`, URL-encode the `+`
       "completed_at": null,
       "error_message": null,
       "idempotency_key": "optional-customer-key",
+      "max_credits": 200,
       "created_at": "2026-05-08T12:00:00Z",
       "updated_at": "2026-05-08T12:00:00Z"
     }
@@ -460,6 +474,8 @@ Polling responses may omit fields whose value is `null`. The in-progress example
   "items_available": 0,
   "credits_consumed": 0.0,
   "credits_exhausted": false,
+  "max_credits": null,
+  "limit_reached": false,
   "completed_at": null,
   "duration_ms": null,
   "error": null
@@ -484,6 +500,8 @@ Polling responses may omit fields whose value is `null`. The in-progress example
   "items_available": 60,
   "credits_consumed": 43.0,
   "credits_exhausted": false,
+  "max_credits": null,
+  "limit_reached": false,
   "counts": {
     "posts": 1,
     "comments": 12,
@@ -540,7 +558,7 @@ while (true) {
   );
   const data = await response.json();
 
-  if (data.status === "success" || data.status === "success_credits_exhausted") {
+  if (["success", "success_credits_exhausted", "success_limit_reached"].includes(data.status)) {
     workbookId = data.workbook_id;
     break;
   }
@@ -572,7 +590,7 @@ while True:
     )
     data = response.json()
 
-    if data["status"] in {"success", "success_credits_exhausted"}:
+    if data["status"] in {"success", "success_credits_exhausted", "success_limit_reached"}:
         workbook_id = data["workbook_id"]
         break
     if data["status"] == "failed":
