@@ -198,7 +198,7 @@ POST /api/workbooks
 
 ### Credit cap
 
-A popular post can have thousands of engagers. Set `max_credits` to limit what one run can spend: the post costs 1 credit, each engager 1 credit, and a re-fetch fee (1 credit per engager the workbook already held) counts too. Collection stops before the next item would go over the cap; the run then completes as `success_limit_reached` (`limit_reached: true`) and everything collected so far stays available through the [Engagers API](./engagers.md) until the workbook expires. A run stopped by its cap never resumes, even after a credit top-up.
+A popular post can have thousands of engagements. Set `max_credits` to limit what one run can spend: the post costs 1 credit and each engagement (a comment or a reaction) 1 credit. Collection stops before the next item would go over the cap; the run then completes as `success_limit_reached` (`limit_reached: true`) and everything collected so far stays available through the [Engagers API](./engagers.md) until the workbook expires. A run stopped by its cap never resumes, even after a credit top-up.
 
 The cap applies on top of your workspace's credit balance: if the workspace runs out first, the run completes as `success_credits_exhausted` as before. A run that collects everything without reaching the cap completes as `success`, even when it spends exactly `max_credits`.
 
