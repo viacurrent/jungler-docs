@@ -319,7 +319,7 @@ To start monitoring later, [activate](#activate-signal) the signal. A one-shot s
 
 #### Credit cap for one-shot keyword signals
 
-Set `max_credits` on a one-shot keyword signal to limit what its collection may spend. Each post costs 1 credit, the AI filter included; posts the filter rejects are counted too, since they are charged when collected. When more posts match than the cap allows, the newest `max_credits` posts from the past month are kept, the rest are not collected, and the run completes as `success_limit_reached` (`limit_reached: true` in [Run Status](#run-status)). A search collects at most 2,000 posts either way.
+Set `max_credits` on a one-shot keyword signal to limit what its collection may spend. Each post costs 1 credit, the AI filter included; posts the filter rejects are counted too, since they are charged when collected. When more posts match than the cap allows, the newest `max_credits` posts from the past month are kept, the rest are not collected, and the run completes as `success_limit_reached` (`limit_reached: true` in [Run Status](#run-status)).
 
 The cap applies on top of your workspace's credit balance: if the workspace runs out first, the run completes as `success_credits_exhausted`, and the rest (still within the cap) is collected after a top-up. Activating the signal later starts normal, uncapped monitoring.
 
