@@ -229,9 +229,13 @@ Returns a run ID for tracking the extraction progress, and a workbook ID for ret
 - `success_limit_reached` - Extraction stopped at the run's `max_credits`; what was collected so far is available
 - `failed` - Extraction failed
 
+:::info When results are ready
+A run shows a success status (`success`, `success_credits_exhausted` or `success_limit_reached`) only once its results can be read. Until then it shows `running`. From that moment, a fresh request to the Engagers API (without an older `snapshot_time`) returns everything the run collected, so there is no need to retry an empty result. A request that reuses a `snapshot_time` taken before the run finished still sees the data as of that time. `failed` is shown right away.
+:::
+
 ### Webhook Callbacks
 
-If you provide a `webhook_url` when creating a workbook run, we'll send a completion callback to that URL when the extraction finishes, whether it succeeds or fails.
+If you provide a `webhook_url` when creating a workbook run, we'll send a completion callback to that URL when the extraction finishes, whether it succeeds or fails. A success callback is sent once the run's results can be read, usually 2 to 3 minutes after collection ends; a failure callback is sent right away.
 
 :::note Not the same as Webhooks
 This callback is the per-run completion notification for Workbooks API requests. It is separate from the platform's broader [Webhooks integration](./../integrations/webhooks.md).
