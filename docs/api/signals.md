@@ -283,7 +283,8 @@ POST /api/signals
 | `initial_window` | string | No | First-run history window for profile/company signals: `past_month` (default), `past_week`, or `none`. Write-only — not returned in responses. Non-default values are rejected for keyword signals |
 | `track_engagement` | boolean | No | Whether to capture engagers for a profile/company signal. Defaults to `true`; pass `false` to monitor posts only (no engagement). Rejected for keyword signals |
 | `engagement_type` | string | No | Capture only `COMMENT` or `REACTION` engagement for a profile/company signal. Omit to capture both. Rejected for keyword signals |
-| `monitor` | boolean | No | Keep collecting on the signal's schedule. Defaults to `true`. Pass `false` for a [one-shot signal](#one-shot-signals): the first collection only, then the signal pauses itself. Rejected with `initial_window: none` |
+| `monitor` | boolean | No | Keep collecting on the signal's schedule. Defaults to `true`. Pass `false` for a [one-shot signal](#one-shot-signals): the first collection only, then the signal pauses itself. A one-shot signal costs at least 1 credit. Rejected with `initial_window: none` |
+| `max_credits` | integer | No | Keyword signals with `monitor: false` only: the most credits the one-shot collection may spend (1 or more; 1 credit per post, the AI filter included). See [Credit cap](#credit-cap-for-one-shot-keyword-signals). Rejected for profile/company signals and with `monitor: true` |
 
 The signal type (`query_type`) is automatically detected from the `query` string:
 - **Keywords** → `search_keyword` — e.g. `"lemlist OR \"heyreach\""`
@@ -313,6 +314,14 @@ To get a profile's or company's recent posts once, without monitoring it afterwa
 Use [Run Status](#run-status) or a `webhook_url` to know when the first run completes, then read the posts and engagers as usual. Normally nothing runs after the first collection; if that collection is still finishing when the signal's next daily read comes (for example during a data provider outage), that read runs too. A one-shot signal pauses itself at the latest 7 days after creation.
 
 To start monitoring later, [activate](#activate-signal) the signal. A one-shot signal holds a signal slot like any other signal until you [delete](#delete-signal) it.
+
+**Cost.** A one-shot signal is charged like any signal: 1 credit per post (keyword signals, the AI filter included), or per post and engagement (profile/company signals). Every one-shot signal costs at least 1 credit, also when its collection finds nothing. To search again, create a new signal.
+
+#### Credit cap for one-shot keyword signals
+
+Set `max_credits` on a one-shot keyword signal to limit what its collection may spend. Each post costs 1 credit, the AI filter included; posts the filter rejects are counted too, since they are charged when collected. When more posts match than the cap allows, the newest `max_credits` posts from the past month are kept, the rest are not collected, and the run completes as `success_limit_reached` (`limit_reached: true` in [Run Status](#run-status)).
+
+The cap applies on top of your workspace's credit balance: if the workspace runs out first, the run completes as `success_credits_exhausted`, and the rest (still within the cap) is collected after a top-up. Activating the signal later starts normal, uncapped monitoring.
 
 ### Run Lifecycle
 
@@ -537,14 +546,21 @@ GET /api/signals/{signal_id}/run
 |-------|------|---------|-------------|
 | `signal_id` | string | Always | The signal this run belongs to |
 | `run_id` | string | Always | Unique run identifier |
-| `status` | string | Always | One of: `queued`, `pending`, `running`, `success`, `success_with_warnings`, `failed`, `timed_out`, `cancelled` |
+| `status` | string | Always | One of: `queued`, `pending`, `running`, `success`, `success_credits_exhausted` (the workspace ran out of credits; the rest is collected after a top-up), `success_limit_reached` (the signal's `max_credits` was reached), `success_with_warnings`, `failed`, `timed_out`, `cancelled` |
 | `started_at` | string | After start | ISO 8601 timestamp when the run started |
 | `completed_at` | string | After completion | ISO 8601 timestamp when the run finished |
 | `duration_ms` | integer | After completion | Total run duration in milliseconds |
+| `credits_consumed` | number | Keyword signals | Credits this run has charged so far (1 per post, the AI filter included) |
+| `max_credits` | integer | Capped one-shot keyword signals | The signal's `max_credits` |
+| `limit_reached` | boolean | Keyword signals | `true` when the run completed as `success_limit_reached` |
 | `error` | string | On failure | Error message if the run failed |
 
 :::tip Polling Strategy
-Poll every **10-30 seconds**. Most runs complete within 2-5 minutes. Once `status` is one of `success`, `success_with_warnings`, `failed`, `timed_out`, or `cancelled`, the run is finished and you can fetch the results via the [Posts API](./posts.md) or [Engagers API](./engagers.md).
+Poll every **10-30 seconds**. Most runs complete within 2-5 minutes. Once `status` is one of `success`, `success_credits_exhausted`, `success_limit_reached`, `success_with_warnings`, `failed`, `timed_out`, or `cancelled`, the run is finished and you can fetch the results via the [Posts API](./posts.md) or [Engagers API](./engagers.md).
+:::
+
+:::info When results are ready
+A run shows a success status (`success`, `success_credits_exhausted`, `success_limit_reached` or `success_with_warnings`) only once its results can be read. Until then it shows `running`. From that moment, a fresh request (without an older `snapshot_time`) returns every post and engager the run collected, so there is no need to retry an empty result. A request that reuses a `snapshot_time` taken before the run finished still sees the data as of that time. `success_with_warnings` means collection or analysis may still be finishing, so AI-filtered results can still change. `failed` is shown right away.
 :::
 
 Returns `404 Not Found` if the signal has never been run.
@@ -584,7 +600,10 @@ signal_id = signal["_id"]
 print(f"Signal created: {signal_id}, run: {signal['run']['run_id']}")
 
 # 2. Poll until the first run completes
-terminal_statuses = {"success", "success_with_warnings", "failed", "timed_out", "cancelled"}
+terminal_statuses = {
+    "success", "success_credits_exhausted", "success_limit_reached",
+    "success_with_warnings", "failed", "timed_out", "cancelled",
+}
 
 while True:
     time.sleep(15)
@@ -599,7 +618,7 @@ while True:
         break
 
 # 3. Fetch results
-if run["status"] in ("success", "success_with_warnings"):
+if run["status"].startswith("success"):
     posts = httpx.get(
         f"{BASE}/posts",
         headers=headers,
@@ -982,7 +1001,7 @@ The complete API-only workflow to create a signal and consume results:
 
 ## Run Completion Callback
 
-If you provide a `webhook_url` when creating a signal, we'll POST to that URL every time a run completes — including the auto-triggered first run and all subsequent scheduled runs.
+If you provide a `webhook_url` when creating a signal, we'll POST to that URL every time a run completes — including the auto-triggered first run and all subsequent scheduled runs. A success callback is sent once the run's results can be read (see [When results are ready](#run-status)), usually 2 to 3 minutes after collection ends; a failure callback is sent right away.
 
 :::note Not the same as Webhooks
 This is a lightweight callback that notifies you when a signal run finishes. It does **not** deliver posts or engagers — you still fetch those via the [Posts API](./posts.md) or [Engagers API](./engagers.md). For automatically pushing collected data to external platforms (Slack, n8n, etc.), see [Webhooks](../integrations/webhooks.md).
@@ -990,7 +1009,7 @@ This is a lightweight callback that notifies you when a signal run finishes. It 
 
 ### Payload
 
-The callback payload matches the [Run Status](#run-status) response:
+The callback payload matches the [Run Status](#run-status) response, including the credit fields for keyword signals:
 
 ```http
 POST https://customer.com/callback
@@ -1013,7 +1032,7 @@ Content-Type: application/json
 - URL must be HTTPS
 
 :::tip
-You can use webhooks and polling together. The webhook notifies you immediately, and polling serves as a fallback if the webhook delivery fails.
+You can use webhooks and polling together. The webhook notifies you as soon as the results can be read, and polling serves as a fallback if the webhook delivery fails.
 :::
 
 ## Next Steps
