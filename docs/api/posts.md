@@ -69,7 +69,7 @@ Use one date family per request. The API rejects requests that combine `created_
 | `has_engagement_since` | string | Exclusive lower-bound ISO 8601 timestamp (UTC). Returns only posts that received a newly captured comment or reaction strictly after this time. Pair with `GET /api/engagers/post/{post_id}?captured_after=…` to incrementally sync new engagement. See [Incremental engagement sync](#incremental-engagement-sync). When set without an explicit `sort_by`, results are sorted by `last_engagement_at` descending. |
 | `country` | string | Comma-separated ISO country codes to include |
 | `country_exclude` | string | Comma-separated ISO country codes to exclude |
-| `function` | string | Functions: `ENG` (Engineering/IT), `PRD` (Product), `MKT` (Marketing), `SAL` (Sales), `FIN` (Finance), `OPS` (Operations), `HR` (Human Resources), `CS` (Customer Success), `LEG` (Legal), `DA` (Data/Analytics), `DSN` (Design/UX), `EDU` (Education/Academia), `AMB` (Ambiguous/Consultant), `GEN` (General Management), `UNMAPPED` |
+| `function` | string | Functions: `ENG` (Engineering/IT), `PRD` (Product), `MKT` (Marketing), `SAL` (Sales), `GTM` (Growth & RevOps), `FIN` (Finance), `OPS` (Operations), `HR` (Human Resources), `CS` (Customer Success), `LEG` (Legal), `DA` (Data/Analytics), `DSN` (Design/UX), `EDU` (Education/Academia), `AMB` (Ambiguous/Consultant), `GEN` (General Management), `UNMAPPED` |
 | `function_exclude` | string | Functions to exclude (same values as above) |
 | `role_level` | string | Authority — the rank the author's job title claims: `executive` (Executive), `vp`, `director` (Director), `manager` (Manager), `principal` (Principal), `senior_ic` (Senior IC), `ic` (Individual contributor (IC)), `junior` (Junior), `unranked` (Unranked), `UNMAPPED`; responses may also carry `out_of_scope` (Out of scope), which is not a filter value. See [Authority](#authority) |
 | `role_level_exclude` | string | Authority levels to exclude (same values as above) |
@@ -104,7 +104,7 @@ Use one date family per request. The API rejects requests that combine `created_
         "employment_context": "in_house",
         "function": "ENG",
         "company_size": "L",
-        "company_industry": "Technology",
+        "company_industry": "TECH_INFO_MEDIA",
         "company_website": "https://example.com",
         "email": "john.doe@example.com",
         "email_status": "found"
@@ -380,7 +380,7 @@ GET /api/posts/{post_id}
     "employment_context": "in_house",
     "function": "ENG",
     "company_size": "L",
-    "company_industry": "Technology",
+    "company_industry": "TECH_INFO_MEDIA",
     "company_website": "https://example.com",
     "email": "john.doe@example.com",
     "email_status": "found"
@@ -531,8 +531,9 @@ Use the same `snapshot_time` across all pages of a single sync run for consisten
 | `PRD` | Product | Product Management |
 | `MKT` | Marketing | Marketing roles |
 | `SAL` | Sales | Account Executives, SDRs, Partnerships |
+| `GTM` | Growth & RevOps | Growth, Revenue Operations, GTM Engineering |
 | `FIN` | Finance | Accounting, FP&A |
-| `OPS` | Operations | RevOps, BizOps, Supply Chain |
+| `OPS` | Operations | BizOps, Supply Chain |
 | `HR` | Human Resources | Talent Acquisition, Recruiting, L&D |
 | `CS` | Customer Success | Support, CX, Services |
 | `LEG` | Legal | Counsel, Compliance |

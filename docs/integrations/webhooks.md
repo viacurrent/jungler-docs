@@ -122,6 +122,10 @@ All sensitive data (like custom header values) is stored in encrypted form.
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
+:::note Workspace ID
+Every record carries `jungler_workspace_id`, the ID of the Jungler workspace the webhook belongs to, whatever columns you select. Use it to route records when one endpoint receives webhooks from several workspaces.
+:::
+
 :::note Email fields
 `author_email` / `author_email_status` (posts) and `email` / `email_status` (engagements) are included only when the **Email** column is selected in the webhook configuration. `email_status` is one of `found`, `not_found`, or `pending` — an empty email with `pending` is still resolving, while `not_found` means none could be found.
 :::
@@ -132,6 +136,8 @@ import TabItem from '@theme/TabItem';
 `employment_context` / `author_employment_context` describes how the person holds the role: `In-house`, `Founder-owner`, `Fractional`, `Interim`, `Advisory`, or `Freelance`.
 
 Either field is empty when it could not be determined from the person's job title.
+
+`function` (engagements) and `author_function` (posts) carry the function's label, for example `Engineering/IT`, `Growth & RevOps` or `General Management`, not the code used by the API filters.
 :::
 
 <Tabs>
@@ -164,7 +170,7 @@ Either field is empty when it could not be determined from the person's job titl
         "author_company_staff_range": "11-50",
         "author_company_staff_registered": "45",
         "author_company_industry": "TECH_INFO_MEDIA",
-        "author_function": "GEN",
+        "author_function": "General Management",
         "author_role_level": "Executive",
         "author_employment_context": "In-house",
         "post_url": "https://example.com/posts/...",
@@ -172,9 +178,10 @@ Either field is empty when it could not be determined from the person's job titl
         "post_language": "en",
         "post_sentiment": "positive",
         "post_type": "announcement",
-        "posted_at": "2026-01-10T15:30:00.000000+00:00",
+        "post_posted_at": "2026-01-10T15:30:00+00:00",
         "jungler_signal_id": "69654ea72a0d2c9f612d1cb4",
-        "jungler_post_id": "69654ea72a0d2c9f612d1cb5"
+        "jungler_post_id": "69654ea72a0d2c9f612d1cb5",
+        "jungler_workspace_id": "69654ea72a0d2c9f612d1cb3"
       }
       // ... up to 500 posts per batch
     ]
@@ -204,14 +211,14 @@ Either field is empty when it could not be determined from the person's job titl
         "headline": "VP of Engineering @ StartupCo",
         "profile_url": "https://example.com/profile/...",
         "profile_type": "user",
-        "profile_urn": "ACoAAApaN_cBDNTq...",
+        "profile_id": "ACoAAApaN_cBDNTq...",
         "title": "VP of Engineering",
         "company": "StartupCo",
         "country": "United Kingdom",
         "country_code": "GB",
         "region": "EU",
-        "function": "Engineering",
-        "role_level": "vp",
+        "function": "Engineering/IT",
+        "role_level": "VP",
         "employment_context": "In-house",
         "company_staff_range": "51-200",
         "company_staff_registered": "156",
@@ -223,7 +230,8 @@ Either field is empty when it could not be determined from the person's job titl
         "content": "N/A",
         "reaction_type": "LIKE",
         "post_url": "https://example.com/posts/...",
-        "engaged_at": "2026-01-11T14:25:02.305000+00:00"
+        "engaged_at": "2026-01-11T14:25:02.305000+00:00",
+        "jungler_workspace_id": "6963b2beb79d3a2768c537b9"
       }
       // ... up to 500 engagements per batch
     ]
