@@ -67,7 +67,7 @@ GET /api/engagers/signal/{signal_id}
         "name": "Jane Smith",
         "first_name": "Jane",
         "last_name": "Smith",
-        "urn": "urn:li:member:789",
+        "urn": "ACoAAApaN_cBDNTq...",
         "username": "janesmith",
         "profile_url": "https://linkedin.com/in/janesmith",
         "profile_image_url": "https://...",
@@ -112,7 +112,7 @@ GET /api/engagers/signal/{signal_id}
         "name": "Bob Johnson",
         "first_name": "Bob",
         "last_name": "Johnson",
-        "urn": "urn:li:member:101",
+        "urn": "ACoAAB7xQk2mLwRt...",
         "username": "bobjohnson",
         "profile_url": "https://linkedin.com/in/bobjohnson",
         "profile_image_url": "https://...",
@@ -175,7 +175,7 @@ GET /api/engagers/signal/{signal_id}
 | `name` | string | Display name |
 | `first_name` | string \| null | First name |
 | `last_name` | string \| null | Last name |
-| `urn` | string \| null | Member URN |
+| `urn` | string \| null | LinkedIn member ID of the person (for example `ACoAAApaN_cBDNTq...`) |
 | `username` | string \| null | Username |
 | `profile_url` | string \| null | Profile URL |
 | `profile_image_url` | string \| null | Profile image URL |
@@ -184,6 +184,7 @@ GET /api/engagers/signal/{signal_id}
 | `summary` | string \| null | About/summary section |
 | `company_name` | string \| null | Current company name |
 | `company_website` | string \| null | Company website domain |
+| `company_domain` | string \| null | Company registered domain, cleaned from the website |
 | `email` | string \| null | Work email if found (see [Email status](#email-status) below) |
 | `email_status` | string | `found`, `not_found`, or `pending` — see [Email status](#email-status) |
 | `title` | string \| null | Current job title |
@@ -198,7 +199,9 @@ GET /api/engagers/signal/{signal_id}
 | `company_hq_loc_country` | string \| null | Company HQ country |
 | `company_hq_loc_code` | string \| null | Company HQ ISO country code |
 | `role_level` | string \| null | Authority — the rank the title claims: `executive` (Executive), `vp`, `director` (Director), `manager`, `principal` (Principal), `senior_ic` (Senior IC), `ic`, `junior`, `unranked`. See [Authority](./posts#authority) |
+| `role_level_label` | string \| null | Display form of `role_level`, for example `Senior IC` |
 | `employment_context` | string \| null | How the person holds the role: `in_house`, `founder_owner`, `fractional`, `interim`, `advisory`, `freelance`. See [Employment context](./posts#employment-context) |
+| `employment_context_label` | string \| null | Display form of `employment_context`, for example `Founder-owner` |
 | `function` | string \| null | Job function (ENG, MKT, SAL, etc.) |
 
 #### Comment Metadata
@@ -427,7 +430,7 @@ GET /api/engagers/signal/{signal_id}/contacts
       "name": "Jane Smith",
       "first_name": "Jane",
       "last_name": "Smith",
-      "urn": "urn:li:member:789",
+      "urn": "ACoAAApaN_cBDNTq...",
       "profile_type": "user",
       "profile_url": "https://linkedin.com/in/janesmith",
       "profile_image_url": "https://...",
@@ -652,7 +655,7 @@ GET /api/engagers/workbook/{workbook_id}/contacts
       "name": "Jane Smith",
       "first_name": "Jane",
       "last_name": "Smith",
-      "urn": "urn:li:member:789",
+      "urn": "ACoAAApaN_cBDNTq...",
       "profile_type": "user",
       "profile_url": "https://linkedin.com/in/janesmith",
       "profile_image_url": "https://...",

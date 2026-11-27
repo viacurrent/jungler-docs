@@ -60,14 +60,15 @@ print(response.json())
 ```json
 [
   {
-    "_id": "507f1f77bcf86cd799439011",
-    "name": "My Company Workspace",
-    "role": "admin"
+    "membership_id": "507f1f77bcf86cd799439010",
+    "workspace_id": "507f1f77bcf86cd799439011",
+    "workspace_name": "My Company Workspace",
+    "user_role": "admin"
   }
 ]
 ```
 
-Save the `_id` - this is your workspace ID for subsequent requests.
+Save the `workspace_id` - you need it for subsequent requests.
 
 ## Step 3: List Your Signals
 
